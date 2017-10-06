@@ -28,8 +28,22 @@
                                     <tabBarItem systemItem="more" id="nj3-yn-HQ7"/>
                                 </items>
                             </tabBar>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Click diary icon below " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B8S-S1-Do1">
+                                <rect key="frame" x="40" y="301" width="295" height="102"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="102" id="Ng6-eJ-biG"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="27"/>
+                                <color key="textColor" red="1" green="0.35267600900000001" blue="0.2319609537" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="0.75290595279999994" blue="0.51700460410000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="B8S-S1-Do1" secondAttribute="trailing" constant="40" id="8k1-ih-kmk"/>
+                            <constraint firstItem="B8S-S1-Do1" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="237" id="Pk7-bZ-NEp"/>
+                            <constraint firstItem="B8S-S1-Do1" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="40" id="lH6-hZ-rl2"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" id="9k3-E2-3dh"/>
@@ -39,7 +53,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-9" y="-575"/>
+            <point key="canvasLocation" x="-10.4" y="-575.26236881559225"/>
         </scene>
         <!--Diary-->
         <scene sceneID="URZ-3m-Mgj">
