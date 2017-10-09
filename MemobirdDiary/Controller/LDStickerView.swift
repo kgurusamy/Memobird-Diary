@@ -331,6 +331,7 @@ class LDStickerView: UIView, UIGestureRecognizerDelegate, LDStickerViewDelegate 
             let t: CGAffineTransform = transform
             transform = CGAffineTransform.identity
             var scaleRect:CGRect = CGRect(x: frame.origin.x, y: frame.origin.y, width: max(frame.size.width + (wChange*2), 1 + _globalInset*2), height: max(frame.size.height + (hChange*2), 1 + _globalInset*2))
+           
             /*var scaleRect:CGRect
             if (frame.size.width >= frame.size.height){
             scaleRect = CGRectMake(frame.origin.x, frame.origin.y, max(frame.size.width + (hChange*2), 1 + _globalInset*2), max(frame.size.height + (hChange*2), 1 + _globalInset*2))
@@ -340,6 +341,7 @@ class LDStickerView: UIView, UIGestureRecognizerDelegate, LDStickerViewDelegate 
             scaleRect = CGRectSetCenter(scaleRect, center: center)
             frame = scaleRect
             transform = t
+          
             if responds(to: #selector(LDStickerViewDelegate.stickerViewDidChangeEditing(_:))) {
                 _delegate?.stickerViewDidChangeEditing!(self)
             }
@@ -349,18 +351,22 @@ class LDStickerView: UIView, UIGestureRecognizerDelegate, LDStickerViewDelegate 
             }
         }
         _prevPoint = _touchLocation;
-        
-    }
     
+    }
+
     @objc func rotateViewPanGesture(_ recognizer: UIPanGestureRecognizer){
         _touchLocation =  recognizer.location(in: superview)
-        
+        let label = self._contentView as? UILabel
+        var initialFontSize : CGFloat = CGFloat(0)
         let c: CGPoint = CGRectGetCenter(frame);
         if (recognizer.state == UIGestureRecognizerState.began){
             _deltaAngle = atan2(_touchLocation.y - c.y, _touchLocation.x - c.x) - CGAffineTransformGetAngle(transform)
-            
+            if(self._contentView.accessibilityIdentifier == "dragText"){
+                initialFontSize = (label?.font.pointSize)!
+            }
             _initialBounds = bounds;
             _initialDistance = CGPointGetDistance(c, point2: _touchLocation);
+            
             if (responds(to: #selector(LDStickerViewDelegate.stickerViewDidBeginEditing(_:)))){
                 _delegate?.stickerViewDidBeginEditing!(self)
             }
@@ -370,11 +376,22 @@ class LDStickerView: UIView, UIGestureRecognizerDelegate, LDStickerViewDelegate 
             transform = CGAffineTransform(rotationAngle: -angleDiff)
             setNeedsDisplay()
             let scale: CGFloat = sqrt(CGPointGetDistance(c, point2: _touchLocation) / _initialDistance)
-            print("scaled val : \(scale*50)")
             let scaleRect: CGRect = CGRectScale(_initialBounds, wScale: scale, hScale: scale);
             if (scaleRect.size.width >= (1 + _globalInset*2) && scaleRect.size.height >= (1 + _globalInset*2)){
                 bounds = scaleRect
             }
+            if(self._contentView.accessibilityIdentifier == "dragText")
+            {
+                let scaleVal = Float((scaleRect.size.height+scaleRect.size.height)/2) + Float((_initialBounds.size.height+_initialBounds.size.width)/2)
+                
+                label?.font = UIFont.systemFont(ofSize:CGFloat((scaleVal/16)*2)+initialFontSize)
+                label?.adjustsFontSizeToFitWidth = true
+                label?.numberOfLines = 0
+                label?.lineBreakMode = .byWordWrapping
+                label?.minimumScaleFactor = 0.5
+                //print("scaleval : \((scaleVal/16)*2)")
+            }
+            
             if responds(to: #selector(LDStickerViewDelegate.stickerViewDidChangeEditing(_:))) {
                 _delegate?.stickerViewDidChangeEditing!(self)
             }
@@ -383,6 +400,7 @@ class LDStickerView: UIView, UIGestureRecognizerDelegate, LDStickerViewDelegate 
                 _delegate?.stickerViewDidEndEditing!(self)
             }
         }
+       
     }
     
     

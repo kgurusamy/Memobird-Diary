@@ -94,8 +94,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
             for dragView in fromView.subviews
             {
                 if(dragView.accessibilityIdentifier == "drag"){
-                //print("subviews : ")
-                //print(dragView.subviews)
+              
                      let radians:Double = Double(atan2f(Float(Double(dragView.transform.b)), Float(Double(dragView.transform.a))))
                     
                     let dataModelObj : dataModel
@@ -123,7 +122,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
                 coreDataDiary.diary_image = captureDiaryScreenAndSave()
                
                 coreDataDiary.diary_data = dataModelArr as NSObject
-              //  coreDataDiary.diary_height = Float(self.scrollView.contentSize.height)
+              
                 print(self.scrollView.contentSize.height)
                 print(self.scrollView.frame.size.height)
 
@@ -211,9 +210,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated) // No need for semicolon
-//        NotificationCenter.default.addObserver(self, selector: #selector(DiaryViewController.scrolldisableReceivedNotification(notification:)), name: Notification.Name("ScollviewDisableNotificationIdentifier"), object: nil)
-//        NotificationCenter.default.addObserver(self, selector: #selector(DiaryViewController.scrollenableReceivedNotification(notification:)), name: Notification.Name("ScollviewEnableNotificationIdentifier"), object: nil)
-        
+
     }
     
     override func viewDidLayoutSubviews() {
@@ -222,10 +219,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         scrollView.frame = CGRect(x: 10, y: 70, width: self.view.frame.size.width-20, height: self.view.frame.size.height-130)
     }
     
-    deinit {
-//        NotificationCenter.default.removeObserver(self, name: Notification.Name("ScollviewDisableNotificationIdentifier"), object: nil)
-//        NotificationCenter.default.removeObserver(self, name: Notification.Name("ScollviewEnableNotificationIdentifier"), object: nil)
-    }
+
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -241,19 +235,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
             //stickerView.hideEditingHandles()
         }
     }
-//    @objc func scrolldisableReceivedNotification(notification: Notification)
-//    {
-//        //Take Action on Notification
-//        self.scrollView.isScrollEnabled = false
-//        //hideOtherViewSelection()
-//    }
-//    @objc func scrollenableReceivedNotification(notification: Notification)
-//    {
-//        //Take Action on Notification
-//        
-//        self.scrollView.isScrollEnabled = true
-//    }
-//
+
     // MARK:- Custom methods
     @IBAction func savebtn(_ sender: Any)
     {
@@ -342,7 +324,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
             
         }
         if(item.tag == 3){
-            print("Test3")
+            //print("Test3")
             if(addremovecount <= 3)
             {
                 addremovecount += 1
@@ -350,17 +332,17 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
                 
                 self.scrollView.contentSize = CGSize(width:1.0, height: self.view.frame.height*addremovecountcgfloat)
             }else{
-                let alertView:UIAlertView = UIAlertView()
-                alertView.title = "Alert!"
-                alertView.message = "Maximum 3 page allowed"
-                alertView.delegate = self
-                alertView.addButton(withTitle: "OK")
-                alertView.show()
+                
+                // create the alert
+                let alert = UIAlertController(title: "Alert!", message: "Maximum 3 page allowed", preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+
             }
             
         }
         if(item.tag == 4){
-            print("Test4")
+            //print("Test4")
             if(addremovecount >= 1)
             {
                 addremovecount -= 1
