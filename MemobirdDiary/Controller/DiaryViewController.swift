@@ -123,7 +123,18 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
                 coreDataDiary.diary_image = captureDiaryScreenAndSave()
                
                 coreDataDiary.diary_data = dataModelArr as NSObject
-                coreDataDiary.diary_height = Float(self.scrollView.contentSize.height)
+              //  coreDataDiary.diary_height = Float(self.scrollView.contentSize.height)
+                print(self.scrollView.contentSize.height)
+                print(self.scrollView.frame.size.height)
+
+                if(self.scrollView.contentSize.height > self.scrollView.frame.size.height + 130)
+                {
+                    coreDataDiary.diary_height = Float(self.scrollView.frame.size.height+200)
+                    
+                }else{
+                    coreDataDiary.diary_height = Float(self.scrollView.frame.size.height)
+                    
+                }
                 
             } else {
                 // Fallback on earlier versions
@@ -133,7 +144,14 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
                 
                 coreDataDiary.modified_time = Date()
                 coreDataDiary.diary_data = dataModelArr as NSObject
-                coreDataDiary.diary_height = Float(self.scrollView.contentSize.height)
+                if(self.scrollView.contentSize.height > self.scrollView.frame.size.height+130)
+                {
+                    coreDataDiary.diary_height = Float(self.scrollView.frame.size.height+200)
+
+                }else{
+                    coreDataDiary.diary_height = Float(self.scrollView.frame.size.height)
+
+                }
             }
             CoreDataStack.saveContext()
         }
@@ -170,7 +188,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         addremovecount = 1;
         self.scrollView = UIScrollView()
         self.scrollView.delegate = self
-        self.scrollView.contentSize = CGSize(width:1.0, height: self.view.frame.height)
+        self.scrollView.contentSize = CGSize(width:1.0, height: self.view.frame.size.height)
         self.scrollView.backgroundColor = UIColor.white
         self.view.addSubview(scrollView)
         
@@ -258,7 +276,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
             calcHeight = CGFloat(120)
         }
 
-        stickerView = LDStickerView(frame: CGRect(x: 40, y: 200, width: calcWidth, height: calcHeight))
+        stickerView = LDStickerView(frame: CGRect(x: 40, y: self.scrollView.contentSize.height - 400, width: calcWidth, height: calcHeight))
         stickerView.accessibilityIdentifier = "drag"
 
         if(type == contentType.image.rawValue){
@@ -523,11 +541,42 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
     }
     func captureDiaryScreenAndSave() -> String? {
         hideOtherViewSelection()
-        UIGraphicsBeginImageContextWithOptions(self.view.frame.size, false, self.view.layer.contentsScale)
-        self.view.layer.render(in: UIGraphicsGetCurrentContext()!)
+       UIGraphicsBeginImageContextWithOptions(scrollView.frame.size, false, scrollView.layer.contentsScale)
+      //  UIGraphicsBeginImageContext(scrollView.contentSize)
+        let savedContentOffset = scrollView.contentOffset
+        let savedFrame = scrollView.frame
+        
+        scrollView.contentOffset = CGPoint.zero
+        scrollView.frame = CGRect(x: 0, y: 60, width: scrollView.frame.width, height: scrollView.contentSize.height)
+        scrollView.layer.render(in: UIGraphicsGetCurrentContext()!)
         let image = UIGraphicsGetImageFromCurrentImageContext()
+        
+       // scrollView.contentOffset = savedContentOffset
+        scrollView.frame = savedFrame
+        
+        UIGraphicsEndImageContext()
+       // UIGraphicsEndImageContext()
+ 
+        
+        ///////
+       /* UIGraphicsBeginImageContext(scrollView.contentSize)
+       //  UIGraphicsBeginImageContextWithOptions(scrollView.contentSize, false, scrollView.layer.contentsScale)
+        let savedContentOffset = scrollView.contentOffset
+        let savedFrame = scrollView.frame
+        
+        scrollView.contentOffset = CGPoint.zero
+        scrollView.frame = CGRect(x: 0, y: 0, width: scrollView.frame.width, height: scrollView.contentSize.height)
+        
+        scrollView.layer.render(in: UIGraphicsGetCurrentContext()!)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        
+        scrollView.contentOffset = savedContentOffset
+        scrollView.frame = savedFrame
+        
         UIGraphicsEndImageContext()
         
+        */
+        ///////
         var imageName = Date().description
         imageName = imageName.replacingOccurrences(of: " ", with: "") + ".png"
         let fullImagePath = diaryImagesDirectoryPath + "/\(imageName)"

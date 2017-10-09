@@ -36,7 +36,7 @@ class HistoryViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return CGFloat(diaryEntries[indexPath.row].diary_height/1.85)
+        return CGFloat(diaryEntries[indexPath.row].diary_height/1.65)
         //return 300
     }
     
@@ -53,8 +53,9 @@ class HistoryViewController: UIViewController, UITableViewDelegate, UITableViewD
        
         let myImageView : UIImageView! = cell.contentView.viewWithTag(imageViewDefaultTag) as! UIImageView!
        
-        myImageView.contentMode = UIViewContentMode.scaleToFill
-        
+        myImageView.contentMode = UIViewContentMode.scaleAspectFit
+       // myImageView.backgroundColor = UIColor.red
+
         let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
         // Get the Document directory path
         let documentDirectorPath:String = paths[0]
@@ -66,6 +67,9 @@ class HistoryViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
         myImageView.frame = CGRect(x : 30, y: 15, width : CGFloat((myImageView.image?.size.width)!/2), height:CGFloat(diaryEntries[indexPath.row].diary_height/2))
         myImageView.center = cell.contentView.center
+        myImageView.layer.borderWidth = 2
+        myImageView.layer.cornerRadius = 20
+        myImageView.layer.borderColor = UIColor.init(red:222/255.0, green:225/255.0, blue:227/255.0, alpha: 1.0).cgColor
         
         return cell
     }
