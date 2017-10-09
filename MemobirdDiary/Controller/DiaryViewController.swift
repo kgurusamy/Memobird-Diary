@@ -161,7 +161,8 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
     func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView)
     {
         self.scrollView.isScrollEnabled = true
-        stickerView.hideEditingHandles()
+        hideOtherViewSelection()
+        //stickerView.hideEditingHandles()
     }
     // MARK:- ViewController delegate methods
     override func viewDidLoad() {
@@ -192,8 +193,8 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated) // No need for semicolon
-        NotificationCenter.default.addObserver(self, selector: #selector(DiaryViewController.scrolldisableReceivedNotification(notification:)), name: Notification.Name("ScollviewDisableNotificationIdentifier"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(DiaryViewController.scrollenableReceivedNotification(notification:)), name: Notification.Name("ScollviewEnableNotificationIdentifier"), object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(DiaryViewController.scrolldisableReceivedNotification(notification:)), name: Notification.Name("ScollviewDisableNotificationIdentifier"), object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(DiaryViewController.scrollenableReceivedNotification(notification:)), name: Notification.Name("ScollviewEnableNotificationIdentifier"), object: nil)
         
     }
     
@@ -204,8 +205,8 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
     }
     
     deinit {
-        NotificationCenter.default.removeObserver(self, name: Notification.Name("ScollviewDisableNotificationIdentifier"), object: nil)
-        NotificationCenter.default.removeObserver(self, name: Notification.Name("ScollviewEnableNotificationIdentifier"), object: nil)
+//        NotificationCenter.default.removeObserver(self, name: Notification.Name("ScollviewDisableNotificationIdentifier"), object: nil)
+//        NotificationCenter.default.removeObserver(self, name: Notification.Name("ScollviewEnableNotificationIdentifier"), object: nil)
     }
     
     override func didReceiveMemoryWarning() {
@@ -218,19 +219,22 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         if gestureRecognizer.state == .began
         {
             self.scrollView.isScrollEnabled = true
-            stickerView.hideEditingHandles()
+            hideOtherViewSelection()
+            //stickerView.hideEditingHandles()
         }
     }
-    @objc func scrolldisableReceivedNotification(notification: Notification)
-    {
-        //Take Action on Notification
-        self.scrollView.isScrollEnabled = true
-    }
-    @objc func scrollenableReceivedNotification(notification: Notification)
-    {
-        //Take Action on Notification
-        self.scrollView.isScrollEnabled = false
-    }
+//    @objc func scrolldisableReceivedNotification(notification: Notification)
+//    {
+//        //Take Action on Notification
+//        self.scrollView.isScrollEnabled = false
+//        //hideOtherViewSelection()
+//    }
+//    @objc func scrollenableReceivedNotification(notification: Notification)
+//    {
+//        //Take Action on Notification
+//        
+//        self.scrollView.isScrollEnabled = true
+//    }
 //
     // MARK:- Custom methods
     @IBAction func savebtn(_ sender: Any)
@@ -282,20 +286,6 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
             stickerView.subviews[2].isHidden = false
         }
         self.scrollView.addSubview(stickerView)
-       
-
-    }
-    
-    @objc func stickerViewTapped(_ tapGesture:UITapGestureRecognizer){
-        hideOtherViewSelection()
-        let touchedView = tapGesture.view
-        if(touchedView?.accessibilityIdentifier == "drag"){
-            if(touchedView?.subviews.count == 3){
-                touchedView?.subviews[1].isHidden = false
-                touchedView?.subviews[2].isHidden = false
-            }
-            touchedView?.bringSubview(toFront: self.scrollView)
-        }
         self.scrollView.isScrollEnabled = false
     }
 

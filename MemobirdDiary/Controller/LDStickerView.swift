@@ -148,15 +148,41 @@ class LDStickerView: UIView, UIGestureRecognizerDelegate, LDStickerViewDelegate 
     }
     
     @objc func contentTapped(_ tapGesture:UITapGestureRecognizer){
-        if ((_isShowingEditingHandles) != false){
-            hideEditingHandles()
-            superview?.bringSubview(toFront: self)
-            NotificationCenter.default.post(name: Notification.Name("ScollviewDisableNotificationIdentifier"), object: nil)
-
-        } else {
-            showEditingHandles()
-            NotificationCenter.default.post(name: Notification.Name("ScollviewEnableNotificationIdentifier"), object: nil)
-
+        
+        hideOtherViewSelection()
+        showEditingHandles()
+        superview?.bringSubview(toFront: self)
+        let scrollView = self.superview as! UIScrollView
+        //if lastTouchedView != nil{
+        scrollView.isScrollEnabled = false
+        //NotificationCenter.default.post(name: Notification.Name("ScollviewDisableNotificationIdentifier"), object: nil)
+        
+//        if ((_isShowingEditingHandles) != false){
+//            //hideEditingHandles()
+//            hideOtherViewSelection()
+//            showEditingHandles()
+//            superview?.bringSubview(toFront: self)
+//            NotificationCenter.default.post(name: Notification.Name("ScollviewDisableNotificationIdentifier"), object: nil)
+//
+//        } else {
+//            showEditingHandles()
+//            NotificationCenter.default.post(name: Notification.Name("ScollviewEnableNotificationIdentifier"), object: nil)
+//
+//        }
+    }
+    
+    func hideOtherViewSelection()
+    {
+        if((self.superview?.subviews.count)! > 0){
+            for view in (self.superview?.subviews)!
+            {
+                if(view.accessibilityIdentifier == "drag"){
+                    if(view.subviews.count == 3){
+                        view.subviews[1].isHidden = true
+                        view.subviews[2].isHidden = true
+                    }
+                }
+            }
         }
     }
     
@@ -256,9 +282,10 @@ class LDStickerView: UIView, UIGestureRecognizerDelegate, LDStickerViewDelegate 
     }
     @objc func moveGesture(_ recognizer: UIPanGestureRecognizer){
         _touchLocation = recognizer.location(in: superview)
-        print(lastTouchedView)
-        print("_touchLocation")
-        if lastTouchedView != nil{
+
+        let scrollView = self.superview as! UIScrollView
+        //if lastTouchedView != nil{
+        if(scrollView.isScrollEnabled == false){
         if(recognizer.state == UIGestureRecognizerState.began){
            
             _beginningPoint = _touchLocation
@@ -266,6 +293,10 @@ class LDStickerView: UIView, UIGestureRecognizerDelegate, LDStickerViewDelegate 
             center = CGPoint(x: _beginningCenter.x + (_touchLocation.x - _beginningPoint.x), y: _beginningCenter.y + (_touchLocation.y - _beginningPoint.y))
             
             _beginBounds = self.bounds
+           
+            // Show editing handles and bring the current view to front
+            showEditingHandles()
+            superview?.bringSubview(toFront: self)
             
             if responds(to: #selector(LDStickerViewDelegate.stickerViewDidBeginEditing(_:))){
                 _delegate?.stickerViewDidBeginEditing!(self)
