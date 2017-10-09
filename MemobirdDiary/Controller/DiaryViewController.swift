@@ -525,7 +525,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         hideOtherViewSelection()
        UIGraphicsBeginImageContextWithOptions(scrollView.frame.size, false, scrollView.layer.contentsScale)
       //  UIGraphicsBeginImageContext(scrollView.contentSize)
-        let savedContentOffset = scrollView.contentOffset
+       // let savedContentOffset = scrollView.contentOffset
         let savedFrame = scrollView.frame
         
         scrollView.contentOffset = CGPoint.zero

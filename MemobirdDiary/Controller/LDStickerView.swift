@@ -112,22 +112,22 @@ class LDStickerView: UIView, UIGestureRecognizerDelegate, LDStickerViewDelegate 
         _resizeView.image = UIImage(named: "icon_scale")
        // addSubview(_resizeView)
         
-        var moveGesture: UIPanGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(LDStickerView.moveGesture(_:)))
+        let moveGesture: UIPanGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(LDStickerView.moveGesture(_:)))
       //  moveGesture.minimumPressDuration = 0.1
         addGestureRecognizer(moveGesture)
         
-        var singleTapShowHide:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(LDStickerView.contentTapped(_:)))
+        let singleTapShowHide:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(LDStickerView.contentTapped(_:)))
         addGestureRecognizer(singleTapShowHide)
         
-        var singleTap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(LDStickerView.singleTap(_:)))
+        let singleTap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(LDStickerView.singleTap(_:)))
         _closeView.addGestureRecognizer(singleTap)
         
-        var panResizeGesture:UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(LDStickerView.resizeTranslate(_:)))
+        //var panResizeGesture:UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(LDStickerView.resizeTranslate(_:)))
         
-        panResizeGesture.minimumPressDuration = 0
-        _resizeView.addGestureRecognizer(panResizeGesture)
+        //panResizeGesture.minimumPressDuration = 0
+        //_resizeView.addGestureRecognizer(panResizeGesture)
         
-        var panRotateGesture:UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(LDStickerView.rotateViewPanGesture(_:)))
+        let panRotateGesture:UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(LDStickerView.rotateViewPanGesture(_:)))
         
         panRotateGesture.minimumPressDuration = 0
         _rotateView.addGestureRecognizer(panRotateGesture)
