@@ -26,6 +26,7 @@ class HistoryViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
+   
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
@@ -64,13 +65,13 @@ class HistoryViewController: UIViewController, UITableViewDelegate, UITableViewD
         let data = FileManager.default.contents(atPath: diaryImagesDirectoryPath + "/\(diaryEntries[indexPath.row].diary_image ?? "")")
         if(data != nil){
             myImageView.image = UIImage(data: data!)
+            myImageView.frame = CGRect(x : 30, y: 15, width : CGFloat((myImageView.image?.size.width)!/2), height:CGFloat(diaryEntries[indexPath.row].diary_height/2))
+            myImageView.center = cell.contentView.center
+            myImageView.layer.borderWidth = 2
+            myImageView.layer.cornerRadius = 20
+            myImageView.layer.borderColor = UIColor.init(red:222/255.0, green:225/255.0, blue:227/255.0, alpha: 1.0).cgColor
         }
-        myImageView.frame = CGRect(x : 30, y: 15, width : CGFloat((myImageView.image?.size.width)!/2), height:CGFloat(diaryEntries[indexPath.row].diary_height/2))
-        myImageView.center = cell.contentView.center
-        myImageView.layer.borderWidth = 2
-        myImageView.layer.cornerRadius = 20
-        myImageView.layer.borderColor = UIColor.init(red:222/255.0, green:225/255.0, blue:227/255.0, alpha: 1.0).cgColor
-        
+       
         return cell
     }
     
@@ -106,9 +107,11 @@ class HistoryViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func navigateToDiaryView(forIndex : Int)
     {
-        let diaryVC = storyboard?.instantiateViewController(withIdentifier: "DiaryViewController") as! DiaryViewController
-        diaryVC.selectedDiaryEntryIndex = forIndex
-        self.navigationController?.pushViewController(diaryVC, animated: true)
+        let diaryVC = self.navigationController?.viewControllers[(self.navigationController?.viewControllers.count)!-2] as? DiaryViewController
+        diaryVC?.selectedDiaryEntryIndex = forIndex
+        diaryVC?.mode = "edit"
+        self.navigationController?.popToViewController((diaryVC)!, animated: true)
+        
     }
 
     override func didReceiveMemoryWarning() {

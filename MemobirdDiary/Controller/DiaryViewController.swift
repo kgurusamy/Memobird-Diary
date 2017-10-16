@@ -30,11 +30,14 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
     var diaryEntries = [DiaryEntry]()
     var dataModelArr = [dataModel]()
     var selectedDiaryEntryIndex : Int! = -1
+    var mode : String = ""
     var stickerView = LDStickerView()
     var addremovecount : Int = 0
 
     func loadData(atIndex : Int)
     {
+        self.scrollView.subviews.forEach({ $0.removeFromSuperview() })
+        
         if(diaryEntries.count > 0){
         let currentDiaryEntry = diaryEntries[selectedDiaryEntryIndex]
         let diaryData = currentDiaryEntry.diary_data as! [dataModel]
@@ -199,18 +202,21 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         
         createImagesFolder()
         createDiaryImagesFolder()
-        
-        if(diaryEntries.count==0){
-        }
-        if(selectedDiaryEntryIndex != -1){
-            getSavedData()
-            loadData(atIndex : selectedDiaryEntryIndex)
-        }
-    }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated) // No need for semicolon
+    }
+ 
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        getSavedData()
+        if(mode == "edit"){
+            if(selectedDiaryEntryIndex != -1){
+                
+                loadData(atIndex : selectedDiaryEntryIndex)
+            }
+            mode = ""
+        }
+        
     }
     
     override func viewDidLayoutSubviews() {
@@ -388,6 +394,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         
         var imageName = Date().description
         imageName = imageName.replacingOccurrences(of: " ", with: "") + ".png"
+        imageName = imageName.replacingOccurrences(of: ":", with: "")
         let fullImagePath = imagesDirectoryPath + "/\(imageName)"
         let myImage = self.fixOrientation(image: (info[UIImagePickerControllerOriginalImage] as? UIImage)!)
         
@@ -561,6 +568,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         ///////
         var imageName = Date().description
         imageName = imageName.replacingOccurrences(of: " ", with: "") + ".png"
+        imageName = imageName.replacingOccurrences(of: ":", with: "")
         let fullImagePath = diaryImagesDirectoryPath + "/\(imageName)"
         
         let data = UIImagePNGRepresentation((image)!)
