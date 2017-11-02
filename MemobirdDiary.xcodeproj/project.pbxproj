@@ -14,6 +14,7 @@
 		339814A61F85F966006810D8 /* picture-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 339814A51F85F966006810D8 /* picture-icon.png */; };
 		33C8DA431F7B6793005E4211 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C8DA421F7B6793005E4211 /* CoreDataStack.swift */; };
 		33C8DA451F7B698A005E4211 /* dataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C8DA441F7B698A005E4211 /* dataModel.swift */; };
+		AE65F8591FA09AF00057A0AD /* ExportImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE65F8581FA09AF00057A0AD /* ExportImageViewController.swift */; };
 		AE67DE6B1F752881007A3B76 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE67DE6A1F752881007A3B76 /* AppDelegate.swift */; };
 		AE67DE6D1F752881007A3B76 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE67DE6C1F752881007A3B76 /* ViewController.swift */; };
 		AE67DE701F752881007A3B76 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AE67DE6E1F752881007A3B76 /* Main.storyboard */; };
@@ -56,6 +57,7 @@
 		AE538FB61F839E2F00D8FEFC /* expand.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = expand.png; sourceTree = "<group>"; };
 		AE538FB71F839E2F00D8FEFC /* cancel_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cancel_icon.png; sourceTree = "<group>"; };
 		AE538FB81F839E2F00D8FEFC /* rotation.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rotation.png; sourceTree = "<group>"; };
+		AE65F8581FA09AF00057A0AD /* ExportImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportImageViewController.swift; sourceTree = "<group>"; };
 		AE67DE671F752881007A3B76 /* MemobirdDiary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MemobirdDiary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE67DE6A1F752881007A3B76 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AE67DE6C1F752881007A3B76 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -116,6 +118,7 @@
 				AEEC54291F78DB5400050B06 /* TextEditViewController.swift */,
 				AEEC542B1F78DB6700050B06 /* HistoryViewController.swift */,
 				AEAB03651F8759940096546E /* LDStickerView.swift */,
+				AE65F8581FA09AF00057A0AD /* ExportImageViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -348,6 +351,7 @@
 				AEEC542A1F78DB5400050B06 /* TextEditViewController.swift in Sources */,
 				AEAB03661F8759940096546E /* LDStickerView.swift in Sources */,
 				AE67DE6D1F752881007A3B76 /* ViewController.swift in Sources */,
+				AE65F8591FA09AF00057A0AD /* ExportImageViewController.swift in Sources */,
 				AEEC542C1F78DB6700050B06 /* HistoryViewController.swift in Sources */,
 				AE67DE731F752881007A3B76 /* MemobirdDiary.xcdatamodeld in Sources */,
 				AE67DE6B1F752881007A3B76 /* AppDelegate.swift in Sources */,
