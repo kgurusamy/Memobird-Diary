@@ -147,7 +147,9 @@ class ExportImageViewController: UIViewController,UIScrollViewDelegate {
                     ////////////////////////                   /////////////////////
                     // we create a CIImage, think of a CIImage as image data for processing, nothing is displayed or can be displayed at this point
                     //  let coreImage = CIImage(cgImage: resultImage as! CGImage)
-                    let coreImage = CIImage(image : newImage)
+                    let ciContext = CIContext(options: nil)
+
+                    let coreImage = CIImage(image : myImg)
                     
                     // we pick the filter we want
                     let filter = CIFilter(name: "CIDotScreen")
@@ -158,7 +160,8 @@ class ExportImageViewController: UIViewController,UIScrollViewDelegate {
                     // we retrieve the processed image
                     let filteredImageData = filter?.value(forKey: kCIOutputImageKey) as! CIImage
                     // returns a Quartz image from the Core Image context
-                    let filteredImageRef = ciContext.createCGImage(filteredImageData, from: filteredImageData.extent)
+                    let filteredImageRef = ciContext.createCGImage(filteredImageData, from:filteredImageData.extent)
+                   // let filteredImageRef = CGContext.createCGImage(filteredImageData, from: filteredImageData.extent)
                     // this is our final UIImage ready to be displayed
                     //  let personciImage = CIImage(cgImage: imageView.image!.cgImage!)
                     // let filteredImage = CIImage(cgImage: filteredImageRef!);
