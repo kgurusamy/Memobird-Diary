@@ -157,8 +157,10 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
             }
             CoreDataStack.saveContext()
         }
-        let historyVC = storyboard?.instantiateViewController(withIdentifier: "HistoryViewController") as! HistoryViewController
-        self.navigationController?.pushViewController(historyVC, animated: true)
+        let ExportVC = storyboard?.instantiateViewController(withIdentifier: "ExportImageViewController") as! ExportImageViewController
+        self.navigationController?.pushViewController(ExportVC, animated: true)
+        /*let historyVC = storyboard?.instantiateViewController(withIdentifier: "HistoryViewController") as! HistoryViewController
+        self.navigationController?.pushViewController(historyVC, animated: true)*/
         
     }
     
