@@ -157,13 +157,78 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
             }
             CoreDataStack.saveContext()
         }
-        let ExportVC = storyboard?.instantiateViewController(withIdentifier: "ExportImageViewController") as! ExportImageViewController
+        UIGraphicsBeginImageContextWithOptions(scrollView.frame.size, false, scrollView.layer.contentsScale)
+        //  UIGraphicsBeginImageContext(scrollView.contentSize)
+        // let savedContentOffset = scrollView.contentOffset
+        let savedFrame = scrollView.frame
+        
+        scrollView.contentOffset = CGPoint.zero
+        scrollView.frame = CGRect(x: 0, y: 60, width: scrollView.frame.width, height: scrollView.contentSize.height)
+        scrollView.layer.render(in: UIGraphicsGetCurrentContext()!)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        
+        // scrollView.contentOffset = savedContentOffset
+        scrollView.frame = savedFrame
+        
+        UIGraphicsEndImageContext()
+        let ExportVC = storyboard?.instantiateViewController(withIdentifier: "ExportFiltersViewController") as! ExportFiltersViewController
+        ExportVC.getnewImage = image
         self.navigationController?.pushViewController(ExportVC, animated: true)
-        /*let historyVC = storyboard?.instantiateViewController(withIdentifier: "HistoryViewController") as! HistoryViewController
+        /*let ExportVC = storyboard?.instantiateViewController(withIdentifier: "ExportImageViewController") as! ExportImageViewController
+        self.navigationController?.pushViewController(ExportVC, animated: true)
+        let historyVC = storyboard?.instantiateViewController(withIdentifier: "HistoryViewController") as! HistoryViewController
         self.navigationController?.pushViewController(historyVC, animated: true)*/
         
     }
-    
+    func getImageOfScrollView() -> String?{
+        UIGraphicsBeginImageContextWithOptions(scrollView.frame.size, false, scrollView.layer.contentsScale)
+        //  UIGraphicsBeginImageContext(scrollView.contentSize)
+        // let savedContentOffset = scrollView.contentOffset
+        let savedFrame = scrollView.frame
+        
+        scrollView.contentOffset = CGPoint.zero
+        scrollView.frame = CGRect(x: 0, y: 60, width: scrollView.frame.width, height: scrollView.contentSize.height)
+        scrollView.layer.render(in: UIGraphicsGetCurrentContext()!)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        
+        // scrollView.contentOffset = savedContentOffset
+        scrollView.frame = savedFrame
+        
+        UIGraphicsEndImageContext()
+        // UIGraphicsEndImageContext()
+        
+        
+        ///////
+        /* UIGraphicsBeginImageContext(scrollView.contentSize)
+         //  UIGraphicsBeginImageContextWithOptions(scrollView.contentSize, false, scrollView.layer.contentsScale)
+         let savedContentOffset = scrollView.contentOffset
+         let savedFrame = scrollView.frame
+         
+         scrollView.contentOffset = CGPoint.zero
+         scrollView.frame = CGRect(x: 0, y: 0, width: scrollView.frame.width, height: scrollView.contentSize.height)
+         
+         scrollView.layer.render(in: UIGraphicsGetCurrentContext()!)
+         let image = UIGraphicsGetImageFromCurrentImageContext()
+         
+         scrollView.contentOffset = savedContentOffset
+         scrollView.frame = savedFrame
+         
+         UIGraphicsEndImageContext()
+         
+         */
+        ///////
+        var imageName = Date().description
+        imageName = imageName.replacingOccurrences(of: " ", with: "") + ".png"
+        imageName = imageName.replacingOccurrences(of: ":", with: "")
+        let fullImagePath = diaryImagesDirectoryPath + "/\(imageName)"
+        
+        let data = UIImagePNGRepresentation((image)!)
+        let success = FileManager.default.createFile(atPath: fullImagePath, contents: data, attributes: nil)
+        if(success){
+            print("DiaryImage saved successfully in local")
+        }
+        return imageName
+    }
     func getSavedData()
     {
         let fetchRequest: NSFetchRequest<DiaryEntry> = DiaryEntry.fetchRequest()

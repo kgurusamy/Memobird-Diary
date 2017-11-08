@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+let kSampleImageName = "duckling.jpg"
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
