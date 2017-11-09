@@ -10,6 +10,8 @@ import UIKit
 // MARK: - UISlider @IBAction
 import QuartzCore
 import CoreData
+
+
 extension ExportFiltersViewController {
     
     @IBAction func brightnesssliderbtn(_ sender: UISlider) {
@@ -30,7 +32,7 @@ extension ExportFiltersViewController {
     }
     
 }
-class ExportFiltersViewController:UIViewController , UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout,UITabBarDelegate {
+class ExportFiltersViewController:UIViewController , UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout,UITabBarDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate, CropViewControllerDelegate {
     @IBOutlet weak var filteredImageView: FilteredImageView!
     @IBOutlet weak var photoFilterCollectionView: UICollectionView!
     ////TabBarview
@@ -70,9 +72,12 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        filterBGView.isHidden = false
+        filterBGView.isHidden = true
         tabBarView.delegate = self
-
+        undobtnoutlet.backgroundColor = .clear
+        undobtnoutlet.layer.cornerRadius = 34
+        undobtnoutlet.layer.borderWidth = 1
+        undobtnoutlet.layer.borderColor = UIColor.black.cgColor
         for descriptor in filterDescriptors {
             filters.append(CIFilter(name: descriptor.filterName)!)
         }
@@ -86,6 +91,7 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
         self.photoFilterCollectionView.collectionViewLayout = flowLayout
         filteredImageView.inputImage = getnewImage
         filteredImageView.contentMode = .scaleAspectFit
+        filteredImageView.backgroundColor = UIColor.clear
         filteredImageView.filter = filters[0]
         colorControl.input(filteredImageView.inputImage!)
     }
@@ -110,14 +116,112 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoFilterCell", for: indexPath) as! PhotoFilterCollectionViewCell
-        cell.filteredImageView.contentMode = .scaleAspectFill
-        cell.filteredImageView.inputImage = UIImage(named: "duckling.jpg")
+        cell.filteredImageView.contentMode = .scaleAspectFit
+        cell.filteredImageView.inputImage = UIImage(named: "memobirdicon.png")
         cell.filteredImageView.filter = filters[indexPath.item]
         cell.filterNameLabel.text = filterDescriptors[indexPath.item].filterDisplayName
         return cell
     }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize
+    {
+        return CGSize(width: 68.0 , height: 72.0)
+    }
     
+    CIColorInvert
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         filteredImageView.filter = filters[indexPath.item]
+    }
+    // MARK: - Private methods
+    private func updateEditButtonEnabled() {
+        //editButton.isEnabled = self.imageView.image != nil
+    }
+    
+    // MARK: - CropView
+    func cropViewController(_ controller: CropViewController, didFinishCroppingImage image: UIImage) {
+        //        controller.dismissViewControllerAnimated(true, completion: nil)
+        //        imageView.image = image
+        //        updateEditButtonEnabled()
+    }
+    
+    func cropViewController(_ controller: CropViewController, didFinishCroppingImage image: UIImage, transform: CGAffineTransform, cropRect: CGRect) {
+        controller.dismiss(animated: true, completion: nil)
+        //imageView.image = image
+        filteredImageView.inputImage = image
+        updateEditButtonEnabled()
+    }
+    
+    func cropViewControllerDidCancel(_ controller: CropViewController) {
+        controller.dismiss(animated: true, completion: nil)
+        updateEditButtonEnabled()
+    }
+    
+    // MARK: - UIImagePickerController delegate methods
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        guard let image = info[UIImagePickerControllerOriginalImage] as? UIImage else {
+            dismiss(animated: true, completion: nil)
+            return
+        }
+       // imageView.image = image
+        getnewImage = image
+        filteredImageView.inputImage = getnewImage
+
+        dismiss(animated: true) { [unowned self] in
+           // self.openEditor(nil)
+        }
+    }
+    @IBAction func undobtn(_ sender: Any)
+    {
+        for descriptor in filterDescriptors {
+            filters.append(CIFilter(name: descriptor.filterName)!)
+        }
+        self.photoFilterCollectionView.delegate = self
+        self.photoFilterCollectionView.dataSource = self
+        let flowLayout = UICollectionViewFlowLayout()
+        //flowLayout.itemSize = CGSizeMake(UIScreen.main.bounds.width/2 - 10, 190)
+        flowLayout.sectionInset = UIEdgeInsetsMake(0, 5, 0, 5)
+        flowLayout.scrollDirection = UICollectionViewScrollDirection.horizontal
+        flowLayout.minimumInteritemSpacing = 0.0
+        self.photoFilterCollectionView.collectionViewLayout = flowLayout
+        filteredImageView.inputImage = getnewImage
+        filteredImageView.contentMode = .scaleAspectFit
+        filteredImageView.filter = filters[0]
+        colorControl.input(filteredImageView.inputImage!)
+    }
+    func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+        
+        if(item.tag == 0){
+            if(filterBGView.isHidden == true)
+            {
+                filterBGView.isHidden = false
+                self.undobtnoutlet.frame = CGRect(x: 290, y: 370, width: self.undobtnoutlet.frame.width, height: self.undobtnoutlet.frame.height)
+                
+            }else{
+                filterBGView.isHidden = true
+                self.undobtnoutlet.frame = CGRect(x: 290, y: 540, width: self.undobtnoutlet.frame.width, height: self.undobtnoutlet.frame.height)
+                
+            }
+        }
+            if(item.tag == 1){
+                let controller = CropViewController()
+                controller.delegate = self
+                controller.image = getnewImage
+                
+                let navController = UINavigationController(rootViewController: controller)
+                present(navController, animated: true, completion: nil)
+            }
+            if(item.tag == 2){
+                
+            }
+            if(item.tag == 3){
+                
+            }
+            if(item.tag == 4){
+                UIView.animate(withDuration: 1.0, animations: {
+                
+                    self.filteredImageView.transform = self.filteredImageView.transform.rotated(by: CGFloat(M_PI_2))
+                })
+            }
+       
+        
     }
 }

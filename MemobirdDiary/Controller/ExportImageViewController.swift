@@ -9,6 +9,8 @@
 import UIKit
 import QuartzCore
 import CoreData
+//import PhotoCropEditor
+
 extension UIImage {
     class func imageWithLabel(label: UILabel) -> UIImage {
         UIGraphicsBeginImageContextWithOptions(label.bounds.size, false, 0.0)
@@ -302,7 +304,7 @@ class ExportImageViewController: UIViewController,UIScrollViewDelegate,UICollect
 
         }
         if(item.tag == 1){
-            
+           
         }
         if(item.tag == 2){
             

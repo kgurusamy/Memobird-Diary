@@ -23,6 +23,11 @@
 		AE67DE781F752881007A3B76 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AE67DE761F752881007A3B76 /* LaunchScreen.storyboard */; };
 		AE67DE831F752881007A3B76 /* MemobirdDiaryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE67DE821F752881007A3B76 /* MemobirdDiaryTests.swift */; };
 		AE67DE8E1F752881007A3B76 /* MemobirdDiaryUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE67DE8D1F752881007A3B76 /* MemobirdDiaryUITests.swift */; };
+		AE70D1761FB4602000AAC3EB /* CropViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE70D16F1FB45F9100AAC3EB /* CropViewController.swift */; };
+		AE70D1771FB4602800AAC3EB /* CropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE70D16D1FB45F9100AAC3EB /* CropView.swift */; };
+		AE70D1781FB4602D00AAC3EB /* CropRectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE70D16C1FB45F9100AAC3EB /* CropRectView.swift */; };
+		AE70D1791FB4603300AAC3EB /* ResizeControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE70D1741FB45F9100AAC3EB /* ResizeControl.swift */; };
+		AE70D17A1FB4603500AAC3EB /* UIImage+Crop.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE70D1751FB45F9100AAC3EB /* UIImage+Crop.swift */; };
 		AE8E67161FB18D4100452792 /* ExportFiltersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8E67151FB18D4100452792 /* ExportFiltersViewController.swift */; };
 		AE986D101FB068F600FCEDF7 /* Foundation Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE986D0F1FB068EE00FCEDF7 /* Foundation Extensions.swift */; };
 		AE986D131FB0690B00FCEDF7 /* ColorControlManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE986D121FB0690B00FCEDF7 /* ColorControlManager.swift */; };
@@ -62,6 +67,19 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		AE91E0E41FB3428300A99256 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		3398149D1F85F60B006810D8 /* icon_plus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_plus.png; sourceTree = "<group>"; };
 		3398149E1F85F60B006810D8 /* minus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = minus.png; sourceTree = "<group>"; };
@@ -86,6 +104,17 @@
 		AE67DE821F752881007A3B76 /* MemobirdDiaryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemobirdDiaryTests.swift; sourceTree = "<group>"; };
 		AE67DE891F752881007A3B76 /* MemobirdDiaryUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MemobirdDiaryUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE67DE8D1F752881007A3B76 /* MemobirdDiaryUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemobirdDiaryUITests.swift; sourceTree = "<group>"; };
+		AE70D1541FB45E3800AAC3EB /* PhotoCropEditor.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PhotoCropEditor.framework; sourceTree = "<group>"; };
+		AE70D15B1FB45EA600AAC3EB /* memobirdicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = memobirdicon.png; path = ../../../../memobirdicon.png; sourceTree = "<group>"; };
+		AE70D16C1FB45F9100AAC3EB /* CropRectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CropRectView.swift; sourceTree = "<group>"; };
+		AE70D16D1FB45F9100AAC3EB /* CropView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CropView.swift; sourceTree = "<group>"; };
+		AE70D16E1FB45F9100AAC3EB /* CropViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CropViewController.h; sourceTree = "<group>"; };
+		AE70D16F1FB45F9100AAC3EB /* CropViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CropViewController.swift; sourceTree = "<group>"; };
+		AE70D1711FB45F9100AAC3EB /* PhotoCropEditorBorder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PhotoCropEditorBorder.png; sourceTree = "<group>"; };
+		AE70D1721FB45F9100AAC3EB /* PhotoCropEditorBorder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "PhotoCropEditorBorder@2x.png"; sourceTree = "<group>"; };
+		AE70D1731FB45F9100AAC3EB /* PhotoCropEditorBorder@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "PhotoCropEditorBorder@3x.png"; sourceTree = "<group>"; };
+		AE70D1741FB45F9100AAC3EB /* ResizeControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResizeControl.swift; sourceTree = "<group>"; };
+		AE70D1751FB45F9100AAC3EB /* UIImage+Crop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Crop.swift"; sourceTree = "<group>"; };
 		AE8E67151FB18D4100452792 /* ExportFiltersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportFiltersViewController.swift; sourceTree = "<group>"; };
 		AE986D0F1FB068EE00FCEDF7 /* Foundation Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Foundation Extensions.swift"; sourceTree = "<group>"; };
 		AE986D121FB0690B00FCEDF7 /* ColorControlManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorControlManager.swift; sourceTree = "<group>"; };
@@ -184,6 +213,7 @@
 		AE3F4D471F7906AF00D26F7E /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				AE70D15B1FB45EA600AAC3EB /* memobirdicon.png */,
 				339814A51F85F966006810D8 /* picture-icon.png */,
 				339814A31F85F70C006810D8 /* font.png */,
 				3398149D1F85F60B006810D8 /* icon_plus.png */,
@@ -192,19 +222,43 @@
 				AE538FB71F839E2F00D8FEFC /* cancel_icon.png */,
 				AE538FB61F839E2F00D8FEFC /* expand.png */,
 				AE538FB81F839E2F00D8FEFC /* rotation.png */,
+				AE986D2B1FB07A7A00FCEDF7 /* duckling.jpg */,
 			);
 			path = Images;
+			sourceTree = "<group>";
+		};
+		AE5851A71FB4568600E4BAA6 /* FiltersLib */ = {
+			isa = PBXGroup;
+			children = (
+				AE986D2F1FB07BC000FCEDF7 /* ParameterAdjustmentView.swift */,
+				AE986D281FB07A7200FCEDF7 /* FilteredImageView.swift */,
+				AE986D271FB07A7100FCEDF7 /* ScalarFilterParameter.swift */,
+				AE986D231FB07A6800FCEDF7 /* PhotoFilterCollectionViewCell.swift */,
+				AE986D241FB07A6800FCEDF7 /* PhotoFilterViewController.swift */,
+				AE986D2C1FB07BBF00FCEDF7 /* LabeledSliderView.swift */,
+			);
+			path = FiltersLib;
+			sourceTree = "<group>";
+		};
+		AE5851B61FB4570300E4BAA6 /* PhotoCropEditorLib */ = {
+			isa = PBXGroup;
+			children = (
+				AE70D16B1FB45F9100AAC3EB /* CropViewController */,
+			);
+			path = PhotoCropEditorLib;
 			sourceTree = "<group>";
 		};
 		AE67DE5E1F752881007A3B76 = {
 			isa = PBXGroup;
 			children = (
 				AE67DE691F752881007A3B76 /* MemobirdDiary */,
+				AE986D1C1FB0691700FCEDF7 /* Helper */,
 				AE3F4D461F79069A00D26F7E /* Resorces */,
 				AE67DE711F752881007A3B76 /* MemobirdDiary.xcdatamodeld */,
 				AE67DE811F752881007A3B76 /* MemobirdDiaryTests */,
 				AE67DE8C1F752881007A3B76 /* MemobirdDiaryUITests */,
 				AE67DE681F752881007A3B76 /* Products */,
+				AE91E0D81FB33EDE00A99256 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -221,19 +275,13 @@
 		AE67DE691F752881007A3B76 /* MemobirdDiary */ = {
 			isa = PBXGroup;
 			children = (
-				33C8DA411F7B677A005E4211 /* Model */,
 				AE67DE6A1F752881007A3B76 /* AppDelegate.swift */,
-				AE986D2B1FB07A7A00FCEDF7 /* duckling.jpg */,
-				AE986D281FB07A7200FCEDF7 /* FilteredImageView.swift */,
-				AE986D271FB07A7100FCEDF7 /* ScalarFilterParameter.swift */,
-				AE986D231FB07A6800FCEDF7 /* PhotoFilterCollectionViewCell.swift */,
-				AE986D241FB07A6800FCEDF7 /* PhotoFilterViewController.swift */,
-				AE986D2C1FB07BBF00FCEDF7 /* LabeledSliderView.swift */,
-				AE986D2F1FB07BC000FCEDF7 /* ParameterAdjustmentView.swift */,
-				AE986D1C1FB0691700FCEDF7 /* Helper */,
-				AE986D111FB068FB00FCEDF7 /* Util */,
-				AE3F4D441F79066C00D26F7E /* Controller */,
+				33C8DA411F7B677A005E4211 /* Model */,
 				AE3F4D451F79067E00D26F7E /* View */,
+				AE3F4D441F79066C00D26F7E /* Controller */,
+				AE5851B61FB4570300E4BAA6 /* PhotoCropEditorLib */,
+				AE5851A71FB4568600E4BAA6 /* FiltersLib */,
+				AE986D111FB068FB00FCEDF7 /* Util */,
 			);
 			path = MemobirdDiary;
 			sourceTree = "<group>";
@@ -252,6 +300,30 @@
 				AE67DE8D1F752881007A3B76 /* MemobirdDiaryUITests.swift */,
 			);
 			path = MemobirdDiaryUITests;
+			sourceTree = "<group>";
+		};
+		AE70D16B1FB45F9100AAC3EB /* CropViewController */ = {
+			isa = PBXGroup;
+			children = (
+				AE70D16C1FB45F9100AAC3EB /* CropRectView.swift */,
+				AE70D16D1FB45F9100AAC3EB /* CropView.swift */,
+				AE70D16E1FB45F9100AAC3EB /* CropViewController.h */,
+				AE70D16F1FB45F9100AAC3EB /* CropViewController.swift */,
+				AE70D1711FB45F9100AAC3EB /* PhotoCropEditorBorder.png */,
+				AE70D1721FB45F9100AAC3EB /* PhotoCropEditorBorder@2x.png */,
+				AE70D1731FB45F9100AAC3EB /* PhotoCropEditorBorder@3x.png */,
+				AE70D1741FB45F9100AAC3EB /* ResizeControl.swift */,
+				AE70D1751FB45F9100AAC3EB /* UIImage+Crop.swift */,
+			);
+			path = CropViewController;
+			sourceTree = "<group>";
+		};
+		AE91E0D81FB33EDE00A99256 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				AE70D1541FB45E3800AAC3EB /* PhotoCropEditor.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		AE986D111FB068FB00FCEDF7 /* Util */ = {
@@ -292,6 +364,7 @@
 				AE67DE631F752881007A3B76 /* Sources */,
 				AE67DE641F752881007A3B76 /* Frameworks */,
 				AE67DE651F752881007A3B76 /* Resources */,
+				AE91E0E41FB3428300A99256 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -426,24 +499,29 @@
 				AE986D301FB07BC000FCEDF7 /* LabeledSliderView.swift in Sources */,
 				33C8DA431F7B6793005E4211 /* CoreDataStack.swift in Sources */,
 				AEEC54281F78DB2C00050B06 /* DiaryViewController.swift in Sources */,
+				AE70D1791FB4603300AAC3EB /* ResizeControl.swift in Sources */,
 				AE986D291FB07A7200FCEDF7 /* ScalarFilterParameter.swift in Sources */,
 				AE8E67161FB18D4100452792 /* ExportFiltersViewController.swift in Sources */,
 				AE986D2A1FB07A7200FCEDF7 /* FilteredImageView.swift in Sources */,
 				AE986D1A1FB0691400FCEDF7 /* Processable.swift in Sources */,
+				AE70D1781FB4602D00AAC3EB /* CropRectView.swift in Sources */,
 				AEF005391FAB3E88004351FD /* MyCollectionViewCell.swift in Sources */,
 				AE986D251FB07A6900FCEDF7 /* PhotoFilterCollectionViewCell.swift in Sources */,
 				33C8DA451F7B698A005E4211 /* dataModel.swift in Sources */,
 				AE986D131FB0690B00FCEDF7 /* ColorControlManager.swift in Sources */,
 				AE986D261FB07A6900FCEDF7 /* PhotoFilterViewController.swift in Sources */,
+				AE70D17A1FB4603500AAC3EB /* UIImage+Crop.swift in Sources */,
 				AEEC542A1F78DB5400050B06 /* TextEditViewController.swift in Sources */,
 				AEAB03661F8759940096546E /* LDStickerView.swift in Sources */,
 				AE67DE6D1F752881007A3B76 /* ViewController.swift in Sources */,
+				AE70D1761FB4602000AAC3EB /* CropViewController.swift in Sources */,
 				AE65F8591FA09AF00057A0AD /* ExportImageViewController.swift in Sources */,
 				AE986D1B1FB0691400FCEDF7 /* Contrastable.swift in Sources */,
 				AEEC542C1F78DB6700050B06 /* HistoryViewController.swift in Sources */,
 				AE67DE731F752881007A3B76 /* MemobirdDiary.xcdatamodeld in Sources */,
 				AE986D191FB0691400FCEDF7 /* Brightnessable.swift in Sources */,
 				AE986D181FB0691400FCEDF7 /* Saturationable.swift in Sources */,
+				AE70D1771FB4602800AAC3EB /* CropView.swift in Sources */,
 				AE986D211FB0696700FCEDF7 /* ColorControlViewController.swift in Sources */,
 				AE67DE6B1F752881007A3B76 /* AppDelegate.swift in Sources */,
 				AEF005371FAB3B31004351FD /* CollectionViewCell.swift in Sources */,
@@ -614,6 +692,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UWRJNNALTK;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/MemobirdDiary",
+				);
 				INFOPLIST_FILE = "$(SRCROOT)/Resorces/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -630,6 +712,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UWRJNNALTK;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/MemobirdDiary",
+				);
 				INFOPLIST_FILE = "$(SRCROOT)/Resorces/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -646,6 +732,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = UWRJNNALTK;
 				INFOPLIST_FILE = MemobirdDiaryTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Oottru.MemobirdDiaryTests;
@@ -662,6 +749,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = UWRJNNALTK;
 				INFOPLIST_FILE = MemobirdDiaryTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Oottru.MemobirdDiaryTests;
@@ -677,6 +765,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = UWRJNNALTK;
 				INFOPLIST_FILE = MemobirdDiaryUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Oottru.MemobirdDiaryUITests;
@@ -692,6 +781,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = UWRJNNALTK;
 				INFOPLIST_FILE = MemobirdDiaryUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Oottru.MemobirdDiaryUITests;
