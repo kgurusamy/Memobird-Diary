@@ -17,7 +17,7 @@ class PhotoFilterViewController: UIViewController, UICollectionViewDataSource, U
     let filterDescriptors: [(filterName: String, filterDisplayName: String)] = [
         ("CIColorControls", "None"),
         ("CIPhotoEffectMono", "Mono"),
-        ("CIPhotoEffectTonal", "Tonal"),
+        ("CIColorInvert", "Invert"),
         ("CIPhotoEffectNoir", "Noir"),
         ("CIPhotoEffectFade", "Fade"),
         ("CIPhotoEffectChrome", "Chrome"),

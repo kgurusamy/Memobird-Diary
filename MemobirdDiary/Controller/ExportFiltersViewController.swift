@@ -15,20 +15,20 @@ import CoreData
 extension ExportFiltersViewController {
     
     @IBAction func brightnesssliderbtn(_ sender: UISlider) {
-        DispatchQueue.main.async {
+        //DispatchQueue.main.async {
             // self.brightnessLabel.text = "Brightness \(sender.value)"
             self.colorControl.brightness(sender.value)
             self.filteredImageView.inputImage = self.colorControl.outputUIImage()
-        }
+      ///  }
     }
     
     @IBAction func contrastsliderbtn(_ sender: UISlider) {
-        DispatchQueue.main.async {
+       // DispatchQueue.main.async {
             //  self.contrastLabel.text = "Contrast \(sender.value)"
             
             self.colorControl.contrast(sender.value)
             self.filteredImageView.inputImage = self.colorControl.outputUIImage()
-        }
+       // }
     }
     
 }
@@ -61,13 +61,19 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
     let filterDescriptors: [(filterName: String, filterDisplayName: String)] = [
         ("CIColorControls", "None"),
         ("CIPhotoEffectMono", "Mono"),
-        ("CIPhotoEffectTonal", "Tonal"),
+        ("CIColorInvert", "Invert"),
         ("CIPhotoEffectNoir", "Noir"),
         ("CIPhotoEffectFade", "Fade"),
         ("CIPhotoEffectChrome", "Chrome"),
         ("CIPhotoEffectProcess", "Process"),
         ("CIPhotoEffectTransfer", "Transfer"),
         ("CIPhotoEffectInstant", "Instant"),
+        ("CIStraightenFilter", "Straighten"),
+        ("CITemperatureAndTint", "TemperatureAndTint"),
+        ("CITileFilter", "TileFilter"),
+        ("CIToneCurve", "ToneCurve"),
+        ("CITriangleKaleidoscope", "TriangleKaleidoscope"),
+        ("CIUnsharpMask", "UnsharpMask"),
         ]
     
     override func viewDidLoad() {
@@ -75,7 +81,7 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
         filterBGView.isHidden = true
         tabBarView.delegate = self
         undobtnoutlet.backgroundColor = .clear
-        undobtnoutlet.layer.cornerRadius = 34
+        undobtnoutlet.layer.cornerRadius = 24
         undobtnoutlet.layer.borderWidth = 1
         undobtnoutlet.layer.borderColor = UIColor.black.cgColor
         for descriptor in filterDescriptors {
@@ -127,7 +133,7 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
         return CGSize(width: 68.0 , height: 72.0)
     }
     
-    CIColorInvert
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         filteredImageView.filter = filters[indexPath.item]
     }
