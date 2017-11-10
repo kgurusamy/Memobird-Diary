@@ -15,24 +15,22 @@ import CoreData
 extension ExportFiltersViewController {
     
     @IBAction func brightnesssliderbtn(_ sender: UISlider) {
-        //DispatchQueue.main.async {
-            // self.brightnessLabel.text = "Brightness \(sender.value)"
+        DispatchQueue.main.async {
             self.colorControl.brightness(sender.value)
             self.filteredImageView.inputImage = self.colorControl.outputUIImage()
-      ///  }
+        }
     }
     
     @IBAction func contrastsliderbtn(_ sender: UISlider) {
-       // DispatchQueue.main.async {
-            //  self.contrastLabel.text = "Contrast \(sender.value)"
-            
+        DispatchQueue.main.async {
             self.colorControl.contrast(sender.value)
             self.filteredImageView.inputImage = self.colorControl.outputUIImage()
-       // }
+        }
     }
     
 }
-class ExportFiltersViewController:UIViewController , UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout,UITabBarDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate, CropViewControllerDelegate {
+class ExportFiltersViewController:UIViewController , UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout,UITabBarDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate, CropViewControllerDelegate  {
+    
     @IBOutlet weak var filteredImageView: FilteredImageView!
     @IBOutlet weak var photoFilterCollectionView: UICollectionView!
     ////TabBarview
@@ -60,16 +58,16 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
 
     let filterDescriptors: [(filterName: String, filterDisplayName: String)] = [
         ("CIColorControls", "None"),
-        ("CIPhotoEffectMono", "Mono"),
+        ("CILineOverlay", "Sketch"),
         ("CIColorInvert", "Invert"),
-        ("CIPhotoEffectNoir", "Noir"),
-        ("CIPhotoEffectFade", "Fade"),
+        ("CIComicEffect", "Comic"),
+        ("CIEdgeWork", "Pencil"),
         ("CIPhotoEffectChrome", "Chrome"),
         ("CIPhotoEffectProcess", "Process"),
         ("CIPhotoEffectTransfer", "Transfer"),
         ("CIPhotoEffectInstant", "Instant"),
         ("CIStraightenFilter", "Straighten"),
-        ("CITemperatureAndTint", "TemperatureAndTint"),
+        ("CITemperatureAndTint", "Temperature"),
         ("CITileFilter", "TileFilter"),
         ("CIToneCurve", "ToneCurve"),
         ("CITriangleKaleidoscope", "TriangleKaleidoscope"),
@@ -90,7 +88,6 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
         self.photoFilterCollectionView.delegate = self
         self.photoFilterCollectionView.dataSource = self
         let flowLayout = UICollectionViewFlowLayout()
-        //flowLayout.itemSize = CGSizeMake(UIScreen.main.bounds.width/2 - 10, 190)
         flowLayout.sectionInset = UIEdgeInsetsMake(0, 5, 0, 5)
         flowLayout.scrollDirection = UICollectionViewScrollDirection.horizontal
         flowLayout.minimumInteritemSpacing = 0.0
@@ -123,7 +120,8 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoFilterCell", for: indexPath) as! PhotoFilterCollectionViewCell
         cell.filteredImageView.contentMode = .scaleAspectFit
-        cell.filteredImageView.inputImage = UIImage(named: "memobirdicon.png")
+        cell.backgroundColor = UIColor.clear
+        cell.filteredImageView.inputImage = UIImage(named: "duckling.jpg")
         cell.filteredImageView.filter = filters[indexPath.item]
         cell.filterNameLabel.text = filterDescriptors[indexPath.item].filterDisplayName
         return cell
@@ -139,19 +137,14 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
     }
     // MARK: - Private methods
     private func updateEditButtonEnabled() {
-        //editButton.isEnabled = self.imageView.image != nil
     }
     
     // MARK: - CropView
     func cropViewController(_ controller: CropViewController, didFinishCroppingImage image: UIImage) {
-        //        controller.dismissViewControllerAnimated(true, completion: nil)
-        //        imageView.image = image
-        //        updateEditButtonEnabled()
     }
     
     func cropViewController(_ controller: CropViewController, didFinishCroppingImage image: UIImage, transform: CGAffineTransform, cropRect: CGRect) {
         controller.dismiss(animated: true, completion: nil)
-        //imageView.image = image
         filteredImageView.inputImage = image
         updateEditButtonEnabled()
     }
@@ -167,12 +160,10 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
             dismiss(animated: true, completion: nil)
             return
         }
-       // imageView.image = image
         getnewImage = image
         filteredImageView.inputImage = getnewImage
 
         dismiss(animated: true) { [unowned self] in
-           // self.openEditor(nil)
         }
     }
     @IBAction func undobtn(_ sender: Any)
@@ -183,7 +174,6 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
         self.photoFilterCollectionView.delegate = self
         self.photoFilterCollectionView.dataSource = self
         let flowLayout = UICollectionViewFlowLayout()
-        //flowLayout.itemSize = CGSizeMake(UIScreen.main.bounds.width/2 - 10, 190)
         flowLayout.sectionInset = UIEdgeInsetsMake(0, 5, 0, 5)
         flowLayout.scrollDirection = UICollectionViewScrollDirection.horizontal
         flowLayout.minimumInteritemSpacing = 0.0

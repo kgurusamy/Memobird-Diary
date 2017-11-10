@@ -68,13 +68,10 @@ class LDStickerView: UIView, UIGestureRecognizerDelegate, LDStickerViewDelegate 
     }
     
     override init(frame: CGRect) {
-        /*(1+_globalInset*2)*/
         if (frame.size.width < (1+12*2)) {
-            //frame.size.width = 25
-            //frame = CGRectMake(frame.origin.x, frame.origin.y, 25, frame.size.height)
+     
         }
         if (frame.size.height < (1+12*2)){
-            //frame.size.height = 25
             
         }
         
@@ -87,7 +84,6 @@ class LDStickerView: UIView, UIGestureRecognizerDelegate, LDStickerViewDelegate 
         //Close button view which is in top left corner
         _closeView = UIImageView(frame: CGRect(x: bounds.size.width - _globalInset*2, y: 0, width: _globalInset*2, height: _globalInset*2))
           _closeView.autoresizingMask = [.flexibleLeftMargin, .flexibleBottomMargin]
-        //_closeView.autoresizingMask = UIViewAutoresizing.FlexibleLeftMargin | UIViewAutoresizing.FlexibleBottomMargin
         
         _closeView.backgroundColor = UIColor.clear
         _closeView.image = UIImage(named: "cancel_icon")
@@ -97,7 +93,6 @@ class LDStickerView: UIView, UIGestureRecognizerDelegate, LDStickerViewDelegate 
         //Rotating view which is in bottom left corner
         _rotateView = UIImageView(frame: CGRect(x: bounds.size.width - _globalInset*2, y: bounds.size.height - _globalInset*2, width: _globalInset*2, height: _globalInset*2))
         _rotateView.autoresizingMask = [.flexibleLeftMargin, .flexibleTopMargin]
-        //_rotateView.autoresizingMask = UIViewAutoresizing.FlexibleLeftMargin | UIViewAutoresizing.FlexibleTopMargin
         _rotateView.backgroundColor = UIColor.clear
         _rotateView.image = UIImage(named: "rotation")
         _rotateView.isUserInteractionEnabled = true
@@ -106,14 +101,11 @@ class LDStickerView: UIView, UIGestureRecognizerDelegate, LDStickerViewDelegate 
         //Resizing view which is in bottom right corner
         _resizeView = UIImageView(frame: CGRect(x: 0, y: bounds.size.height - _globalInset*2, width: _globalInset*2, height: _globalInset*2))
         _resizeView.autoresizingMask = [.flexibleRightMargin,.flexibleTopMargin]
-        //_resizeView.autoresizingMask = UIViewAutoresizing.FlexibleRightMargin | UIViewAutoresizing.FlexibleTopMargin
         _resizeView.backgroundColor = UIColor.clear
         _resizeView.isUserInteractionEnabled = true
         _resizeView.image = UIImage(named: "icon_scale")
-       // addSubview(_resizeView)
         
         let moveGesture: UIPanGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(LDStickerView.moveGesture(_:)))
-      //  moveGesture.minimumPressDuration = 0.1
         addGestureRecognizer(moveGesture)
         
         let singleTapShowHide:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(LDStickerView.contentTapped(_:)))
@@ -122,11 +114,7 @@ class LDStickerView: UIView, UIGestureRecognizerDelegate, LDStickerViewDelegate 
         let singleTap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(LDStickerView.singleTap(_:)))
         _closeView.addGestureRecognizer(singleTap)
         
-        //var panResizeGesture:UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(LDStickerView.resizeTranslate(_:)))
-        
-        //panResizeGesture.minimumPressDuration = 0
-        //_resizeView.addGestureRecognizer(panResizeGesture)
-        
+  
         let panRotateGesture:UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(LDStickerView.rotateViewPanGesture(_:)))
         
         panRotateGesture.minimumPressDuration = 0
@@ -153,22 +141,8 @@ class LDStickerView: UIView, UIGestureRecognizerDelegate, LDStickerViewDelegate 
         showEditingHandles()
         superview?.bringSubview(toFront: self)
         let scrollView = self.superview as! UIScrollView
-        //if lastTouchedView != nil{
         scrollView.isScrollEnabled = false
-        //NotificationCenter.default.post(name: Notification.Name("ScollviewDisableNotificationIdentifier"), object: nil)
-        
-//        if ((_isShowingEditingHandles) != false){
-//            //hideEditingHandles()
-//            hideOtherViewSelection()
-//            showEditingHandles()
-//            superview?.bringSubview(toFront: self)
-//            NotificationCenter.default.post(name: Notification.Name("ScollviewDisableNotificationIdentifier"), object: nil)
-//
-//        } else {
-//            showEditingHandles()
-//            NotificationCenter.default.post(name: Notification.Name("ScollviewEnableNotificationIdentifier"), object: nil)
-//
-//        }
+
     }
     
     func hideOtherViewSelection()

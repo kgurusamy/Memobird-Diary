@@ -48,27 +48,11 @@ class TextEditViewController: UIViewController {
     {
         let vcsCount = self.navigationController?.viewControllers.count
         let diaryController = self.navigationController?.viewControllers[vcsCount! - 2] as! DiaryViewController
-        //diaryController.Dragtextview.attributedText = self.txtContent.attributedText
-
-//        var imageName = Date().description
-//        imageName = imageName.replacingOccurrences(of: " ", with: "") + ".png"
-//        let fullImagePath = imagesDirectoryPath + "/\(imageName)"
         
         self.txtContent.resignFirstResponder()
-        
-//        UIGraphicsBeginImageContextWithOptions(self.txtContent.contentSize, false, 0);
-//        self.txtContent.drawHierarchy(in: self.txtContent.bounds, afterScreenUpdates: true)
-//        let image = UIGraphicsGetImageFromCurrentImageContext();
-//        let data = UIImagePNGRepresentation((image)!)
-//        let success = FileManager.default.createFile(atPath: fullImagePath, contents: data, attributes: nil)
-//        if(success){
-//            print("DiaryImage saved successfully in local")
-//        }
-//        diaryController.dragzoomroatateview(img: image!, imgName: imageName)
+    
         diaryController.dragzoomroatateview(img: UIImage(), imgName: "", type: contentType.text.rawValue, attributedString : txtContent.attributedText)
-        //self.present(diaryController, animated: true, completion: nil)
         
-       // screenshotTextView()
         self.navigationController?.popViewController(animated: true)
     }
     
@@ -110,9 +94,7 @@ class TextEditViewController: UIViewController {
         print("screenshot imagesize \(String(describing: self.txtImageView.image?.size))")
         UIGraphicsEndImageContext()
     }
-    //var frame = self.textView.frame
-    //frame.size.height = self.textView.contentSize.height
-    
+
     @IBAction func sliderValueChanged(sender: UISlider) {
         let currentValue = sender.value
         if(btnBold.isSelected){
@@ -127,7 +109,7 @@ class TextEditViewController: UIViewController {
         if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             keyboardHeight = keyboardSize.height
             self.vwfontOptions.frame = CGRect(x:self.vwfontOptions.frame.origin.x,y: self.view.frame.size.height - keyboardSize.height - vwfontOptions.frame.size.height, width : self.vwfontOptions.frame.size.width, height : self.vwfontOptions.frame.size.height)
-            //print("frame show : \(self.vwfontOptions.frame), keyboardHeight : \(keyboardSize.height)")
+           
             self.vwfontOptions.isHidden = false
         }
     }
