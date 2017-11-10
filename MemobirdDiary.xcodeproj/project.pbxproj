@@ -204,6 +204,10 @@
 		AE3F4D461F79069A00D26F7E /* Resorces */ = {
 			isa = PBXGroup;
 			children = (
+				AE986D111FB068FB00FCEDF7 /* Util */,
+				AE5851A71FB4568600E4BAA6 /* FiltersLib */,
+				AE5851B61FB4570300E4BAA6 /* PhotoCropEditorLib */,
+				AE986D1C1FB0691700FCEDF7 /* Helper */,
 				AE67DE741F752881007A3B76 /* Assets.xcassets */,
 				AE67DE791F752881007A3B76 /* Info.plist */,
 				AE208FD91FB56F3700493885 /* nature1.jpg */,
@@ -254,9 +258,7 @@
 			isa = PBXGroup;
 			children = (
 				AE67DE691F752881007A3B76 /* MemobirdDiary */,
-				AE986D1C1FB0691700FCEDF7 /* Helper */,
 				AE3F4D461F79069A00D26F7E /* Resorces */,
-				AE67DE711F752881007A3B76 /* MemobirdDiary.xcdatamodeld */,
 				AE67DE811F752881007A3B76 /* MemobirdDiaryTests */,
 				AE67DE8C1F752881007A3B76 /* MemobirdDiaryUITests */,
 				AE67DE681F752881007A3B76 /* Products */,
@@ -278,12 +280,10 @@
 			isa = PBXGroup;
 			children = (
 				AE67DE6A1F752881007A3B76 /* AppDelegate.swift */,
+				AE67DE711F752881007A3B76 /* MemobirdDiary.xcdatamodeld */,
 				33C8DA411F7B677A005E4211 /* Model */,
 				AE3F4D451F79067E00D26F7E /* View */,
 				AE3F4D441F79066C00D26F7E /* Controller */,
-				AE5851B61FB4570300E4BAA6 /* PhotoCropEditorLib */,
-				AE5851A71FB4568600E4BAA6 /* FiltersLib */,
-				AE986D111FB068FB00FCEDF7 /* Util */,
 			);
 			path = MemobirdDiary;
 			sourceTree = "<group>";
