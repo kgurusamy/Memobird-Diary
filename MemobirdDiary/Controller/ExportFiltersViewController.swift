@@ -289,6 +289,9 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
         strokesbgview.isHidden = true
 
     }
+    @IBAction func saveBtn(_ sender: Any)
+    {
+    }
     @IBAction func stroke4btn(_ sender: Any) {
         drawVieww.setWidth(CGFloat(12.0))
         strokesbgview.isHidden = true

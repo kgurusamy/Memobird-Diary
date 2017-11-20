@@ -46,6 +46,7 @@
 		AE986D331FB07BC000FCEDF7 /* ParameterAdjustmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE986D2F1FB07BC000FCEDF7 /* ParameterAdjustmentView.swift */; };
 		AEAB03661F8759940096546E /* LDStickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEAB03651F8759940096546E /* LDStickerView.swift */; };
 		AEB677801FC2B0C200C82500 /* PreviewListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEB6777F1FC2B0C200C82500 /* PreviewListViewController.swift */; };
+		AEB677821FC2D84900C82500 /* PreviewlistTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEB677811FC2D84900C82500 /* PreviewlistTableViewCell.swift */; };
 		AEEC54281F78DB2C00050B06 /* DiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEEC54271F78DB2C00050B06 /* DiaryViewController.swift */; };
 		AEEC542A1F78DB5400050B06 /* TextEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEEC54291F78DB5400050B06 /* TextEditViewController.swift */; };
 		AEEC542C1F78DB6700050B06 /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEEC542B1F78DB6700050B06 /* HistoryViewController.swift */; };
@@ -146,6 +147,7 @@
 		AE986D2F1FB07BC000FCEDF7 /* ParameterAdjustmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParameterAdjustmentView.swift; sourceTree = "<group>"; };
 		AEAB03651F8759940096546E /* LDStickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LDStickerView.swift; sourceTree = "<group>"; };
 		AEB6777F1FC2B0C200C82500 /* PreviewListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewListViewController.swift; sourceTree = "<group>"; };
+		AEB677811FC2D84900C82500 /* PreviewlistTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewlistTableViewCell.swift; sourceTree = "<group>"; };
 		AEEC54271F78DB2C00050B06 /* DiaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryViewController.swift; sourceTree = "<group>"; };
 		AEEC54291F78DB5400050B06 /* TextEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditViewController.swift; sourceTree = "<group>"; };
 		AEEC542B1F78DB6700050B06 /* HistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
@@ -231,6 +233,7 @@
 				AEF005361FAB3B31004351FD /* CollectionViewCell.swift */,
 				AE986D1F1FB0696600FCEDF7 /* ColorControlViewController.swift */,
 				AEB6777F1FC2B0C200C82500 /* PreviewListViewController.swift */,
+				AEB677811FC2D84900C82500 /* PreviewlistTableViewCell.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -747,6 +750,7 @@
 				AE70D1771FB4602800AAC3EB /* CropView.swift in Sources */,
 				AE986D211FB0696700FCEDF7 /* ColorControlViewController.swift in Sources */,
 				AE67DE6B1F752881007A3B76 /* AppDelegate.swift in Sources */,
+				AEB677821FC2D84900C82500 /* PreviewlistTableViewCell.swift in Sources */,
 				AEF005371FAB3B31004351FD /* CollectionViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
