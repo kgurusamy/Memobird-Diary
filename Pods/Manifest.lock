@@ -1,0 +1,12 @@
+PODS:
+  - TouchDraw (2.1.0)
+
+DEPENDENCIES:
+  - TouchDraw
+
+SPEC CHECKSUMS:
+  TouchDraw: 4f21cd41da3530815eaac1e9b013a4ff967f6aad
+
+PODFILE CHECKSUM: cc14c68a9f6477a43e7fb1af588bd9010a219dd0
+
+COCOAPODS: 1.3.1

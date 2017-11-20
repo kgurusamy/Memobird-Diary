@@ -1,0 +1,868 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 48;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0BFAE6FACC5C429359245CDC4DC0F1EC /* TouchDraw-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = A2899DF10A20CF07198933CA17617D84 /* TouchDraw-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0D97B5230AA48D81F45DEC61819CAEC8 /* Pods-MemobirdDiaryUITests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 70058B4E3B2B398DD250016DECA76638 /* Pods-MemobirdDiaryUITests-dummy.m */; };
+		0D9F3F1E8BCBBAFB7476BD9BBE3076BC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
+		10A5EB00C9F01DF35436B2018BA5AEE5 /* Stroke.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4DB544135E776F90D0E0E86D196C8BD /* Stroke.swift */; };
+		1AB4BF71B930284E2D4A42156BAE71BA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
+		1F8517F11C3A059D52BC6DD17C63CB19 /* Pods-MemobirdDiaryTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 03BDAB16B3DAA29416B7FDE04909AE4C /* Pods-MemobirdDiaryTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3CAEC904CEE5D08D4F1E9DE7119BEAE8 /* Pods-MemobirdDiary-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 85BFE6F84EC54456E0007B82557A7887 /* Pods-MemobirdDiary-dummy.m */; };
+		46C01704487C5960F02151BE261DD186 /* TouchDrawView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 420C4FA7AA7059C8A7D088DEF15DBD6B /* TouchDrawView.swift */; };
+		6DE7183505663804D0B14A235A6A66C3 /* Pods-MemobirdDiaryTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 824E061FBBE1153625E5CFBDDED9A224 /* Pods-MemobirdDiaryTests-dummy.m */; };
+		A4E598C3EFD2062C53D3626B52E1D436 /* Pods-MemobirdDiaryUITests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E5B7BA4E627226084C7D40278E2D5A3 /* Pods-MemobirdDiaryUITests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AD8B0239DA7026B6ECB34014B6E01829 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
+		D5608A291FB96ECB5CD63B73527FBC11 /* StrokeSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67816C0C7717A7C0F8732B1F630C2DA4 /* StrokeSettings.swift */; };
+		D7E58B03CF651D9A800FD44EC5300EDC /* Pods-MemobirdDiary-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 63822E04C9B108AE64D250AB4D3F8F11 /* Pods-MemobirdDiary-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D965BAA41FF46E351BB5E90E89D2AF63 /* TouchDraw-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E2824B9DAA3C26F308DDBB74C327A60 /* TouchDraw-dummy.m */; };
+		FCC3E25DCB5BD8E3F4BC0D3A5867BBA4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		9DC191CA4DE458A081AC76823B655526 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 463E004DDC26DE974283B45E039EF163;
+			remoteInfo = TouchDraw;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		00E3693722CC6B9327F6DFC4B9980D00 /* Pods-MemobirdDiaryUITests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-MemobirdDiaryUITests-resources.sh"; sourceTree = "<group>"; };
+		03BDAB16B3DAA29416B7FDE04909AE4C /* Pods-MemobirdDiaryTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-MemobirdDiaryTests-umbrella.h"; sourceTree = "<group>"; };
+		05217174A032EE2C869A0B5009689595 /* Pods-MemobirdDiaryTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-MemobirdDiaryTests.debug.xcconfig"; sourceTree = "<group>"; };
+		0964B5487385A558E6201E6A54989F45 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		18C096F3123C57063684240ED993732B /* Pods-MemobirdDiaryTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-MemobirdDiaryTests.modulemap"; sourceTree = "<group>"; };
+		199DD025284019B3D53E0A3B566ECFC3 /* Pods-MemobirdDiaryUITests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-MemobirdDiaryUITests-acknowledgements.markdown"; sourceTree = "<group>"; };
+		1CA8F678EB84BEF1643CA0B814E13C44 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		28AEB3485310657DAE8CB67A0222B000 /* Pods-MemobirdDiaryTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-MemobirdDiaryTests-acknowledgements.plist"; sourceTree = "<group>"; };
+		2B1BC361D031936F68A3A1C3B6A5ED17 /* Pods-MemobirdDiaryUITests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-MemobirdDiaryUITests-frameworks.sh"; sourceTree = "<group>"; };
+		2E26122C24EEBF0977D7F0C9F749C51B /* Pods-MemobirdDiary.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-MemobirdDiary.release.xcconfig"; sourceTree = "<group>"; };
+		30E35131B11AA3973F69C58F052B12E9 /* Pods-MemobirdDiary-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-MemobirdDiary-acknowledgements.plist"; sourceTree = "<group>"; };
+		318DBF6153C42B2403F6CCE106DCEEF2 /* TouchDraw.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = TouchDraw.framework; path = TouchDraw.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		320EBB20547D24460623C6B2F29BA863 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3E5B7BA4E627226084C7D40278E2D5A3 /* Pods-MemobirdDiaryUITests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-MemobirdDiaryUITests-umbrella.h"; sourceTree = "<group>"; };
+		420C4FA7AA7059C8A7D088DEF15DBD6B /* TouchDrawView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TouchDrawView.swift; path = Sources/TouchDrawView.swift; sourceTree = "<group>"; };
+		495752634FE1BD70D09DDA40D2119692 /* Pods-MemobirdDiary-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-MemobirdDiary-acknowledgements.markdown"; sourceTree = "<group>"; };
+		54E122D4B50180DC3036685944FC6E9A /* Pods-MemobirdDiary.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-MemobirdDiary.modulemap"; sourceTree = "<group>"; };
+		585F0D1F47AE3C37E7E18B09BB234F00 /* TouchDraw.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = TouchDraw.modulemap; sourceTree = "<group>"; };
+		5DCC891577B5424264F42F7C99B18345 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		63822E04C9B108AE64D250AB4D3F8F11 /* Pods-MemobirdDiary-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-MemobirdDiary-umbrella.h"; sourceTree = "<group>"; };
+		6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		67816C0C7717A7C0F8732B1F630C2DA4 /* StrokeSettings.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = StrokeSettings.swift; path = Sources/StrokeSettings.swift; sourceTree = "<group>"; };
+		70058B4E3B2B398DD250016DECA76638 /* Pods-MemobirdDiaryUITests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-MemobirdDiaryUITests-dummy.m"; sourceTree = "<group>"; };
+		790C256E3F212982BD8B244C1C27164E /* Pods-MemobirdDiaryUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-MemobirdDiaryUITests.release.xcconfig"; sourceTree = "<group>"; };
+		7E2824B9DAA3C26F308DDBB74C327A60 /* TouchDraw-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "TouchDraw-dummy.m"; sourceTree = "<group>"; };
+		824E061FBBE1153625E5CFBDDED9A224 /* Pods-MemobirdDiaryTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-MemobirdDiaryTests-dummy.m"; sourceTree = "<group>"; };
+		83CF94B74FBBAF9001538F5892BCFA86 /* Pods_MemobirdDiaryTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_MemobirdDiaryTests.framework; path = "Pods-MemobirdDiaryTests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		84BF2B626467BEFF7845BE3E699BBE06 /* TouchDraw.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = TouchDraw.xcconfig; sourceTree = "<group>"; };
+		85BFE6F84EC54456E0007B82557A7887 /* Pods-MemobirdDiary-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-MemobirdDiary-dummy.m"; sourceTree = "<group>"; };
+		89D4446C8794BCCC72355C738A1BDDB3 /* Pods-MemobirdDiaryUITests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-MemobirdDiaryUITests-acknowledgements.plist"; sourceTree = "<group>"; };
+		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		A1B5936AB267823BC924B120E8337A06 /* Pods-MemobirdDiary-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-MemobirdDiary-resources.sh"; sourceTree = "<group>"; };
+		A2899DF10A20CF07198933CA17617D84 /* TouchDraw-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "TouchDraw-umbrella.h"; sourceTree = "<group>"; };
+		AC786E5CC03AC468D6DA31B40485DB2B /* Pods-MemobirdDiaryTests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-MemobirdDiaryTests-frameworks.sh"; sourceTree = "<group>"; };
+		B04C309847B77D8EA3031729535FEE32 /* Pods-MemobirdDiaryUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-MemobirdDiaryUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		B077DE74E7C09E1309C8D666F63D0643 /* Pods-MemobirdDiaryUITests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-MemobirdDiaryUITests.modulemap"; sourceTree = "<group>"; };
+		B511A599EDB88BD42201164225F504D4 /* Pods-MemobirdDiary-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-MemobirdDiary-frameworks.sh"; sourceTree = "<group>"; };
+		C1D288C547B21D81FD43E8F5164E5593 /* TouchDraw-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "TouchDraw-prefix.pch"; sourceTree = "<group>"; };
+		C4DB544135E776F90D0E0E86D196C8BD /* Stroke.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Stroke.swift; path = Sources/Stroke.swift; sourceTree = "<group>"; };
+		D1BA9B65E4F1B14D90348BED5EE3B723 /* Pods_MemobirdDiaryUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_MemobirdDiaryUITests.framework; path = "Pods-MemobirdDiaryUITests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		DA649AD4E6202447D8C60DF89278F3AC /* Pods-MemobirdDiaryTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-MemobirdDiaryTests.release.xcconfig"; sourceTree = "<group>"; };
+		E91EF758D2C4E9964130EC4EA8BCCF58 /* Pods_MemobirdDiary.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_MemobirdDiary.framework; path = "Pods-MemobirdDiary.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		EA1F5F4D8021A6D39F3B750DC23B15D0 /* Pods-MemobirdDiaryTests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-MemobirdDiaryTests-resources.sh"; sourceTree = "<group>"; };
+		F3233A6C639777D3E6A66AD5BDCF3D89 /* Pods-MemobirdDiary.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-MemobirdDiary.debug.xcconfig"; sourceTree = "<group>"; };
+		F8E667F88DEEF472F433A9CA51DE21EC /* Pods-MemobirdDiaryTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-MemobirdDiaryTests-acknowledgements.markdown"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		2058FD7C4A5CC4B657298F422BF3E365 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0D9F3F1E8BCBBAFB7476BD9BBE3076BC /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2DBC2803FED9F70AFFF2E75ED641DF0C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AD8B0239DA7026B6ECB34014B6E01829 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E87D0D4755099DF192182D5418383BE4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FCC3E25DCB5BD8E3F4BC0D3A5867BBA4 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E96A81229EDCE6BBDC964A5E4686938C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1AB4BF71B930284E2D4A42156BAE71BA /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3536B86EE53F89C18BE93995756AB7F5 /* TouchDraw */ = {
+			isa = PBXGroup;
+			children = (
+				C4DB544135E776F90D0E0E86D196C8BD /* Stroke.swift */,
+				67816C0C7717A7C0F8732B1F630C2DA4 /* StrokeSettings.swift */,
+				420C4FA7AA7059C8A7D088DEF15DBD6B /* TouchDrawView.swift */,
+				610C188F48D1A2AE94933432EFB40AF0 /* Support Files */,
+			);
+			name = TouchDraw;
+			path = TouchDraw;
+			sourceTree = "<group>";
+		};
+		610C188F48D1A2AE94933432EFB40AF0 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				5DCC891577B5424264F42F7C99B18345 /* Info.plist */,
+				585F0D1F47AE3C37E7E18B09BB234F00 /* TouchDraw.modulemap */,
+				84BF2B626467BEFF7845BE3E699BBE06 /* TouchDraw.xcconfig */,
+				7E2824B9DAA3C26F308DDBB74C327A60 /* TouchDraw-dummy.m */,
+				C1D288C547B21D81FD43E8F5164E5593 /* TouchDraw-prefix.pch */,
+				A2899DF10A20CF07198933CA17617D84 /* TouchDraw-umbrella.h */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/TouchDraw";
+			sourceTree = "<group>";
+		};
+		6E4937CBFCBCD51539714424EF862FB5 /* Pods-MemobirdDiary */ = {
+			isa = PBXGroup;
+			children = (
+				1CA8F678EB84BEF1643CA0B814E13C44 /* Info.plist */,
+				54E122D4B50180DC3036685944FC6E9A /* Pods-MemobirdDiary.modulemap */,
+				495752634FE1BD70D09DDA40D2119692 /* Pods-MemobirdDiary-acknowledgements.markdown */,
+				30E35131B11AA3973F69C58F052B12E9 /* Pods-MemobirdDiary-acknowledgements.plist */,
+				85BFE6F84EC54456E0007B82557A7887 /* Pods-MemobirdDiary-dummy.m */,
+				B511A599EDB88BD42201164225F504D4 /* Pods-MemobirdDiary-frameworks.sh */,
+				A1B5936AB267823BC924B120E8337A06 /* Pods-MemobirdDiary-resources.sh */,
+				63822E04C9B108AE64D250AB4D3F8F11 /* Pods-MemobirdDiary-umbrella.h */,
+				F3233A6C639777D3E6A66AD5BDCF3D89 /* Pods-MemobirdDiary.debug.xcconfig */,
+				2E26122C24EEBF0977D7F0C9F749C51B /* Pods-MemobirdDiary.release.xcconfig */,
+			);
+			name = "Pods-MemobirdDiary";
+			path = "Target Support Files/Pods-MemobirdDiary";
+			sourceTree = "<group>";
+		};
+		7DB346D0F39D3F0E887471402A8071AB = {
+			isa = PBXGroup;
+			children = (
+				93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */,
+				BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */,
+				EB4080A1653486FB2F710F89B38F8EBC /* Pods */,
+				A72F20A77BE703E0F4076BD2E0CA827D /* Products */,
+				8736D156822EFF342C855F9D96093557 /* Targets Support Files */,
+			);
+			sourceTree = "<group>";
+		};
+		8736D156822EFF342C855F9D96093557 /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				6E4937CBFCBCD51539714424EF862FB5 /* Pods-MemobirdDiary */,
+				A0168AE36664650C660034E5DE87FD22 /* Pods-MemobirdDiaryTests */,
+				FEAC5BD4AE8A92C255DC4591BC744934 /* Pods-MemobirdDiaryUITests */,
+			);
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+		A0168AE36664650C660034E5DE87FD22 /* Pods-MemobirdDiaryTests */ = {
+			isa = PBXGroup;
+			children = (
+				0964B5487385A558E6201E6A54989F45 /* Info.plist */,
+				18C096F3123C57063684240ED993732B /* Pods-MemobirdDiaryTests.modulemap */,
+				F8E667F88DEEF472F433A9CA51DE21EC /* Pods-MemobirdDiaryTests-acknowledgements.markdown */,
+				28AEB3485310657DAE8CB67A0222B000 /* Pods-MemobirdDiaryTests-acknowledgements.plist */,
+				824E061FBBE1153625E5CFBDDED9A224 /* Pods-MemobirdDiaryTests-dummy.m */,
+				AC786E5CC03AC468D6DA31B40485DB2B /* Pods-MemobirdDiaryTests-frameworks.sh */,
+				EA1F5F4D8021A6D39F3B750DC23B15D0 /* Pods-MemobirdDiaryTests-resources.sh */,
+				03BDAB16B3DAA29416B7FDE04909AE4C /* Pods-MemobirdDiaryTests-umbrella.h */,
+				05217174A032EE2C869A0B5009689595 /* Pods-MemobirdDiaryTests.debug.xcconfig */,
+				DA649AD4E6202447D8C60DF89278F3AC /* Pods-MemobirdDiaryTests.release.xcconfig */,
+			);
+			name = "Pods-MemobirdDiaryTests";
+			path = "Target Support Files/Pods-MemobirdDiaryTests";
+			sourceTree = "<group>";
+		};
+		A72F20A77BE703E0F4076BD2E0CA827D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E91EF758D2C4E9964130EC4EA8BCCF58 /* Pods_MemobirdDiary.framework */,
+				83CF94B74FBBAF9001538F5892BCFA86 /* Pods_MemobirdDiaryTests.framework */,
+				D1BA9B65E4F1B14D90348BED5EE3B723 /* Pods_MemobirdDiaryUITests.framework */,
+				318DBF6153C42B2403F6CCE106DCEEF2 /* TouchDraw.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D35AF013A5F0BAD4F32504907A52519E /* iOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D35AF013A5F0BAD4F32504907A52519E /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		EB4080A1653486FB2F710F89B38F8EBC /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				3536B86EE53F89C18BE93995756AB7F5 /* TouchDraw */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		FEAC5BD4AE8A92C255DC4591BC744934 /* Pods-MemobirdDiaryUITests */ = {
+			isa = PBXGroup;
+			children = (
+				320EBB20547D24460623C6B2F29BA863 /* Info.plist */,
+				B077DE74E7C09E1309C8D666F63D0643 /* Pods-MemobirdDiaryUITests.modulemap */,
+				199DD025284019B3D53E0A3B566ECFC3 /* Pods-MemobirdDiaryUITests-acknowledgements.markdown */,
+				89D4446C8794BCCC72355C738A1BDDB3 /* Pods-MemobirdDiaryUITests-acknowledgements.plist */,
+				70058B4E3B2B398DD250016DECA76638 /* Pods-MemobirdDiaryUITests-dummy.m */,
+				2B1BC361D031936F68A3A1C3B6A5ED17 /* Pods-MemobirdDiaryUITests-frameworks.sh */,
+				00E3693722CC6B9327F6DFC4B9980D00 /* Pods-MemobirdDiaryUITests-resources.sh */,
+				3E5B7BA4E627226084C7D40278E2D5A3 /* Pods-MemobirdDiaryUITests-umbrella.h */,
+				B04C309847B77D8EA3031729535FEE32 /* Pods-MemobirdDiaryUITests.debug.xcconfig */,
+				790C256E3F212982BD8B244C1C27164E /* Pods-MemobirdDiaryUITests.release.xcconfig */,
+			);
+			name = "Pods-MemobirdDiaryUITests";
+			path = "Target Support Files/Pods-MemobirdDiaryUITests";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		18A0AF8A551F5C12D83216140038FFD4 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0BFAE6FACC5C429359245CDC4DC0F1EC /* TouchDraw-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		24A76F107386FCF53E4EDC1CC8B19A9F /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A4E598C3EFD2062C53D3626B52E1D436 /* Pods-MemobirdDiaryUITests-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AAB01DC112FE7E4287604273D494294E /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1F8517F11C3A059D52BC6DD17C63CB19 /* Pods-MemobirdDiaryTests-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C57A435278E7F7830C501F9287D1ACFA /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D7E58B03CF651D9A800FD44EC5300EDC /* Pods-MemobirdDiary-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		463E004DDC26DE974283B45E039EF163 /* TouchDraw */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4CA3A9966955658BE2E87919B90130A6 /* Build configuration list for PBXNativeTarget "TouchDraw" */;
+			buildPhases = (
+				991B87BF578607EF7094AD389D72FAFE /* Sources */,
+				2058FD7C4A5CC4B657298F422BF3E365 /* Frameworks */,
+				18A0AF8A551F5C12D83216140038FFD4 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TouchDraw;
+			productName = TouchDraw;
+			productReference = 318DBF6153C42B2403F6CCE106DCEEF2 /* TouchDraw.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		4D5C277F4999F105C34202CFFEF1C1C0 /* Pods-MemobirdDiaryUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7A33C525F0FB9E6CDAFA661E3FA77E26 /* Build configuration list for PBXNativeTarget "Pods-MemobirdDiaryUITests" */;
+			buildPhases = (
+				35D8B3570C2C11915CF2351FD98B4372 /* Sources */,
+				E96A81229EDCE6BBDC964A5E4686938C /* Frameworks */,
+				24A76F107386FCF53E4EDC1CC8B19A9F /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Pods-MemobirdDiaryUITests";
+			productName = "Pods-MemobirdDiaryUITests";
+			productReference = D1BA9B65E4F1B14D90348BED5EE3B723 /* Pods_MemobirdDiaryUITests.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		8E93DF2CB5D95C60A897515811C79F24 /* Pods-MemobirdDiaryTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 98F3A118A6C6026EDFE1303BD94E6B99 /* Build configuration list for PBXNativeTarget "Pods-MemobirdDiaryTests" */;
+			buildPhases = (
+				AE8AC7BF1E34D3DEB0EA170D5E694345 /* Sources */,
+				2DBC2803FED9F70AFFF2E75ED641DF0C /* Frameworks */,
+				AAB01DC112FE7E4287604273D494294E /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Pods-MemobirdDiaryTests";
+			productName = "Pods-MemobirdDiaryTests";
+			productReference = 83CF94B74FBBAF9001538F5892BCFA86 /* Pods_MemobirdDiaryTests.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		C535EEE6A1B0C8E434BCB9C4719268D6 /* Pods-MemobirdDiary */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6F323638124B1CE2B59F61443BACCA98 /* Build configuration list for PBXNativeTarget "Pods-MemobirdDiary" */;
+			buildPhases = (
+				155A26D05F85849AA102CA5F6D004032 /* Sources */,
+				E87D0D4755099DF192182D5418383BE4 /* Frameworks */,
+				C57A435278E7F7830C501F9287D1ACFA /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				425A4270A7BFB9A470FD3B9974246DC5 /* PBXTargetDependency */,
+			);
+			name = "Pods-MemobirdDiary";
+			productName = "Pods-MemobirdDiary";
+			productReference = E91EF758D2C4E9964130EC4EA8BCCF58 /* Pods_MemobirdDiary.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D41D8CD98F00B204E9800998ECF8427E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0830;
+				LastUpgradeCheck = 0700;
+			};
+			buildConfigurationList = 2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 7DB346D0F39D3F0E887471402A8071AB;
+			productRefGroup = A72F20A77BE703E0F4076BD2E0CA827D /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C535EEE6A1B0C8E434BCB9C4719268D6 /* Pods-MemobirdDiary */,
+				8E93DF2CB5D95C60A897515811C79F24 /* Pods-MemobirdDiaryTests */,
+				4D5C277F4999F105C34202CFFEF1C1C0 /* Pods-MemobirdDiaryUITests */,
+				463E004DDC26DE974283B45E039EF163 /* TouchDraw */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		155A26D05F85849AA102CA5F6D004032 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3CAEC904CEE5D08D4F1E9DE7119BEAE8 /* Pods-MemobirdDiary-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		35D8B3570C2C11915CF2351FD98B4372 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0D97B5230AA48D81F45DEC61819CAEC8 /* Pods-MemobirdDiaryUITests-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		991B87BF578607EF7094AD389D72FAFE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				10A5EB00C9F01DF35436B2018BA5AEE5 /* Stroke.swift in Sources */,
+				D5608A291FB96ECB5CD63B73527FBC11 /* StrokeSettings.swift in Sources */,
+				D965BAA41FF46E351BB5E90E89D2AF63 /* TouchDraw-dummy.m in Sources */,
+				46C01704487C5960F02151BE261DD186 /* TouchDrawView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AE8AC7BF1E34D3DEB0EA170D5E694345 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6DE7183505663804D0B14A235A6A66C3 /* Pods-MemobirdDiaryTests-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		425A4270A7BFB9A470FD3B9974246DC5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = TouchDraw;
+			target = 463E004DDC26DE974283B45E039EF163 /* TouchDraw */;
+			targetProxy = 9DC191CA4DE458A081AC76823B655526 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		1905F05A530A775D56C6774080FFD1BB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 05217174A032EE2C869A0B5009689595 /* Pods-MemobirdDiaryTests.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-MemobirdDiaryTests/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-MemobirdDiaryTests/Pods-MemobirdDiaryTests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_MemobirdDiaryTests;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		2B573DD2CED0811DDC410948B360DFE9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 84BF2B626467BEFF7845BE3E699BBE06 /* TouchDraw.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/TouchDraw/TouchDraw-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/TouchDraw/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/TouchDraw/TouchDraw.modulemap";
+				PRODUCT_NAME = TouchDraw;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		3E0223C605A1B9FBADE58604B4460D4D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B04C309847B77D8EA3031729535FEE32 /* Pods-MemobirdDiaryUITests.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-MemobirdDiaryUITests/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-MemobirdDiaryUITests/Pods-MemobirdDiaryUITests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_MemobirdDiaryUITests;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		6F9224530522DD3C735EC96CF142642E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGNING_REQUIRED = NO;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_RELEASE=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = NO_SIGNING/;
+				STRIP_INSTALLED_PRODUCT = NO;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Release;
+		};
+		7AABF2D0462485F332795D35E4F8296E /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 790C256E3F212982BD8B244C1C27164E /* Pods-MemobirdDiaryUITests.release.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-MemobirdDiaryUITests/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-MemobirdDiaryUITests/Pods-MemobirdDiaryUITests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_MemobirdDiaryUITests;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		9BFD48F904DB87F8C19F0A86FD48138E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F3233A6C639777D3E6A66AD5BDCF3D89 /* Pods-MemobirdDiary.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-MemobirdDiary/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-MemobirdDiary/Pods-MemobirdDiary.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_MemobirdDiary;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		ABC098E970FAD6B2285509BC8C7A8DA8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 84BF2B626467BEFF7845BE3E699BBE06 /* TouchDraw.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/TouchDraw/TouchDraw-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/TouchDraw/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/TouchDraw/TouchDraw.modulemap";
+				PRODUCT_NAME = TouchDraw;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		B57951D085A1B98A97F8A1062A5E5C5B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGNING_REQUIRED = NO;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_DEBUG=1",
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = NO_SIGNING/;
+				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Debug;
+		};
+		F13B1F4558A3CD65CD477103EF54A929 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = DA649AD4E6202447D8C60DF89278F3AC /* Pods-MemobirdDiaryTests.release.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-MemobirdDiaryTests/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-MemobirdDiaryTests/Pods-MemobirdDiaryTests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_MemobirdDiaryTests;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		FC64EB1329F3C8EC148BF98088497E7E /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2E26122C24EEBF0977D7F0C9F749C51B /* Pods-MemobirdDiary.release.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-MemobirdDiary/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-MemobirdDiary/Pods-MemobirdDiary.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_MemobirdDiary;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B57951D085A1B98A97F8A1062A5E5C5B /* Debug */,
+				6F9224530522DD3C735EC96CF142642E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4CA3A9966955658BE2E87919B90130A6 /* Build configuration list for PBXNativeTarget "TouchDraw" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ABC098E970FAD6B2285509BC8C7A8DA8 /* Debug */,
+				2B573DD2CED0811DDC410948B360DFE9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6F323638124B1CE2B59F61443BACCA98 /* Build configuration list for PBXNativeTarget "Pods-MemobirdDiary" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9BFD48F904DB87F8C19F0A86FD48138E /* Debug */,
+				FC64EB1329F3C8EC148BF98088497E7E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7A33C525F0FB9E6CDAFA661E3FA77E26 /* Build configuration list for PBXNativeTarget "Pods-MemobirdDiaryUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3E0223C605A1B9FBADE58604B4460D4D /* Debug */,
+				7AABF2D0462485F332795D35E4F8296E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		98F3A118A6C6026EDFE1303BD94E6B99 /* Build configuration list for PBXNativeTarget "Pods-MemobirdDiaryTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1905F05A530A775D56C6774080FFD1BB /* Debug */,
+				F13B1F4558A3CD65CD477103EF54A929 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+}

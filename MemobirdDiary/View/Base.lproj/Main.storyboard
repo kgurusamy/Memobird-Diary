@@ -21,7 +21,7 @@
                             <tabBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rg0-xQ-wi1">
                                 <rect key="frame" x="0.0" y="618" width="375" height="49"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                <color key="backgroundColor" red="1" green="0.35267600900000001" blue="0.2319609537" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="1" green="0.75290595279999994" blue="0.51700460410000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <items>
                                     <tabBarItem systemItem="favorites" id="RcI-rO-gRJ"/>
                                     <tabBarItem tag="1" title="Diary" image="notes.png" id="G7x-t3-waR"/>
@@ -68,7 +68,7 @@
                             </scrollView>
                             <tabBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vqE-8q-DtY">
                                 <rect key="frame" x="0.0" y="618" width="375" height="49"/>
-                                <color key="backgroundColor" red="1" green="0.35267600900000001" blue="0.2319609537" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="1" green="0.75290595279999994" blue="0.51700460410000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="49" id="6dI-tb-btf"/>
                                 </constraints>
@@ -401,6 +401,11 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </glkView>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GJX-OB-3ii" customClass="TouchDrawView" customModule="TouchDraw">
+                                <rect key="frame" x="0.0" y="26" width="375" height="592"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ur0-eC-sh2">
                                 <rect key="frame" x="0.0" y="440" width="375" height="174"/>
                                 <subviews>
@@ -505,7 +510,7 @@
                                 <items>
                                     <tabBarItem title="Filter" image="font.png" id="f7N-mq-Yi7"/>
                                     <tabBarItem tag="1" title="Clipping" image="picture-icon.png" id="MdU-QY-oay"/>
-                                    <tabBarItem tag="2" title="Material" id="y52-Ru-1Cn"/>
+                                    <tabBarItem tag="2" title="Material" image="diaryiconsmal" largeContentSizeImage="diaryicon.png" id="y52-Ru-1Cn"/>
                                     <tabBarItem tag="3" title="Graffiti" image="icon_plus.png" id="owd-IH-wxs"/>
                                     <tabBarItem tag="4" title="Rotate" image="minus.png" id="zCn-AT-u7S"/>
                                 </items>
@@ -523,6 +528,161 @@
                                     <action selector="undobtn:" destination="YND-hH-jaq" eventType="touchUpInside" id="fPg-Je-fWE"/>
                                 </connections>
                             </button>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="V4K-lJ-C22">
+                                <rect key="frame" x="0.0" y="618" width="375" height="48"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b50-4X-uec">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="1"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AaE-rW-qE8">
+                                        <rect key="frame" x="0.0" y="1" width="72" height="48"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <connections>
+                                            <action selector="Graffitibtn:" destination="YND-hH-jaq" eventType="touchUpInside" id="faJ-RG-vfc"/>
+                                            <action selector="pencilbtn:" destination="YND-hH-jaq" eventType="touchUpInside" id="oRw-Zl-yUY"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9ex-WL-cFS">
+                                        <rect key="frame" x="80" y="1" width="72" height="48"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <connections>
+                                            <action selector="eraserbtn:" destination="YND-hH-jaq" eventType="touchUpInside" id="BmR-yo-0vU"/>
+                                        </connections>
+                                    </button>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Eraser.png" translatesAutoresizingMaskIntoConstraints="NO" id="byi-Q6-RWu">
+                                        <rect key="frame" x="95" y="5" width="42" height="28"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Eraser" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d9M-fX-lGb">
+                                        <rect key="frame" x="90" y="33" width="52" height="16"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kUX-xF-fNh">
+                                        <rect key="frame" x="160" y="3" width="56" height="45"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="Button" image="diaryicon.png"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="81d-3p-JkN">
+                                        <rect key="frame" x="304" y="1" width="72" height="48"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <connections>
+                                            <action selector="cancelbtn:" destination="YND-hH-jaq" eventType="touchUpInside" id="FsI-El-TOH"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M6Q-um-nn5">
+                                        <rect key="frame" x="224" y="1" width="72" height="48"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <connections>
+                                            <action selector="storkebtn:" destination="YND-hH-jaq" eventType="touchUpInside" id="VB2-eF-ptV"/>
+                                        </connections>
+                                    </button>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="dotcircle.png" translatesAutoresizingMaskIntoConstraints="NO" id="jhR-gd-QSC">
+                                        <rect key="frame" x="244" y="6" width="32" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Stroke" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e3e-KF-OTQ">
+                                        <rect key="frame" x="234" y="33" width="52" height="16"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="pencil.png" translatesAutoresizingMaskIntoConstraints="NO" id="QP5-S0-dX7">
+                                        <rect key="frame" x="18" y="8" width="32" height="22"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Graffiti" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3TX-h3-6MG">
+                                        <rect key="frame" x="10" y="33" width="52" height="16"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Cancel" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3v2-oL-8Be">
+                                        <rect key="frame" x="314" y="33" width="52" height="16"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Cancelundo.png" translatesAutoresizingMaskIntoConstraints="NO" id="Lid-B8-Qob">
+                                        <rect key="frame" x="324" y="6" width="32" height="26"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GdR-qo-D9K">
+                                <rect key="frame" x="226" y="384" width="64" height="232"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J9H-3W-A96">
+                                        <rect key="frame" x="0.0" y="134" width="64" height="60"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="100"/>
+                                        <state key="normal" title=".">
+                                            <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="stroke4btn:" destination="YND-hH-jaq" eventType="touchUpInside" id="4ft-Xp-XSc"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u7k-bp-emS">
+                                        <rect key="frame" x="0.0" y="97" width="64" height="42"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="80"/>
+                                        <state key="normal" title=".">
+                                            <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="stroke3btn:" destination="YND-hH-jaq" eventType="touchUpInside" id="JmF-2X-11X"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WTo-9f-qdt">
+                                        <rect key="frame" x="0.0" y="42" width="64" height="48"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="50"/>
+                                        <state key="normal" title=".">
+                                            <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="stroke2btn:" destination="YND-hH-jaq" eventType="touchUpInside" id="zjv-Gl-aHz"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="top" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QUa-n5-NsQ">
+                                        <rect key="frame" x="0.0" y="1" width="64" height="42"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="30"/>
+                                        <state key="normal" title=".">
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="stroke1btn:" destination="YND-hH-jaq" eventType="touchUpInside" id="2cK-CG-Yk0"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tmC-v2-rI3">
+                                        <rect key="frame" x="0.0" y="174" width="64" height="74"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="120"/>
+                                        <state key="normal" title=".">
+                                            <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="stroke5btn:" destination="YND-hH-jaq" eventType="touchUpInside" id="ule-1D-uhy"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -541,9 +701,17 @@
                     <connections>
                         <outlet property="brightnessSlider" destination="7Wk-dF-esF" id="aGR-21-YLB"/>
                         <outlet property="contrastSlider" destination="5RW-T1-e1P" id="ttp-aA-fHc"/>
+                        <outlet property="drawVieww" destination="GJX-OB-3ii" id="rsw-km-E9W"/>
+                        <outlet property="drawbgview" destination="V4K-lJ-C22" id="B2d-cl-BjL"/>
                         <outlet property="filterBGView" destination="Ur0-eC-sh2" id="neq-UQ-gBW"/>
                         <outlet property="filteredImageView" destination="WTo-BN-xBj" id="d9u-jH-zDT"/>
                         <outlet property="photoFilterCollectionView" destination="16P-UQ-5py" id="QX9-6G-XZB"/>
+                        <outlet property="stroke1btn" destination="QUa-n5-NsQ" id="tSV-9D-JWU"/>
+                        <outlet property="stroke2btn" destination="WTo-9f-qdt" id="0IY-Z2-wkf"/>
+                        <outlet property="stroke3btn" destination="u7k-bp-emS" id="gq5-pP-qWo"/>
+                        <outlet property="stroke4btn" destination="J9H-3W-A96" id="fHw-Ch-Dv6"/>
+                        <outlet property="stroke5btn" destination="tmC-v2-rI3" id="LTV-UD-79r"/>
+                        <outlet property="strokesbgview" destination="GdR-qo-D9K" id="IIm-8g-9bz"/>
                         <outlet property="tabBarView" destination="bOh-0B-1VV" id="Kf1-6c-75F"/>
                         <outlet property="undobtnoutlet" destination="Yzr-3X-ivo" id="Yq7-3Y-uIY"/>
                     </connections>
@@ -554,10 +722,16 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Cancelundo.png" width="512" height="512"/>
+        <image name="Eraser.png" width="256" height="256"/>
+        <image name="diaryicon.png" width="300" height="300"/>
+        <image name="diaryiconsmal" width="32" height="32"/>
+        <image name="dotcircle.png" width="2000" height="2000"/>
         <image name="font.png" width="24" height="24"/>
         <image name="icon_plus.png" width="24" height="24"/>
         <image name="minus.png" width="24" height="24"/>
         <image name="notes.png" width="24" height="24"/>
+        <image name="pencil.png" width="900" height="876"/>
         <image name="picture-icon.png" width="24" height="24"/>
     </resources>
 </document>

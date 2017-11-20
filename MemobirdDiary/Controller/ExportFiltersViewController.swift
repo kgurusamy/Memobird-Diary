@@ -10,6 +10,7 @@ import UIKit
 // MARK: - UISlider @IBAction
 import QuartzCore
 import CoreData
+import TouchDraw
 
 
 extension ExportFiltersViewController {
@@ -29,8 +30,14 @@ extension ExportFiltersViewController {
     }
     
 }
-class ExportFiltersViewController:UIViewController , UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout,UITabBarDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate, CropViewControllerDelegate  {
+class ExportFiltersViewController:UIViewController , UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout,UITabBarDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate, CropViewControllerDelegate,TouchDrawViewDelegate  {
+    @IBOutlet weak var strokesbgview: UIView!
     
+    @IBOutlet weak var stroke1btn: UIButton!
+    @IBOutlet weak var stroke2btn: UIButton!
+    @IBOutlet weak var stroke3btn: UIButton!
+    @IBOutlet weak var stroke4btn: UIButton!
+    @IBOutlet weak var stroke5btn: UIButton!
     @IBOutlet weak var filteredImageView: FilteredImageView!
     @IBOutlet weak var photoFilterCollectionView: UICollectionView!
     ////TabBarview
@@ -45,7 +52,9 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
     var picimageView = UIImageView()
     var picimageView1 = UIImageView()
     
+    @IBOutlet weak var tabBarDrawView: UITabBar!
     
+    @IBOutlet weak var drawbgview: UIView!
     var textLabel = UILabel()
     // var scrollView: UIScrollView!
     var diaryEntries = [DiaryEntry]()
@@ -70,14 +79,27 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
         ("CITemperatureAndTint", "Temperature"),
         ("CITileFilter", "TileFilter"),
         ("CIToneCurve", "ToneCurve"),
-        ("CITriangleKaleidoscope", "TriangleKaleidoscope"),
         ("CIUnsharpMask", "UnsharpMask"),
         ]
     
+    ////////////NEW CODE FOR PAINT
+    private static let deltaWidth = CGFloat(2.0)
+    
+    @IBOutlet weak var drawVieww: TouchDrawView!
+    ///////////////
+
+
+    
+    //////////
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = "Processing"
+        
         filterBGView.isHidden = true
         tabBarView.delegate = self
+        drawbgview.isHidden = true
+        undobtnoutlet.isHidden = false
+
         undobtnoutlet.backgroundColor = .clear
         undobtnoutlet.layer.cornerRadius = 24
         undobtnoutlet.layer.borderWidth = 1
@@ -97,8 +119,29 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
         filteredImageView.backgroundColor = UIColor.clear
         filteredImageView.filter = filters[0]
         colorControl.input(filteredImageView.inputImage!)
+        drawVieww.setColor(nil)
+
+        strokesbgview.isHidden = true
     }
     
+    @IBAction func cancelbtn(_ sender: Any) {
+        
+        drawVieww.undo()
+
+
+    }
+    @IBAction func storkebtn(_ sender: Any) {
+        strokesbgview.isHidden = false
+
+
+    }
+    @IBAction func eraserbtn(_ sender: Any)
+    {
+        drawVieww.setColor(nil)
+
+    }
+    @IBAction func pencilbtn(_ sender: Any) {
+    }
     fileprivate func setUISLidersValues() {
         contrastSlider.value = colorControl.currentContrastValue
         contrastSlider.maximumValue = colorControl.maxContrastValue
@@ -206,10 +249,20 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
                 present(navController, animated: true, completion: nil)
             }
             if(item.tag == 2){
-                
+               
+
             }
             if(item.tag == 3){
-                
+                undobtnoutlet.isHidden = true
+                filterBGView.isHidden = true
+
+                tabBarView.isHidden = true
+                tabBarView.delegate = nil
+                drawbgview.isHidden = false
+                drawVieww.delegate = self
+                let color = UIColor.black
+                drawVieww.setColor(color)
+                drawVieww.setWidth(ExportFiltersViewController.deltaWidth)
             }
             if(item.tag == 4){
                 UIView.animate(withDuration: 1.0, animations: {
@@ -220,4 +273,36 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
        
         
     }
+    // MARK: - Actions
+    @IBAction func stroke1btn(_ sender: Any) {
+       drawVieww.setWidth(CGFloat(2.0))
+        strokesbgview.isHidden = true
+
+    }
+    @IBAction func stroke2btn(_ sender: Any) {
+        drawVieww.setWidth(CGFloat(6.0))
+        strokesbgview.isHidden = true
+
+    }
+    @IBAction func stroke3btn(_ sender: Any) {
+       drawVieww.setWidth(CGFloat(8.0))
+        strokesbgview.isHidden = true
+
+    }
+    @IBAction func stroke4btn(_ sender: Any) {
+        drawVieww.setWidth(CGFloat(12.0))
+        strokesbgview.isHidden = true
+
+    }
+    @IBAction func stroke5btn(_ sender: Any) {
+        drawVieww.setWidth(CGFloat(14.0))
+        strokesbgview.isHidden = true
+
+    }
+    @IBAction func Graffitibtn(_ sender: Any)
+    {
+        let color = UIColor.black
+        drawVieww.setColor(color)
+    }
 }
+
