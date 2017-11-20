@@ -123,7 +123,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
                 let coreDataDiary = DiaryEntry(context: CoreDataStack.managedObjectContext)
                 coreDataDiary.modified_time = Date()
                 coreDataDiary.diary_image = captureDiaryScreenAndSave()
-               
+                coreDataDiary.preview_image = ""
                 coreDataDiary.diary_data = dataModelArr as NSObject
               
                 print(self.scrollView.contentSize.height)
@@ -143,7 +143,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
                 let entityDesc = NSEntityDescription.entity(forEntityName: "DiaryEntry", in: CoreDataStack.managedObjectContext)
                 let coreDataDiary = DiaryEntry(entity: entityDesc!, insertInto: CoreDataStack.managedObjectContext)
                 coreDataDiary.diary_image = captureDiaryScreenAndSave()
-                
+                coreDataDiary.preview_image = ""
                 coreDataDiary.modified_time = Date()
                 coreDataDiary.diary_data = dataModelArr as NSObject
                 if(self.scrollView.contentSize.height > self.scrollView.frame.size.height+130)
