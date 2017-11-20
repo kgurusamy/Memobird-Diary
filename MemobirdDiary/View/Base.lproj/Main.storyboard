@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="nAL-aO-gXs">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="nAL-aO-gXs">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -700,10 +700,9 @@
                         <viewLayoutGuide key="safeArea" id="7QI-lD-CsU"/>
                     </view>
                     <navigationItem key="navigationItem" id="JBs-mz-UlE">
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="wp8-Ha-E0y">
+                        <barButtonItem key="rightBarButtonItem" title="OK" id="wp8-Ha-E0y">
                             <connections>
                                 <action selector="saveBtn:" destination="YND-hH-jaq" id="eo2-eS-oJ6"/>
-                                <segue destination="PKI-nK-6Vr" kind="show" id="E59-1X-vl4"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -715,6 +714,7 @@
                         <outlet property="filterBGView" destination="Ur0-eC-sh2" id="neq-UQ-gBW"/>
                         <outlet property="filteredImageView" destination="WTo-BN-xBj" id="d9u-jH-zDT"/>
                         <outlet property="photoFilterCollectionView" destination="16P-UQ-5py" id="QX9-6G-XZB"/>
+                        <outlet property="rightBarButtonItem" destination="wp8-Ha-E0y" id="Dd7-0u-vbA"/>
                         <outlet property="stroke1btn" destination="QUa-n5-NsQ" id="tSV-9D-JWU"/>
                         <outlet property="stroke2btn" destination="WTo-9f-qdt" id="0IY-Z2-wkf"/>
                         <outlet property="stroke3btn" destination="u7k-bp-emS" id="gq5-pP-qWo"/>
@@ -732,7 +732,7 @@
         <!--Preview List View Controller-->
         <scene sceneID="9Ge-a6-Gya">
             <objects>
-                <viewController id="PKI-nK-6Vr" customClass="PreviewListViewController" customModule="MemobirdDiary" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PreviewListViewController" id="PKI-nK-6Vr" customClass="PreviewListViewController" customModule="MemobirdDiary" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="cme-dx-KGf">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

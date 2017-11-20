@@ -12,6 +12,7 @@ import CoreData
 
 var diaryImagesDirectoryPath : String!
 var imagesDirectoryPath : String!
+var previewImagesDirectoryPath : String!
 
 // For checking content type
 enum contentType: Int {

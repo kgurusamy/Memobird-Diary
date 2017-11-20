@@ -7,10 +7,11 @@
         <attribute name="modified_time" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
     </entity>
     <entity name="PreviewList" representedClassName="PreviewList" syncable="YES" codeGenerationType="class">
+        <attribute name="modified_time" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="preview_image" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
         <element name="DiaryEntry" positionX="-63" positionY="-18" width="128" height="105"/>
-        <element name="PreviewList" positionX="-63" positionY="9" width="128" height="60"/>
+        <element name="PreviewList" positionX="-63" positionY="9" width="128" height="75"/>
     </elements>
 </model>

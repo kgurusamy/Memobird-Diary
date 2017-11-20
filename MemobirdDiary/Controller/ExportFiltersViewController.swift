@@ -47,6 +47,8 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
     @IBOutlet weak var filterBGView: UIView!
     @IBOutlet weak var brightnessSlider: UISlider!
     @IBOutlet weak var contrastSlider: UISlider!
+    @IBOutlet weak var rightBarButtonItem : UIBarButtonItem!
+    
     var getnewImage: UIImage!
 
     var picimageView = UIImageView()
@@ -94,6 +96,7 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Processing"
+        self.rightBarButtonItem.title = "OK"
         
         filterBGView.isHidden = true
         tabBarView.delegate = self
@@ -122,6 +125,8 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
         drawVieww.setColor(nil)
 
         strokesbgview.isHidden = true
+        
+        createPreviewImagesFolder()
     }
     
     @IBAction func cancelbtn(_ sender: Any) {
@@ -291,7 +296,17 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
     }
     @IBAction func saveBtn(_ sender: Any)
     {
+        if(self.rightBarButtonItem.title == "OK"){
+            self.rightBarButtonItem.title = "Preview"
+            // Show filter options here
+        }else if(self.rightBarButtonItem.title == "Preview"){
+            saveDataToPreviewList()
+            let previewListVC = storyboard?.instantiateViewController(withIdentifier: "PreviewListViewController") as! PreviewListViewController
+            self.navigationController?.pushViewController(previewListVC, animated: true)
+        }
+        
     }
+    
     @IBAction func stroke4btn(_ sender: Any) {
         drawVieww.setWidth(CGFloat(12.0))
         strokesbgview.isHidden = true
@@ -306,6 +321,65 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
     {
         let color = UIColor.black
         drawVieww.setColor(color)
+    }
+    
+    // MARK: - CoreData methods
+    func saveDataToPreviewList()
+    {
+        if #available(iOS 10.0, *) {
+            let coreDataPreviewList = PreviewList(context: CoreDataStack.managedObjectContext)
+            coreDataPreviewList.modified_time = Date()
+            coreDataPreviewList.preview_image = captureImageForPreview()
+            
+        } else {
+            // Fallback on earlier versions
+            let entityDesc = NSEntityDescription.entity(forEntityName: "PreviewList", in: CoreDataStack.managedObjectContext)
+            let coreDataPreviewList = PreviewList(entity: entityDesc!, insertInto: CoreDataStack.managedObjectContext)
+            coreDataPreviewList.preview_image = captureImageForPreview()
+            coreDataPreviewList.modified_time = Date()
+        }
+        CoreDataStack.saveContext()
+    }
+    
+    func captureImageForPreview() -> String? {
+       
+        UIGraphicsBeginImageContext(self.view.bounds.size);
+        self.view.layer.render(in: UIGraphicsGetCurrentContext()!)
+        let image = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        
+        var imageName = Date().description
+        imageName = imageName.replacingOccurrences(of: " ", with: "") + ".png"
+        imageName = imageName.replacingOccurrences(of: ":", with: "")
+        let fullImagePath = previewImagesDirectoryPath + "/\(imageName)"
+        
+        let data = UIImagePNGRepresentation((image)!)
+        let success = FileManager.default.createFile(atPath: fullImagePath, contents: data, attributes: nil)
+        if(success){
+            print("Preview Image saved successfully in local")
+        }
+        return imageName
+    }
+    
+    func createPreviewImagesFolder()
+    {
+        let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
+        // Get the Document directory path
+        let documentDirectorPath:String = paths[0]
+        // Create a new path for the new images folder
+        previewImagesDirectoryPath = documentDirectorPath + "/PreviewImages"
+        var objcBool:ObjCBool = true
+        let isExist = FileManager.default.fileExists(atPath: previewImagesDirectoryPath, isDirectory: &objcBool)
+        print("Preview                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            Images path : \(previewImagesDirectoryPath)")
+        // If the folder with the given path doesn't exist already, create it
+        if isExist == false{
+            do{
+                try FileManager.default.createDirectory(atPath: previewImagesDirectoryPath, withIntermediateDirectories: true, attributes: nil)
+                
+            }catch{
+                print("Something went wrong while creating a folder")
+            }
+        }
     }
 }
 
