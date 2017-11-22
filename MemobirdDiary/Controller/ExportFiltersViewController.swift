@@ -12,7 +12,14 @@ import QuartzCore
 import CoreData
 import TouchDraw
 
-
+extension UIView {
+    var snapshot: UIImage? {
+        UIGraphicsBeginImageContextWithOptions(bounds.size, false, 0)
+        defer { UIGraphicsEndImageContext() }
+        drawHierarchy(in: bounds, afterScreenUpdates: true)
+        return UIGraphicsGetImageFromCurrentImageContext()
+    }
+}
 extension ExportFiltersViewController {
     
     @IBAction func brightnesssliderbtn(_ sender: UISlider) {
@@ -29,6 +36,38 @@ extension ExportFiltersViewController {
         }
     }
     
+}
+extension UIDevice {
+    var iPhoneX: Bool {
+        return UIScreen.main.nativeBounds.height == 2436
+    }
+    var iPhone: Bool {
+        return UIDevice.current.userInterfaceIdiom == .phone
+    }
+    enum ScreenType: String {
+        case iPhone4 = "iPhone 4 or iPhone 4S"
+        case iPhones_5_5s_5c_SE = "iPhone 5, iPhone 5s, iPhone 5c or iPhone SE"
+        case iPhones_6_6s_7_8 = "iPhone 6, iPhone 6S, iPhone 7 or iPhone 8"
+        case iPhones_6Plus_6sPlus_7Plus_8Plus = "iPhone 6 Plus, iPhone 6S Plus, iPhone 7 Plus or iPhone 8 Plus"
+        case iPhoneX = "iPhone X"
+        case unknown
+    }
+    var screenType: ScreenType {
+        switch UIScreen.main.nativeBounds.height {
+        case 960:
+            return .iPhone4
+        case 1136:
+            return .iPhones_5_5s_5c_SE
+        case 1334:
+            return .iPhones_6_6s_7_8
+        case 1920, 2208:
+            return .iPhones_6Plus_6sPlus_7Plus_8Plus
+        case 2436:
+            return .iPhoneX
+        default:
+            return .unknown
+        }
+    }
 }
 class ExportFiltersViewController:UIViewController , UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout,UITabBarDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate, CropViewControllerDelegate,TouchDrawViewDelegate  {
     @IBOutlet weak var strokesbgview: UIView!
@@ -78,10 +117,9 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
         ("CIPhotoEffectTransfer", "Transfer"),
         ("CIPhotoEffectInstant", "Instant"),
         ("CIStraightenFilter", "Straighten"),
-        ("CITemperatureAndTint", "Temperature"),
         ("CITileFilter", "TileFilter"),
         ("CIToneCurve", "ToneCurve"),
-        ("CIUnsharpMask", "UnsharpMask"),
+        
         ]
     
     ////////////NEW CODE FOR PAINT
@@ -237,11 +275,25 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
             if(filterBGView.isHidden == true)
             {
                 filterBGView.isHidden = false
-                self.undobtnoutlet.frame = CGRect(x: 290, y: 370, width: self.undobtnoutlet.frame.width, height: self.undobtnoutlet.frame.height)
+                print("screenType:", UIDevice.current.screenType.rawValue)
+                if(UIDevice.current.screenType.rawValue == "iPhone 6 Plus, iPhone 6S Plus, iPhone 7 Plus or iPhone 8 Plus")
+                {
+                    self.undobtnoutlet.frame = CGRect(x: 290, y: 400, width: self.undobtnoutlet.frame.width, height: self.undobtnoutlet.frame.height)
+                }else{
+                    self.undobtnoutlet.frame = CGRect(x: 290, y: 370, width: self.undobtnoutlet.frame.width, height: self.undobtnoutlet.frame.height)
+                }
+                
                 
             }else{
                 filterBGView.isHidden = true
-                self.undobtnoutlet.frame = CGRect(x: 290, y: 540, width: self.undobtnoutlet.frame.width, height: self.undobtnoutlet.frame.height)
+                print("screenType:", UIDevice.current.screenType.rawValue)
+
+                if(UIDevice.current.screenType.rawValue == "iPhone 6 Plus, iPhone 6S Plus, iPhone 7 Plus or iPhone 8 Plus")
+                {
+                    self.undobtnoutlet.frame = CGRect(x: 290, y: 580, width: self.undobtnoutlet.frame.width, height: self.undobtnoutlet.frame.height)
+                }else{
+                    self.undobtnoutlet.frame = CGRect(x: 290, y: 540, width: self.undobtnoutlet.frame.width, height: self.undobtnoutlet.frame.height)
+                }
                 
             }
         }
@@ -343,11 +395,11 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
     
     func captureImageForPreview() -> String? {
        
-        UIGraphicsBeginImageContext(self.view.bounds.size);
-        self.view.layer.render(in: UIGraphicsGetCurrentContext()!)
-        let image = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
-        
+//        UIGraphicsBeginImageContext(self.drawVieww.bounds.size);
+//        self.drawVieww.layer.render(in: UIGraphicsGetCurrentContext()!)
+//        let image = UIGraphicsGetImageFromCurrentImageContext();
+//        UIGraphicsEndImageContext();
+        let image = drawVieww?.snapshot
         var imageName = Date().description
         imageName = imageName.replacingOccurrences(of: " ", with: "") + ".png"
         imageName = imageName.replacingOccurrences(of: ":", with: "")

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="nAL-aO-gXs">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="nAL-aO-gXs">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -397,14 +397,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <glkView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WTo-BN-xBj" customClass="FilteredImageView" customModule="MemobirdDiary" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="72" width="375" height="360"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </glkView>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GJX-OB-3ii" customClass="TouchDrawView" customModule="TouchDraw">
                                 <rect key="frame" x="0.0" y="26" width="375" height="592"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <glkView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WTo-BN-xBj" customClass="FilteredImageView" customModule="MemobirdDiary" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="56" width="375" height="360"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </glkView>
+                                </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ur0-eC-sh2">
@@ -516,10 +518,13 @@
                                     <tabBarItem tag="4" title="Rotate" image="minus.png" id="zCn-AT-u7S"/>
                                 </items>
                             </tabBar>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yzr-3X-ivo">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yzr-3X-ivo">
                                 <rect key="frame" x="296" y="550" width="54" height="54"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.039798156756564174" green="0.9635661663879781" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="54" id="8X6-H7-c7U"/>
+                                    <constraint firstAttribute="height" constant="54" id="Uuj-xu-GpJ"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <state key="normal" title="UNDO">
                                     <color key="titleColor" red="1" green="0.55537227600000005" blue="0.28101780840000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -529,9 +534,8 @@
                                     <action selector="undobtn:" destination="YND-hH-jaq" eventType="touchUpInside" id="fPg-Je-fWE"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="V4K-lJ-C22">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V4K-lJ-C22">
                                 <rect key="frame" x="0.0" y="618" width="375" height="48"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b50-4X-uec">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="1"/>
@@ -621,6 +625,9 @@
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="48" id="TSR-rO-97Z"/>
+                                </constraints>
                             </view>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GdR-qo-D9K">
                                 <rect key="frame" x="226" y="384" width="64" height="232"/>
@@ -687,15 +694,20 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="V4K-lJ-C22" firstAttribute="trailing" secondItem="7QI-lD-CsU" secondAttribute="trailing" id="2cG-il-hwd"/>
                             <constraint firstItem="bOh-0B-1VV" firstAttribute="top" secondItem="Ur0-eC-sh2" secondAttribute="bottom" constant="4" id="43s-Tw-DXu"/>
+                            <constraint firstItem="7QI-lD-CsU" firstAttribute="trailing" secondItem="Yzr-3X-ivo" secondAttribute="trailing" constant="25" id="6wR-m0-q9i"/>
                             <constraint firstItem="Ur0-eC-sh2" firstAttribute="leading" secondItem="7QI-lD-CsU" secondAttribute="leading" id="8cn-cw-K56"/>
                             <constraint firstItem="bOh-0B-1VV" firstAttribute="bottom" secondItem="7QI-lD-CsU" secondAttribute="bottom" id="ACH-3A-T1Z"/>
+                            <constraint firstItem="7QI-lD-CsU" firstAttribute="bottom" secondItem="V4K-lJ-C22" secondAttribute="bottom" constant="1" id="F18-8V-Tl6"/>
                             <constraint firstItem="Ur0-eC-sh2" firstAttribute="trailing" secondItem="7QI-lD-CsU" secondAttribute="trailing" id="KQe-fw-uOE"/>
                             <constraint firstItem="bOh-0B-1VV" firstAttribute="trailing" secondItem="7QI-lD-CsU" secondAttribute="trailing" id="RQw-MN-K9N"/>
                             <constraint firstItem="bOh-0B-1VV" firstAttribute="leading" secondItem="7QI-lD-CsU" secondAttribute="leading" id="X2b-xu-S7b"/>
                             <constraint firstItem="Ur0-eC-sh2" firstAttribute="leading" secondItem="7QI-lD-CsU" secondAttribute="leading" id="ck4-Wy-YEU"/>
                             <constraint firstItem="Ur0-eC-sh2" firstAttribute="trailing" secondItem="7QI-lD-CsU" secondAttribute="trailing" id="eb7-63-aLU"/>
+                            <constraint firstItem="bOh-0B-1VV" firstAttribute="top" secondItem="Yzr-3X-ivo" secondAttribute="bottom" constant="14" id="h2X-Tj-x94"/>
                             <constraint firstItem="bOh-0B-1VV" firstAttribute="top" secondItem="Ur0-eC-sh2" secondAttribute="bottom" constant="4" id="lD5-iV-BwZ"/>
+                            <constraint firstItem="V4K-lJ-C22" firstAttribute="leading" secondItem="7QI-lD-CsU" secondAttribute="leading" id="viW-wh-ngO"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="7QI-lD-CsU"/>
                     </view>
@@ -742,20 +754,20 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="80" id="ctT-6o-ama" customClass="PreviewlistTableViewCell" customModule="MemobirdDiary" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="80"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="81" id="ctT-6o-ama" customClass="PreviewlistTableViewCell" customModule="MemobirdDiary" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="81"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ctT-6o-ama" id="9d5-Br-Bp4">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="79.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="80.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7Aq-5k-Kgm">
-                                                    <rect key="frame" x="79" y="4" width="216" height="71"/>
+                                                    <rect key="frame" x="154" y="4" width="66" height="81"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
                                             </subviews>
+                                            <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                         </tableViewCellContentView>
-                                        <color key="backgroundColor" red="1" green="0.51848295089999996" blue="0.36049725999999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
                                             <outlet property="previewimageview" destination="7Aq-5k-Kgm" id="AwX-Xz-JBZ"/>
                                         </connections>

@@ -229,11 +229,8 @@
 				AEAB03651F8759940096546E /* LDStickerView.swift */,
 				AE65F8581FA09AF00057A0AD /* ExportImageViewController.swift */,
 				AE8E67151FB18D4100452792 /* ExportFiltersViewController.swift */,
-				AEF005381FAB3E88004351FD /* MyCollectionViewCell.swift */,
-				AEF005361FAB3B31004351FD /* CollectionViewCell.swift */,
 				AE986D1F1FB0696600FCEDF7 /* ColorControlViewController.swift */,
 				AEB6777F1FC2B0C200C82500 /* PreviewListViewController.swift */,
-				AEB677811FC2D84900C82500 /* PreviewlistTableViewCell.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -242,6 +239,9 @@
 			isa = PBXGroup;
 			children = (
 				AE986D1E1FB0695700FCEDF7 /* MultipleColorCell.swift */,
+				AEB677811FC2D84900C82500 /* PreviewlistTableViewCell.swift */,
+				AEF005361FAB3B31004351FD /* CollectionViewCell.swift */,
+				AEF005381FAB3E88004351FD /* MyCollectionViewCell.swift */,
 				AE67DE761F752881007A3B76 /* LaunchScreen.storyboard */,
 				AE67DE6E1F752881007A3B76 /* Main.storyboard */,
 			);
