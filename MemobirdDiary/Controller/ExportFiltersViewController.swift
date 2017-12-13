@@ -127,9 +127,6 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
     
     @IBOutlet weak var drawVieww: TouchDrawView!
     ///////////////
-
-
-    
     //////////
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -161,41 +158,23 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
         filteredImageView.filter = filters[0]
         colorControl.input(filteredImageView.inputImage!)
         drawVieww.setColor(nil)
-
         strokesbgview.isHidden = true
-        
         createPreviewImagesFolder()
     }
     
     @IBAction func cancelbtn(_ sender: Any) {
-        
         drawVieww.undo()
-
-
     }
     @IBAction func storkebtn(_ sender: Any) {
         strokesbgview.isHidden = false
-
-
     }
     @IBAction func eraserbtn(_ sender: Any)
     {
         drawVieww.setColor(nil)
-
     }
     @IBAction func pencilbtn(_ sender: Any) {
     }
-    fileprivate func setUISLidersValues() {
-        contrastSlider.value = colorControl.currentContrastValue
-        contrastSlider.maximumValue = colorControl.maxContrastValue
-        contrastSlider.minimumValue = colorControl.minContrastValue
-        
-        brightnessSlider.value = colorControl.currentBrightnessValue
-        brightnessSlider.maximumValue = colorControl.maxBrightnessValue
-        brightnessSlider.minimumValue = colorControl.minBrightnessValue
-        
-        
-    }
+ 
     
     // MARK: - Collection View
     
@@ -282,19 +261,15 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
                 }else{
                     self.undobtnoutlet.frame = CGRect(x: 290, y: 370, width: self.undobtnoutlet.frame.width, height: self.undobtnoutlet.frame.height)
                 }
-                
-                
             }else{
                 filterBGView.isHidden = true
                 print("screenType:", UIDevice.current.screenType.rawValue)
-
                 if(UIDevice.current.screenType.rawValue == "iPhone 6 Plus, iPhone 6S Plus, iPhone 7 Plus or iPhone 8 Plus")
                 {
                     self.undobtnoutlet.frame = CGRect(x: 290, y: 580, width: self.undobtnoutlet.frame.width, height: self.undobtnoutlet.frame.height)
                 }else{
                     self.undobtnoutlet.frame = CGRect(x: 290, y: 540, width: self.undobtnoutlet.frame.width, height: self.undobtnoutlet.frame.height)
                 }
-                
             }
         }
             if(item.tag == 1){
@@ -394,7 +369,6 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
     }
     
     func captureImageForPreview() -> String? {
-       
 //        UIGraphicsBeginImageContext(self.drawVieww.bounds.size);
 //        self.drawVieww.layer.render(in: UIGraphicsGetCurrentContext()!)
 //        let image = UIGraphicsGetImageFromCurrentImageContext();

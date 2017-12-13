@@ -71,7 +71,6 @@ class HistoryViewController: UIViewController, UITableViewDelegate, UITableViewD
             myImageView.layer.cornerRadius = 20
             myImageView.layer.borderColor = UIColor.init(red:222/255.0, green:225/255.0, blue:227/255.0, alpha: 1.0).cgColor
         }
-       
         return cell
     }
     
@@ -111,7 +110,6 @@ class HistoryViewController: UIViewController, UITableViewDelegate, UITableViewD
         diaryVC?.selectedDiaryEntryIndex = forIndex
         diaryVC?.mode = "edit"
         self.navigationController?.popToViewController((diaryVC)!, animated: true)
-        
     }
 
     override func didReceiveMemoryWarning() {
@@ -125,8 +123,7 @@ class HistoryViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         // Sorting data according to modified time
         let sort = NSSortDescriptor(key: "modified_time", ascending: false)
-        fetchRequest.sortDescriptors = [sort]
-        
+        fetchRequest.sortDescriptors = [sort] 
         do {
             self.diaryEntries = try CoreDataStack.managedObjectContext.fetch(fetchRequest)
         } catch {

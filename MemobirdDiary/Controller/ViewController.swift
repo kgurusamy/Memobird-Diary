@@ -13,14 +13,10 @@ class ViewController: UIViewController,UITabBarDelegate {
 
     @IBOutlet weak var Tabbarview: UITabBar!
     
- 
-   
     override func viewDidLoad() {
         super.viewDidLoad()
         Tabbarview.delegate = self
         self.title = "MEMOBIRD"
-        
-
         // Do any additional setup after loading the view, typically from a nib.
     }
     func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
@@ -29,15 +25,11 @@ class ViewController: UIViewController,UITabBarDelegate {
             print("Test1")
             let DiaryVC = storyboard?.instantiateViewController(withIdentifier: "DiaryViewController") as! DiaryViewController
             self.navigationController?.pushViewController(DiaryVC, animated: true)
-
         }
-        
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-
 }
 

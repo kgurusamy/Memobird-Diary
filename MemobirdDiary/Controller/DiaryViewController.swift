@@ -9,6 +9,7 @@
 import UIKit
 import QuartzCore
 import CoreData
+import CoreImage
 
 var diaryImagesDirectoryPath : String!
 var imagesDirectoryPath : String!
@@ -19,11 +20,22 @@ enum contentType: Int {
     case image = 0
     case text = 1
 }
+// For checking text Formatting buttons tag
+enum textFormat: Int {
+    case bold = 101
+    case underline = 102
+    case italic = 103
+    case leftAlign = 104
+    case centerAlign = 105
+    case rightAlign = 106
+}
 
-class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIGestureRecognizerDelegate,UIScrollViewDelegate {
+class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIGestureRecognizerDelegate,UIScrollViewDelegate,UICollectionViewDelegate, UICollectionViewDataSource {
 
     @IBOutlet weak var tabBarview: UITabBar!
     
+    @IBOutlet weak var contrastslider: UISlider!
+    @IBOutlet weak var brightnessslider: UISlider!
     let imagePicker = UIImagePickerController()
     var picimageView = UIImageView()
     var textLabel = UILabel()
@@ -34,7 +46,146 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
     var mode : String = ""
     var stickerView = LDStickerView()
     var addremovecount : Int = 0
+    var backgroundTextView : UITextView!
+    @IBOutlet weak var filteredImageView: FilteredImageView!
+    @IBOutlet weak var materialG1BGview: UIView!
+    @IBOutlet weak var materialG2BGview: UIView!
+    @IBOutlet weak var materialG3BGview: UIView!
+    @IBOutlet weak var materialG6BGview: UIView!
+    @IBOutlet weak var materialG4BGview: UIView!
+    @IBOutlet weak var materialG5BGview: UIView!
+    // MARK:- Text Format controls
+    @IBOutlet weak var vwTextOptions : UIView!
+    @IBOutlet weak var vwTextFormat : UIView!
+    @IBOutlet weak var vwTextFont : UIView!
+    @IBOutlet weak var sliderFontSize : UISlider!
+    @IBOutlet weak var btnTextFont : UIButton!
+    @IBOutlet weak var btnTextFormat : UIButton!
+    var fontArray = UIFont.familyNames
+    let collectionViewRows = 2
+    let columnsInFirstPage = 5
+    var selectedCollectionItemIndex : Int = -1
+    var selectedFontName : String = UIFont.familyNames[0]
+    var sliderFontSizeValue : Float = 0.0
+    @IBOutlet weak var fontCollectionView:UICollectionView!
+    // calculate number of columns needed to display all items
+    var columns: Int { return fontArray.count<=columnsInFirstPage ? fontArray.count : fontArray.count > collectionViewRows*columnsInFirstPage ? (fontArray.count-1)/collectionViewRows + 1 : columnsInFirstPage }
+    
+    // MARK:- QRCode related controls
+    @IBOutlet weak var vwOverlay : UIView!
+    @IBOutlet weak var vwQRCode : UIView!
+    @IBOutlet weak var txtVwQRCode : UITextView!
+    
+    // MARK:- Coredata methods
+    @IBAction func materialimg6btn(_ sender: Any) {
+    }
+    @IBAction func materialimg5btn(_ sender: Any) {
+    }
+    @IBAction func materialimg4btn(_ sender: Any) {
+    }
+    @IBAction func materialimg3btn(_ sender: Any) {
+    }
+    @IBAction func materialimg2btn(_ sender: Any) {
+    }
+    @IBAction func materialimg1btn(_ sender: Any) {
+    }
+    @IBAction func materialOKbtn(_ sender: Any) {
+    }
+    @IBOutlet weak var materialBGview: UIView!
+    @IBAction func cambtn(_ sender: Any)
+    {
+        let optionMenu = UIAlertController(title: nil, message: "Choose Image", preferredStyle: .actionSheet)
+        let cameraAction = UIAlertAction(title: "Camera", style: .default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            self.openCamera()
+        })
+        let gallaryAction = UIAlertAction(title: "Gallery", style: .default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            self.openGallary()
+        })
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: {
+            (alert: UIAlertAction!) -> Void in
+            print("Cancelled")
+        })
+        optionMenu.addAction(cameraAction)
+        optionMenu.addAction(gallaryAction)
+        optionMenu.addAction(cancelAction)
+        optionMenu.popoverPresentationController?.barButtonItem = self.navigationItem.rightBarButtonItem
+        self.present(optionMenu, animated: true) {
+            print("option menu presented")
+        }
+    }
+    
+    //////////
+    
+    var filters = [CIFilter]()
+    fileprivate var colorControl = ColorControl()
+    
+    let filterDescriptors: [(filterName: String, filterDisplayName: String)] = [
+        ("CIColorControls", "None"),
+        ("CILineOverlay", "Sketch"),
+        ("CIColorInvert", "Invert"),
+        ("CIComicEffect", "Comic"),
+        ("CIEdgeWork", "Pencil"),
+        ("CIPhotoEffectChrome", "Chrome"),
+        ("CIPhotoEffectProcess", "Process"),
+        ("CIPhotoEffectTransfer", "Transfer"),
+        ("CIPhotoEffectInstant", "Instant"),
+        ("CIStraightenFilter", "Straighten"),
+        ("CITileFilter", "TileFilter"),
+        ("CIToneCurve", "ToneCurve"),
+        
+        ]
+    
+    ////////////NEW CODE FOR PAINT
+    private static let deltaWidth = CGFloat(2.0)
+    var getnewImage: UIImage!
 
+    //////////
+    @IBOutlet weak var editorBGview: UIView!
+   /////////////////
+    @IBOutlet weak var filterscollectionView: UICollectionView!
+    @IBOutlet weak var filterscontrastsliderBGview: UIView!
+    @IBOutlet weak var filtercollectionviewbg: UIView!
+
+    @IBOutlet weak var EditorBGTempView: UIView!
+    @IBOutlet weak var brightnesssliderBGview: UIView!
+    
+    @IBAction func filtersbtn(_ sender: Any)
+    {
+        filterscontrastsliderBGview.isHidden = false
+        EditorBGTempView.isHidden = true
+        brightnesssliderBGview.isHidden = true
+        filtercollectionviewbg.isHidden = false
+    }
+    @IBAction func brightnesscontrastbtn(_ sender: Any)
+    {
+        filterscontrastsliderBGview.isHidden = false
+        EditorBGTempView.isHidden = true
+        brightnesssliderBGview.isHidden = false
+        filtercollectionviewbg.isHidden = true
+    }
+    
+    @IBAction func editorbtnn(_ sender: Any)
+    {
+        filterscontrastsliderBGview.isHidden = false
+        EditorBGTempView.isHidden = false
+        brightnesssliderBGview.isHidden = true
+        filtercollectionviewbg.isHidden = true
+    }
+    @IBAction func savebtnn(_ sender: Any) {
+    }
+    
+    
+    @IBAction func cropimgbtn(_ sender: Any) {
+    }
+    @IBAction func Rotateimgbtn(_ sender: Any) {
+    }
+    
+ 
+    
+    
+    
     func loadData(atIndex : Int)
     {
         self.scrollView.subviews.forEach({ $0.removeFromSuperview() })
@@ -42,6 +193,8 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         if(diaryEntries.count > 0){
         let currentDiaryEntry = diaryEntries[selectedDiaryEntryIndex]
         let diaryData = currentDiaryEntry.diary_data as! [dataModel]
+        addBackgroundTextView()
+        backgroundTextView.attributedText = currentDiaryEntry.diary_text as! NSAttributedString
         for dataModelObj in diaryData
         {
                 stickerView = LDStickerView(frame: CGRect(x: dataModelObj.xPos, y: dataModelObj.yPos, width: dataModelObj.width, height: dataModelObj.height))
@@ -84,7 +237,9 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
     }
     }
     
-    
+  
+    @IBOutlet weak var morebtnoutlet: UIButton!
+    @IBOutlet weak var PredefineImagesBtn: UIButton!
     func saveDataToCoredata(fromView : UIScrollView)
     {
         if(fromView.subviews.count > 0)
@@ -126,6 +281,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
                 coreDataDiary.diary_image = captureDiaryScreenAndSave()
                 
                 coreDataDiary.diary_data = dataModelArr as NSObject
+                coreDataDiary.diary_text = backgroundTextView.attributedText
               
                 print(self.scrollView.contentSize.height)
                 print(self.scrollView.frame.size.height)
@@ -144,7 +300,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
                 let entityDesc = NSEntityDescription.entity(forEntityName: "DiaryEntry", in: CoreDataStack.managedObjectContext)
                 let coreDataDiary = DiaryEntry(entity: entityDesc!, insertInto: CoreDataStack.managedObjectContext)
                 coreDataDiary.diary_image = captureDiaryScreenAndSave()
-               
+                coreDataDiary.diary_text = backgroundTextView.attributedText
                 coreDataDiary.modified_time = Date()
                 coreDataDiary.diary_data = dataModelArr as NSObject
                 if(self.scrollView.contentSize.height > self.scrollView.frame.size.height+130)
@@ -215,35 +371,320 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
             print(error)
         }
     }
+    // MARK:- QR Code related methods
+    @IBAction func btnQRCode_clicked(_ sender : UIButton){
+        self.view.bringSubview(toFront: self.vwOverlay)
+        self.view.bringSubview(toFront: self.vwQRCode)
+        self.vwOverlay.isHidden = false
+        self.vwQRCode.isHidden = false
+    }
+    
+    @IBAction func btnQRPopupClose_clicked(_ sender : UIButton){
+        self.vwOverlay.isHidden = true
+        self.vwQRCode.isHidden = true
+    }
+    
+    @IBAction func btnQRCodeOK_clicked(_ sender : UIButton){
+        let imageName = getImageNameFromDate()
+        let fullImagePath = imagesDirectoryPath + "/\(imageName)"
+        let myImage = generateQRCode(withString: self.txtVwQRCode.text)
+        
+        dragzoomroatateview(img:myImage, imgName: imageName, type: contentType.image.rawValue, attributedString: NSAttributedString(string:""))
+        
+        let data = UIImagePNGRepresentation(myImage)
+        let success = FileManager.default.createFile(atPath: fullImagePath, contents: data, attributes: nil)
+        if(success){
+            self.vwOverlay.isHidden = true
+            self.vwQRCode.isHidden = true
+        }
+        
+    }
+    
+    func generateQRCode(withString:String) -> UIImage {
+        let filter = CIFilter(name: "CIQRCodeGenerator")
+        
+        let data = withString.data(using: String.Encoding.utf8)
+        filter?.setValue("H", forKey:"inputCorrectionLevel")
+        filter?.setValue(data, forKey:"inputMessage")
+        
+        let outputImage = filter?.outputImage
+        let context = CIContext(options:nil)
+        let cgImage = context.createCGImage(outputImage!, from:outputImage!.extent)
+        
+        let image = UIImage(cgImage:cgImage!, scale:1.0, orientation:UIImageOrientation.up)
+        let resized = resizeImage(image: image, withQuality:CGInterpolationQuality.none, rate:5.0)
+        return resized
+    }
+    
+    func resizeImage(image: UIImage, withQuality quality: CGInterpolationQuality, rate: CGFloat) -> UIImage {
+        let width = image.size.width * rate
+        let height = image.size.height * rate
+        
+        UIGraphicsBeginImageContextWithOptions(CGSize(width:width, height: height), true, 0)
+        let context = UIGraphicsGetCurrentContext()
+        context?.interpolationQuality = quality
+        //CGContex.InterpolationQuality(context!, quality)
+        image.draw(in: CGRect(x:0, y:0, width:width, height:height))
+        
+        let resized = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        return resized!;
+    }
+    
+     // MARK:- TextFormating methods
+    @IBAction func textFormatActions(_ sender : UIButton){
+        let btnLeftAlign = self.view.viewWithTag(textFormat.leftAlign.rawValue) as! UIButton
+        let btnRightAlign = self.view.viewWithTag(textFormat.rightAlign.rawValue) as! UIButton
+        let btnCenterAlign = self.view.viewWithTag(textFormat.centerAlign.rawValue) as! UIButton
+        let btnBold = self.view.viewWithTag(textFormat.bold.rawValue) as! UIButton
+        let btnItalic = self.view.viewWithTag(textFormat.italic.rawValue) as! UIButton
+        //let btnUnderline = self.view.viewWithTag(textFormat.underline.rawValue) as! UIButton
+        switch(sender.tag){
+           
+        case textFormat.bold.rawValue:
+            sender.isSelected = !sender.isSelected
+           
+            backgroundTextView.font = UIFont(name: selectedFontName, size: CGFloat(16.0+sliderFontSizeValue))
+            if(sender.isSelected == true && btnItalic.isSelected == true)
+            {
+                sender.setBackgroundImage(UIImage(named:"ico_bold_checked.png"), for: UIControlState.normal)
+                backgroundTextView.font = backgroundTextView.font?.bold()
+                backgroundTextView.font = backgroundTextView.font?.italic()
+            }
+            else if(sender.isSelected == true)
+            {
+                 sender.setBackgroundImage(UIImage(named:"ico_bold_checked.png"), for: UIControlState.normal)
+                backgroundTextView.font = backgroundTextView.font?.bold()
+            }
+            else
+            {
+                sender.setBackgroundImage(UIImage(named:"ico_bold_unchecked.png"), for: UIControlState.normal)
+                backgroundTextView.font = backgroundTextView.font?.noBold()
+                if(btnItalic.isSelected == true){
+                    backgroundTextView.font = backgroundTextView.font?.italic()
+                }
+            }
+
+        break
+        case textFormat.italic.rawValue:
+            sender.isSelected = !sender.isSelected
+            backgroundTextView.font = UIFont(name: selectedFontName, size: CGFloat(16.0+sliderFontSizeValue))
+            if(btnBold.isSelected == true && sender.isSelected == true)
+            {
+                sender.setBackgroundImage(UIImage(named:"ico_italic_checked.png"), for: UIControlState.normal)
+                backgroundTextView.font = backgroundTextView.font?.italic()
+                backgroundTextView.font = backgroundTextView.font?.bold()
+            }
+            else if(sender.isSelected == true)
+            {
+                sender.setBackgroundImage(UIImage(named:"ico_italic_checked.png"), for: UIControlState.normal)
+                backgroundTextView.font = backgroundTextView.font?.italic()
+            }
+            else
+            {
+                sender.setBackgroundImage(UIImage(named:"ico_italic_unchecked.png"), for: UIControlState.normal)
+                backgroundTextView.font = backgroundTextView.font?.noItalic()
+                if(btnBold.isSelected == true){
+                    backgroundTextView.font = backgroundTextView.font?.bold()
+                }
+            }
+
+        break
+        
+        case textFormat.underline.rawValue:
+            sender.isSelected = !sender.isSelected
+            let attString = NSMutableAttributedString(attributedString: backgroundTextView.attributedText)
+            if (sender.isSelected) {
+                //var attString = backgroundTextView.attributedText as! NSMutableAttributedString
+                attString.addAttribute(NSAttributedStringKey.underlineStyle, value:NSUnderlineStyle.styleSingle.rawValue, range :NSRange(location: 0, length: attString.length))
+                //backgroundTextView.attributedText = attString
+                sender.setBackgroundImage(UIImage(named:"ico_underline_checked.png"), for: UIControlState.normal)
+            }
+            else{
+                //let attString = NSMutableAttributedString(attributedString: backgroundTextView.attributedText)
+                attString.removeAttribute(NSAttributedStringKey.underlineStyle, range: NSRange(location: 0, length: attString.length))
+                //backgroundTextView.attributedText = attString
+                sender.setBackgroundImage(UIImage(named:"ico_underline_unchecked.png"), for: UIControlState.normal)
+                }
+            backgroundTextView.attributedText = attString
+        break
+            
+        case textFormat.leftAlign.rawValue:
+            backgroundTextView.textAlignment = NSTextAlignment.left
+            btnLeftAlign.setBackgroundImage(UIImage(named:"ico_left_checked.png"), for: UIControlState.normal)
+            btnRightAlign.setBackgroundImage(UIImage(named:"ico_right_unchecked.png"), for: UIControlState.normal)
+            btnCenterAlign.setBackgroundImage(UIImage(named:"ico_center_unchecked.png"), for: UIControlState.normal)
+        break
+            
+        case textFormat.rightAlign.rawValue:
+            backgroundTextView.textAlignment = NSTextAlignment.right
+            btnLeftAlign.setBackgroundImage(UIImage(named:"ico_left_unchecked.png"), for: UIControlState.normal)
+            btnRightAlign.setBackgroundImage(UIImage(named:"ico_right_checked.png"), for: UIControlState.normal)
+            btnCenterAlign.setBackgroundImage(UIImage(named:"ico_center_unchecked.png"), for: UIControlState.normal)
+        break
+            
+        case textFormat.centerAlign.rawValue:
+            backgroundTextView.textAlignment = NSTextAlignment.center
+            btnLeftAlign.setBackgroundImage(UIImage(named:"ico_left_unchecked.png"), for: UIControlState.normal)
+            btnRightAlign.setBackgroundImage(UIImage(named:"ico_right_unchecked.png"), for: UIControlState.normal)
+            btnCenterAlign.setBackgroundImage(UIImage(named:"ico_center_checked.png"), for: UIControlState.normal)
+        break
+            
+        default:
+            break
+        }
+    }
+    @IBAction func btnTextFormat(_ sender : UIButton){
+        vwTextFormat.isHidden = false
+        vwTextFont.isHidden = true
+        btnTextFormat.backgroundColor = UIColor.lightGray
+        btnTextFont.backgroundColor = UIColor.white
+    }
+    
+    @IBAction func btnTextFont(_ sender : UIButton){
+        vwTextFormat.isHidden = true
+        vwTextFont.isHidden = false
+        btnTextFormat.backgroundColor = UIColor.white
+        btnTextFont.backgroundColor = UIColor.lightGray
+    }
+    
+    @IBAction func btnCompleteFormat(_ sender : UIButton)
+    {
+        vwTextOptions.isHidden = true
+    }
     func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView)
     {
         self.scrollView.isScrollEnabled = true
         hideOtherViewSelection()
     }
+    
+    @IBAction func sliderValueChanged(sender: UISlider) {
+        sliderFontSizeValue = sender.value
+        let btnBold = self.view.viewWithTag(textFormat.bold.rawValue) as! UIButton
+        //let btnUnderline = self.view.viewWithTag(textFormat.underline.rawValue) as! UIButton
+        let btnItalic = self.view.viewWithTag(textFormat.italic.rawValue) as! UIButton
+       
+        if(btnBold.isSelected){
+            backgroundTextView.font = backgroundTextView.font?.bold()
+        }
+        else{
+            backgroundTextView.font = backgroundTextView.font?.noBold()
+        }
+        if(btnItalic.isSelected){
+            backgroundTextView.font = backgroundTextView.font?.italic()
+        }
+        else{
+            backgroundTextView.font = backgroundTextView.font?.noItalic()
+        }
+         backgroundTextView.font = UIFont(name:selectedFontName, size : CGFloat(16.0+sliderFontSizeValue))
+    }
+    
+   
+    // MARK:- Font CollectionView delegate methods
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return columns*collectionViewRows
+        //return 50
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
+        
+        //cell.backgroundColor = UIColor.green
+        cell.layer.cornerRadius = 20
+        cell.layer.masksToBounds = true
+        cell.layer.borderWidth = 2.0
+        cell.layer.borderColor = UIColor.gray.cgColor
+        let labelFont = UILabel()
+        labelFont.text = "Aa"
+        
+        labelFont.textAlignment = .center
+        labelFont.tag = indexPath.row
+        labelFont.frame.size = CGSize(width:50, height:50)
+        labelFont.center = CGPoint(x:cell.contentView.center.x+5,y:cell.contentView.center.y+5)
+        
+        cell.backgroundColor = UIColor.white
+        labelFont.textColor = UIColor.black
+        
+        if(cell.contentView.subviews.count==0){
+            labelFont.font = UIFont(name: fontArray[indexPath.row], size: 25.0)
+            cell.contentView.addSubview(labelFont)
+        }
+        else{
+            let labelFontCheck = cell.contentView.subviews[0] as! UILabel
+            if(selectedCollectionItemIndex == indexPath.row){
+                cell.backgroundColor = UIColor.gray
+                labelFontCheck.textColor = UIColor.white
+                labelFontCheck.font = UIFont(name: fontArray[indexPath.row], size: 20.0)
+            }
+            else{
+                labelFontCheck.font = UIFont(name: fontArray[indexPath.row], size: 20.0)
+                cell.backgroundColor = UIColor.white
+                labelFontCheck.textColor = UIColor.black
+            }
+        }
+        
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath)
+    {
+        let btnBold = self.view.viewWithTag(textFormat.bold.rawValue) as! UIButton
+        let btnItalic = self.view.viewWithTag(textFormat.italic.rawValue) as! UIButton
+        selectedCollectionItemIndex = indexPath.row
+        selectedFontName = fontArray[indexPath.row]
+        backgroundTextView.font = UIFont(name: selectedFontName, size: CGFloat(16.0+sliderFontSize.value))
+        if(btnBold.isSelected)
+        {
+            backgroundTextView.font = backgroundTextView.font?.bold()
+        }
+        else if(btnItalic.isSelected)
+        {
+            backgroundTextView.font = backgroundTextView.font?.italic()
+        }
+        if(btnBold.isSelected == true && btnItalic.isSelected == true)
+        {
+            backgroundTextView.font = backgroundTextView.font?.bold().italic()
+        }
+        collectionView.reloadData()
+    }
+    
     // MARK:- ViewController delegate methods
     override func viewDidLoad() {
         super.viewDidLoad()
         addremovecount = 1;
         self.scrollView = UIScrollView()
         self.scrollView.delegate = self
-        self.scrollView.contentSize = CGSize(width:1.0, height: self.view.frame.size.height)
+        self.scrollView.contentSize = CGSize(width:self.view.frame.width-30, height: self.view.frame.size.height)
         self.scrollView.backgroundColor = UIColor.white
         self.view.addSubview(scrollView)
+        addBackgroundTextView()
+        self.backgroundTextView.becomeFirstResponder()
         
         let gestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(scrolltouchhandlePan))
         self.view.addGestureRecognizer(gestureRecognizer)
         
-        tabBarview.delegate = self
+        //tabBarview.delegate = self
         imagePicker.delegate = self
         
         createImagesFolder()
         createDiaryImagesFolder()
+        //0,450
+      
     
+        self.editorBGview.layer.zPosition = 1;
+       // editorBGview.frame = CGRect(x: 0, y: 532, width: self.editorBGview.frame.width, height: self.editorBGview.frame.height)
+       // editorBGview.bringSubview(toFront: scrollView)
+        materialBGview.frame = CGRect(x: 0, y: 1000, width: self.materialBGview.frame.width, height: self.materialBGview.frame.height)
+     //self.view.bringSubview(toFront: self.tabBarview)
+        self.view.bringSubview(toFront: self.vwTextOptions)    
+     
     }
  
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+         materialBGview.frame = CGRect(x: 0, y: 1000, width: self.materialBGview.frame.width, height: self.materialBGview.frame.height)
         getSavedData()
         if(mode == "edit"){
             if(selectedDiaryEntryIndex != -1){
@@ -253,12 +694,23 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
             mode = ""
         }
         
+        // Collection view UI changes
+        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        layout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+        layout.itemSize = CGSize(width: 50, height: 50)
+        layout.scrollDirection = .horizontal
+        fontCollectionView.frame = CGRect(x:0,y:0,width:self.view.frame.width,height:120)
+        fontCollectionView.collectionViewLayout = layout
+        fontCollectionView.dataSource = self
+        fontCollectionView.delegate = self
+        fontCollectionView.backgroundColor = UIColor.white
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        scrollView.frame = CGRect(x: 10, y: 70, width: self.view.frame.size.width-20, height: self.view.frame.size.height-130)
+      //  scrollView.frame = CGRect(x: 10, y: 70, width: self.view.frame.size.width-20, height: self.view.frame.size.height-180)
+          scrollView.frame = CGRect(x: 10, y: 70, width: self.view.frame.size.width-20, height: self.view.frame.size.height-150)
     }
     
 
@@ -267,7 +719,15 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    func addBackgroundTextView(){
+        self.backgroundTextView = UITextView()
+        self.backgroundTextView.allowsEditingTextAttributes = true
+        self.backgroundTextView.backgroundColor = UIColor.clear
+        self.backgroundTextView.font = .systemFont(ofSize: 18)
+        self.backgroundTextView.frame = CGRect(x:0,y:0,width:self.view.frame.width-30, height:self.scrollView.contentSize.height)
     
+        self.scrollView.addSubview(backgroundTextView)
+    }
     // MARK:- ScrollView methods
     @objc func scrolltouchhandlePan(_ gestureRecognizer: UIPanGestureRecognizer) {
         if gestureRecognizer.state == .began
@@ -335,31 +795,17 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
     func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         
         if(item.tag == 0){
-            let TextEditVC = storyboard?.instantiateViewController(withIdentifier: "TextEditViewController") as! TextEditViewController
-            self.navigationController?.pushViewController(TextEditVC, animated: true)
+            //let TextEditVC = storyboard?.instantiateViewController(withIdentifier: "TextEditViewController") as! TextEditViewController
+            //self.navigationController?.pushViewController(TextEditVC, animated: true)
+            self.vwTextOptions.isHidden = false
+            self.vwTextFormat.isHidden = false
+            self.vwTextFont.isHidden = true
+            self.btnTextFormat.backgroundColor = UIColor.lightGray
+            self.btnTextFont.backgroundColor = UIColor.white
         }
         if(item.tag == 1){
           
-            let optionMenu = UIAlertController(title: nil, message: "Choose Image", preferredStyle: .actionSheet)
-            let cameraAction = UIAlertAction(title: "Camera", style: .default, handler: {
-                (alert: UIAlertAction!) -> Void in
-                self.openCamera()
-            })
-            let gallaryAction = UIAlertAction(title: "Gallery", style: .default, handler: {
-                (alert: UIAlertAction!) -> Void in
-                self.openGallary()
-            })
-            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: {
-                (alert: UIAlertAction!) -> Void in
-                print("Cancelled")
-            })
-            optionMenu.addAction(cameraAction)
-            optionMenu.addAction(gallaryAction)
-            optionMenu.addAction(cancelAction)
-            optionMenu.popoverPresentationController?.barButtonItem = self.navigationItem.rightBarButtonItem
-            self.present(optionMenu, animated: true) {
-                print("option menu presented")
-            }
+            
             
         }
         if(item.tag == 2){
@@ -400,7 +846,85 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         }
     }
    
+    @IBAction func Textbtn(_ sender: Any)
+    {
+//        let TextEditVC = storyboard?.instantiateViewController(withIdentifier: "TextEditViewController") as! TextEditViewController
+//        self.navigationController?.pushViewController(TextEditVC, animated: true)
+        self.vwTextOptions.isHidden = false
+        self.vwTextFormat.isHidden = false
+        self.vwTextFont.isHidden = true
+        self.btnTextFormat.backgroundColor = UIColor.lightGray
+        self.btnTextFont.backgroundColor = UIColor.white
+    }
     
+    @IBAction func Camerabtn(_ sender: Any)
+    {
+        let optionMenu = UIAlertController(title: nil, message: "Choose Image", preferredStyle: .actionSheet)
+        let cameraAction = UIAlertAction(title: "Camera", style: .default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            self.openCamera()
+        })
+        let gallaryAction = UIAlertAction(title: "Gallery", style: .default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            self.openGallary()
+        })
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: {
+            (alert: UIAlertAction!) -> Void in
+            print("Cancelled")
+        })
+        optionMenu.addAction(cameraAction)
+        optionMenu.addAction(gallaryAction)
+        optionMenu.addAction(cancelAction)
+        optionMenu.popoverPresentationController?.barButtonItem = self.navigationItem.rightBarButtonItem
+        self.present(optionMenu, animated: true) {
+            print("option menu presented")
+        }
+    }
+    @IBAction func PreDefineimgbtn(_ sender: Any)
+    {
+        materialBGview.frame = CGRect(x: 0, y: 420, width: self.materialBGview.frame.width, height: self.materialBGview.frame.height)
+        scrollView.frame = CGRect(x: 10, y: 70, width: self.view.frame.size.width-20, height: self.view.frame.size.height-320)
+        print("PreDefineimgbtn")
+      //  editorBGview.frame = CGRect(x: 0, y: 672, width: self.editorBGview.frame.width, height: self.editorBGview.frame.height)
+      //  scrollView.frame = CGRect(x: 10, y: 70, width: self.view.frame.size.width-20, height: self.view.frame.size.height-160)
+    }
+    @IBAction func morebtn(_ sender: Any)
+    {
+        print("morebtn")
+        editorBGview.frame = CGRect(x: 0, y: 530, width: self.editorBGview.frame.width, height: self.editorBGview.frame.height)
+            scrollView.frame = CGRect(x: 10, y: 70, width: self.view.frame.size.width-20, height: self.view.frame.size.height-280)
+
+    }
+    @IBAction func PredefineTextimgbtn(_ sender: Any)
+    {
+        print("PredefineTextimgbtn")
+
+    }
+    @IBAction func Grafittbtn(_ sender: Any)
+    {
+        print("Grafittbtn")
+
+    }
+    @IBAction func Barcodebtn(_ sender: Any)
+    {
+        print("Barcodebtn")
+
+    }
+    @IBAction func MicBtn(_ sender: Any)
+    {
+        print("MicBtn")
+
+    }
+    @IBAction func Colorbtn(_ sender: Any)
+    {
+        print("Colorbtn")
+
+    }
+    @IBAction func Draftbtn(_ sender: Any)
+    {
+        print("Draftbtn")
+
+    }
     // MARK:- Image picker methods
    
     func openCamera()
@@ -422,7 +946,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         imagePicker.allowsEditing = true
         self.present(imagePicker, animated: true, completion: nil)
     }
-    
+    var camselectedimage: UIImage?
     func imagePickerController(
         _ picker: UIImagePickerController,
         didFinishPickingMediaWithInfo info: [String : Any])
@@ -435,7 +959,6 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         let myImage = self.fixOrientation(image: (info[UIImagePickerControllerOriginalImage] as? UIImage)!)
         
         dragzoomroatateview(img:myImage, imgName: imageName, type: contentType.image.rawValue, attributedString: NSAttributedString(string:""))
-        
         let data = UIImagePNGRepresentation(myImage)
         let success = FileManager.default.createFile(atPath: fullImagePath, contents: data, attributes: nil)
         if(success){
@@ -443,7 +966,31 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         }
         
         self.dismiss(animated: true, completion: nil)
+        for descriptor in filterDescriptors {
+            filters.append(CIFilter(name: descriptor.filterName)!)
+        }
+       
+        
+            camselectedimage = myImage
+        performSegue(withIdentifier: "ExportFiltersViewController", sender: self)
+
+    //self.navigationController?.pushViewController(ExportVC, animated: true)
+       
+
+       // self.navigationController?.pushViewController(ExportVC, animated: true)
+      
     }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ExportFiltersViewController" {
+            if let nextViewController = segue.destination as? ExportFiltersViewController
+            {
+                nextViewController.getnewImage = camselectedimage
+
+                
+            }
+        }
+    }
+  
     //MARK: - Helper methods
     func createImagesFolder()
     {
@@ -592,6 +1139,15 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         return imageName
     }
 }
+// Get ImageName from date
+func getImageNameFromDate()-> String
+{
+    var imageName = Date().description
+    imageName = imageName.replacingOccurrences(of: " ", with: "") + ".png"
+    imageName = imageName.replacingOccurrences(of: ":", with: "")
+    return imageName
+}
+
 // Delete file with imageName
 func deleteFileWithImageName(imageName : String, isDiary : Bool)
 {
@@ -617,5 +1173,47 @@ func deleteImagesFromDiaryData(dataModelArr : [dataModel])
         if(dataModelObj.type == contentType.image.rawValue){
             deleteFileWithImageName(imageName: dataModelObj.imageName, isDiary: false)
         }
+    }
+}
+
+extension UIFont {
+    
+    func withTraits(_ traits:UIFontDescriptorSymbolicTraits...) -> UIFont {
+        let descriptor = self.fontDescriptor
+            .withSymbolicTraits(UIFontDescriptorSymbolicTraits(traits).union(self.fontDescriptor.symbolicTraits))
+        if(descriptor != nil){
+            return UIFont(descriptor: descriptor!, size: 0)
+        }
+        else{
+            if(traits == [UIFontDescriptorSymbolicTraits.traitItalic]){
+                return UIFont.italicSystemFont(ofSize: self.pointSize)
+            }
+            else if(traits == [UIFontDescriptorSymbolicTraits.traitBold]){
+                return UIFont.boldSystemFont(ofSize: self.pointSize)
+            }
+            else
+            {
+                return UIFont.systemFont(ofSize: self.pointSize)
+            }
+        }
+    }
+    func withoutTraits(_ traits:UIFontDescriptorSymbolicTraits...) -> UIFont {
+        let descriptor = self.fontDescriptor
+            .withSymbolicTraits(  self.fontDescriptor.symbolicTraits.subtracting(UIFontDescriptorSymbolicTraits(traits)))
+        return UIFont(descriptor: descriptor!, size: 0)
+    }
+    func bold() -> UIFont {
+        return withTraits( .traitBold)
+    }
+    
+    func italic() -> UIFont {
+        return withTraits(.traitItalic)
+    }
+    
+    func noItalic() -> UIFont {
+        return withoutTraits(.traitItalic)
+    }
+    func noBold() -> UIFont {
+        return withoutTraits(.traitBold)
     }
 }
