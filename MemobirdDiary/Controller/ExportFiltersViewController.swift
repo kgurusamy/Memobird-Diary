@@ -124,10 +124,8 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
     
     ////////////NEW CODE FOR PAINT
     private static let deltaWidth = CGFloat(2.0)
-    
     @IBOutlet weak var drawVieww: TouchDrawView!
     ///////////////
-    //////////
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Processing"
@@ -348,9 +346,6 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
             // Show filter options here
         }else if(self.rightBarButtonItem.title == "Preview"){
             saveDataToPreviewList()
-//            let previewListVC = storyboard?.instantiateViewController(withIdentifier: "PreviewListViewController") as! PreviewListViewController
-//            self.navigationController?.pushViewController(previewListVC, animated: true)
-           
         }
         
     }
@@ -391,10 +386,7 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
     }
     
     func captureImageForPreview() -> String? {
-//        UIGraphicsBeginImageContext(self.drawVieww.bounds.size);
-//        self.drawVieww.layer.render(in: UIGraphicsGetCurrentContext()!)
-//        let image = UIGraphicsGetImageFromCurrentImageContext();
-//        UIGraphicsEndImageContext();
+
         var getpreviewimage: UIImage!
         if(getnewImage == nil)
         {
@@ -404,7 +396,7 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
             getpreviewimage = filteredImageView?.snapshot
 
         }
-        //let DiaryListVC = storyboard?.instantiateViewController(withIdentifier: "DiaryViewController") as! DiaryViewController
+    
         let DiaryListVC = self.navigationController?.viewControllers[(self.navigationController?.viewControllers.count)!-2] as! DiaryViewController!
         DiaryListVC?.PreviewSelectedimage = getpreviewimage
         self.navigationController?.popToViewController(DiaryListVC!, animated: true)

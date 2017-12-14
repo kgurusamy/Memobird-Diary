@@ -285,16 +285,17 @@
 		AE3F4D441F79066C00D26F7E /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				33084A181FE1021D009672BC /* LDStickerView.swift */,
 				AE67DE6C1F752881007A3B76 /* ViewController.swift */,
 				AEEC54271F78DB2C00050B06 /* DiaryViewController.swift */,
+				33084A181FE1021D009672BC /* LDStickerView.swift */,
 				AEEC54291F78DB5400050B06 /* TextEditViewController.swift */,
+				AE8E67151FB18D4100452792 /* ExportFiltersViewController.swift */,
 				AEEC542B1F78DB6700050B06 /* HistoryViewController.swift */,
 				AE65F8581FA09AF00057A0AD /* ExportImageViewController.swift */,
-				AE8E67151FB18D4100452792 /* ExportFiltersViewController.swift */,
 				AE75570A1FDAC477000F2178 /* ExportFilterViewController.swift */,
 				AE986D1F1FB0696600FCEDF7 /* ColorControlViewController.swift */,
 				AEB6777F1FC2B0C200C82500 /* PreviewListViewController.swift */,
+				AE32D6591FB982E2000D7808 /* SettingsViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -405,7 +406,6 @@
 			children = (
 				AE67DE6A1F752881007A3B76 /* AppDelegate.swift */,
 				AE67DE711F752881007A3B76 /* MemobirdDiary.xcdatamodeld */,
-				AE32D6591FB982E2000D7808 /* SettingsViewController.swift */,
 				33C8DA411F7B677A005E4211 /* Model */,
 				AE3F4D451F79067E00D26F7E /* View */,
 				AE3F4D441F79066C00D26F7E /* Controller */,

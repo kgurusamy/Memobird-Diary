@@ -32,7 +32,6 @@ enum textFormat: Int {
 
 class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIGestureRecognizerDelegate,UIScrollViewDelegate,UICollectionViewDelegate, UICollectionViewDataSource {
 
-    @IBOutlet weak var tabBarview: UITabBar!
     
     @IBOutlet weak var contrastslider: UISlider!
     @IBOutlet weak var brightnessslider: UISlider!
@@ -48,6 +47,8 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
     var addremovecount : Int = 0
     var backgroundTextView : UITextView!
     @IBOutlet weak var filteredImageView: FilteredImageView!
+    
+    // MARK:- Material Format controls
     @IBOutlet weak var materialG1BGview: UIView!
     @IBOutlet weak var materialG2BGview: UIView!
     @IBOutlet weak var materialG3BGview: UIView!
@@ -61,38 +62,40 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
     @IBOutlet weak var sliderFontSize : UISlider!
     @IBOutlet weak var btnTextFont : UIButton!
     @IBOutlet weak var btnTextFormat : UIButton!
-    var PreviewSelectedimage: UIImage?
+    @IBOutlet weak var fontCollectionView:UICollectionView!
     var fontArray = UIFont.familyNames
-    let collectionViewRows = 2
     let columnsInFirstPage = 5
     var selectedCollectionItemIndex : Int = -1
     var selectedFontName : String = UIFont.familyNames[0]
     var sliderFontSizeValue : Float = 0.0
-    @IBOutlet weak var fontCollectionView:UICollectionView!
-    // calculate number of columns needed to display all items
-    var columns: Int { return fontArray.count<=columnsInFirstPage ? fontArray.count : fontArray.count > collectionViewRows*columnsInFirstPage ? (fontArray.count-1)/collectionViewRows + 1 : columnsInFirstPage }
-    
+    let collectionViewRows = 2
+
+    var PreviewSelectedimage: UIImage?
     // MARK:- QRCode related controls
     @IBOutlet weak var vwOverlay : UIView!
     @IBOutlet weak var vwQRCode : UIView!
     @IBOutlet weak var txtVwQRCode : UITextView!
     
-    // MARK:- Coredata methods
-    @IBAction func materialimg6btn(_ sender: Any) {
-    }
-    @IBAction func materialimg5btn(_ sender: Any) {
-    }
-    @IBAction func materialimg4btn(_ sender: Any) {
-    }
-    @IBAction func materialimg3btn(_ sender: Any) {
-    }
-    @IBAction func materialimg2btn(_ sender: Any) {
-    }
-    @IBAction func materialimg1btn(_ sender: Any) {
-    }
-    @IBAction func materialOKbtn(_ sender: Any) {
-    }
     @IBOutlet weak var materialBGview: UIView!
+    var filters = [CIFilter]()
+    fileprivate var colorControl = ColorControl()
+    //////////
+    @IBOutlet weak var editorBGview: UIView!
+    /////////////////
+    @IBOutlet weak var filterscollectionView: UICollectionView!
+    @IBOutlet weak var filterscontrastsliderBGview: UIView!
+    @IBOutlet weak var filtercollectionviewbg: UIView!
+    
+    @IBOutlet weak var EditorBGTempView: UIView!
+    @IBOutlet weak var brightnesssliderBGview: UIView!
+    @IBOutlet weak var morebtnoutlet: UIButton!
+    @IBOutlet weak var PredefineImagesBtn: UIButton!
+    // calculate number of columns needed to display all items
+    var columns: Int { return fontArray.count<=columnsInFirstPage ? fontArray.count : fontArray.count > collectionViewRows*columnsInFirstPage ? (fontArray.count-1)/collectionViewRows + 1 : columnsInFirstPage }
+    
+    
+    
+  
     @IBAction func cambtn(_ sender: Any)
     {
         let optionMenu = UIAlertController(title: nil, message: "Choose Image", preferredStyle: .actionSheet)
@@ -116,12 +119,6 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
             print("option menu presented")
         }
     }
-    
-    //////////
-    
-    var filters = [CIFilter]()
-    fileprivate var colorControl = ColorControl()
-    
     let filterDescriptors: [(filterName: String, filterDisplayName: String)] = [
         ("CIColorControls", "None"),
         ("CILineOverlay", "Sketch"),
@@ -137,20 +134,6 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         ("CIToneCurve", "ToneCurve"),
         
         ]
-    
-    ////////////NEW CODE FOR PAINT
-    private static let deltaWidth = CGFloat(2.0)
-    var getnewImage: UIImage!
-
-    //////////
-    @IBOutlet weak var editorBGview: UIView!
-   /////////////////
-    @IBOutlet weak var filterscollectionView: UICollectionView!
-    @IBOutlet weak var filterscontrastsliderBGview: UIView!
-    @IBOutlet weak var filtercollectionviewbg: UIView!
-
-    @IBOutlet weak var EditorBGTempView: UIView!
-    @IBOutlet weak var brightnesssliderBGview: UIView!
     
     @IBAction func filtersbtn(_ sender: Any)
     {
@@ -176,17 +159,10 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
     }
     @IBAction func savebtnn(_ sender: Any) {
     }
-    
-    
     @IBAction func cropimgbtn(_ sender: Any) {
     }
     @IBAction func Rotateimgbtn(_ sender: Any) {
     }
-    
- 
-    
-    
-    
     func loadData(atIndex : Int)
     {
         self.scrollView.subviews.forEach({ $0.removeFromSuperview() })
@@ -238,9 +214,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
     }
     }
     
-  
-    @IBOutlet weak var morebtnoutlet: UIButton!
-    @IBOutlet weak var PredefineImagesBtn: UIButton!
+   
     func saveDataToCoredata(fromView : UIScrollView)
     {
         if(fromView.subviews.count > 0)
@@ -373,12 +347,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         }
     }
     // MARK:- QR Code related methods
-    @IBAction func btnQRCode_clicked(_ sender : UIButton){
-        self.view.bringSubview(toFront: self.vwOverlay)
-        self.view.bringSubview(toFront: self.vwQRCode)
-        self.vwOverlay.isHidden = false
-        self.vwQRCode.isHidden = false
-    }
+ 
     
     @IBAction func btnQRPopupClose_clicked(_ sender : UIButton){
         self.vwOverlay.isHidden = true
@@ -653,13 +622,14 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
     override func viewDidLoad() {
         super.viewDidLoad()
         addremovecount = 1;
+
         self.scrollView = UIScrollView()
         self.scrollView.delegate = self
         self.scrollView.contentSize = CGSize(width:self.view.frame.width-30, height: self.view.frame.size.height)
         self.scrollView.backgroundColor = UIColor.white
         self.view.addSubview(scrollView)
         addBackgroundTextView()
-        self.backgroundTextView.becomeFirstResponder()
+        //self.backgroundTextView.becomeFirstResponder()
         
         let gestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(scrolltouchhandlePan))
         self.view.addGestureRecognizer(gestureRecognizer)
@@ -682,14 +652,69 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         self.view.bringSubview(toFront: self.vwTextOptions)
         ////////////////////////Image view
         
-       
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: .UIKeyboardWillShow, object: nil)
+addDoneButtonOnKeyboard()
         ///////////////////////
-     
+
     }
- 
+    func addDoneButtonOnKeyboard() {
+        let doneToolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
+        doneToolbar.barStyle       = UIBarStyle.default
+        let flexSpace              = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
+        let done: UIBarButtonItem  = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.done, target: self, action: #selector(DiaryViewController.doneButtonAction))
+        
+        var items = [UIBarButtonItem]()
+        items.append(flexSpace)
+        items.append(done)
+        
+        doneToolbar.items = items
+        doneToolbar.sizeToFit()
+        
+        self.backgroundTextView.inputAccessoryView = doneToolbar
+    }
+    @objc func doneButtonAction() {
+        self.backgroundTextView.resignFirstResponder()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        print(getkeyboardHeight)
+        print(self.view.frame.size.height-getkeyboardHeight-60)
+        if(self.vwOverlay.isHidden == false){
+            self.vwOverlay.isHidden = true
+        }
+    
+    }
+   
+    @objc func keyboardWillAppear() {
+        //Do something here
+        didDisplayedKeyboard = true
+    }
+    
+    @objc func keyboardWillDisappear() {
+        //Do something here
+        didDisplayedKeyboard = false
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        NotificationCenter.default.removeObserver(self)
+    }
+    var getkeyboardHeight : CGFloat = CGFloat()
+    var didDisplayedKeyboard:Bool = false
+    var checkmorebtn : Bool = true
+
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            getkeyboardHeight = keyboardSize.height
+            print(getkeyboardHeight)
+           
+        }
+    }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillDisappear), name: Notification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillAppear), name: Notification.Name.UIKeyboardWillShow, object: nil)
          materialBGview.frame = CGRect(x: 0, y: 1000, width: self.materialBGview.frame.width, height: self.materialBGview.frame.height)
         getSavedData()
         if(mode == "edit"){
@@ -724,6 +749,8 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         fontCollectionView.dataSource = self
         fontCollectionView.delegate = self
         fontCollectionView.backgroundColor = UIColor.white
+        //self.vwOverlay.isHidden = true
+
     }
     
     override func viewDidLayoutSubviews() {
@@ -910,21 +937,25 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
       //  editorBGview.frame = CGRect(x: 0, y: 672, width: self.editorBGview.frame.width, height: self.editorBGview.frame.height)
       //  scrollView.frame = CGRect(x: 10, y: 70, width: self.view.frame.size.width-20, height: self.view.frame.size.height-160)
     }
-    @IBAction func morebtn(_ sender: Any)
+    @IBAction func morebtn(_ sender: UIButton)
     {
         print("morebtn")
-        editorBGview.frame = CGRect(x: 0, y: 480, width: self.editorBGview.frame.width, height: self.editorBGview.frame.height)
-            scrollView.frame = CGRect(x: 10, y: 70, width: self.view.frame.size.width-20, height: self.view.frame.size.height)
-
+        morebtnoutlet.isSelected = !sender.isSelected
+        morebtnoutlet.backgroundColor = UIColor.clear
+        if(checkmorebtn == true)
+        {
+            editorBGview.frame = CGRect(x: 0, y: self.view.frame.size.height-self.editorBGview.frame.size.height, width: self.editorBGview.frame.width, height: self.editorBGview.frame.height)
+            checkmorebtn = false
+        }else{
+            checkmorebtn = true
+            editorBGview.frame = CGRect(x: 0, y: self.view.frame.size.height-60, width: self.editorBGview.frame.width, height: self.editorBGview.frame.height)
+        }
     }
     @IBAction func PredefineTextimgbtn(_ sender: Any)
     {
-        print("PredefineTextimgbtn")
-
     }
     @IBAction func Grafittbtn(_ sender: Any)
     {
-        print("Grafittbtn")
         camselectedimage = nil
         performSegue(withIdentifier: "ExportFiltersViewController", sender: self)
 
@@ -932,22 +963,21 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
     }
     @IBAction func Barcodebtn(_ sender: Any)
     {
-        print("Barcodebtn")
+        self.view.bringSubview(toFront: self.vwOverlay)
+        self.view.bringSubview(toFront: self.vwQRCode)
+        self.vwOverlay.isHidden = false
+        self.vwQRCode.isHidden = false
 
     }
     @IBAction func MicBtn(_ sender: Any)
     {
-        print("MicBtn")
 
     }
     @IBAction func Colorbtn(_ sender: Any)
     {
-        print("Colorbtn")
-
     }
     @IBAction func Draftbtn(_ sender: Any)
     {
-        print("Draftbtn")
 
     }
     // MARK:- Image picker methods
@@ -982,27 +1012,23 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         imageName = imageName.replacingOccurrences(of: ":", with: "")
         let fullImagePath = imagesDirectoryPath + "/\(imageName)"
         let myImage = self.fixOrientation(image: (info[UIImagePickerControllerOriginalImage] as? UIImage)!)
-        
-        //dragzoomroatateview(img:myImage, imgName: imageName, type: contentType.image.rawValue, attributedString: NSAttributedString(string:""))
-        //let data = UIImagePNGRepresentation(myImage)
-        //let success = FileManager.default.createFile(atPath: fullImagePath, contents: data, attributes: nil)
-//        if(success){
-//            print("image saved successfully in local")
-//        }
-        
+ 
         self.dismiss(animated: true, completion: nil)
         for descriptor in filterDescriptors {
             filters.append(CIFilter(name: descriptor.filterName)!)
         }
        
+        let activityView = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+        activityView.center = self.view.center
+        activityView.startAnimating()
         
+        self.vwOverlay.addSubview(activityView)
+        self.view.bringSubview(toFront: self.vwOverlay)
+
+        self.vwOverlay.isHidden = false
             camselectedimage = myImage
         performSegue(withIdentifier: "ExportFiltersViewController", sender: self)
 
-    //self.navigationController?.pushViewController(ExportVC, animated: true)
-       
-
-       // self.navigationController?.pushViewController(ExportVC, animated: true)
       
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -1242,5 +1268,20 @@ extension UIFont {
     }
     func noBold() -> UIFont {
         return withoutTraits(.traitBold)
+    }
+    // MARK:- Material methods IN PROGRESS
+    @IBAction func materialimg6btn(_ sender: Any) {
+    }
+    @IBAction func materialimg5btn(_ sender: Any) {
+    }
+    @IBAction func materialimg4btn(_ sender: Any) {
+    }
+    @IBAction func materialimg3btn(_ sender: Any) {
+    }
+    @IBAction func materialimg2btn(_ sender: Any) {
+    }
+    @IBAction func materialimg1btn(_ sender: Any) {
+    }
+    @IBAction func materialOKbtn(_ sender: Any) {
     }
 }
