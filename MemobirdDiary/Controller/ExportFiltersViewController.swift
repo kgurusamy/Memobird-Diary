@@ -142,6 +142,9 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
         undobtnoutlet.layer.cornerRadius = 24
         undobtnoutlet.layer.borderWidth = 1
         undobtnoutlet.layer.borderColor = UIColor.black.cgColor
+        
+        ///////////?FIlter Code
+        if(getnewImage !== nil){
         for descriptor in filterDescriptors {
             filters.append(CIFilter(name: descriptor.filterName)!)
         }
@@ -157,6 +160,23 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
         filteredImageView.backgroundColor = UIColor.clear
         filteredImageView.filter = filters[0]
         colorControl.input(filteredImageView.inputImage!)
+        }else{
+            filteredImageView.isHidden = true
+            undobtnoutlet.isHidden = true
+            let color = UIColor.black
+            drawVieww.setColor(color)
+            undobtnoutlet.isHidden = true
+            filterBGView.isHidden = true
+            
+            tabBarView.isHidden = true
+            tabBarView.delegate = nil
+            drawbgview.isHidden = false
+            drawVieww.delegate = self
+       
+            drawVieww.setWidth(ExportFiltersViewController.deltaWidth)
+
+        }
+        ///////////////////
         drawVieww.setColor(nil)
         strokesbgview.isHidden = true
         createPreviewImagesFolder()
@@ -328,8 +348,9 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
             // Show filter options here
         }else if(self.rightBarButtonItem.title == "Preview"){
             saveDataToPreviewList()
-            let previewListVC = storyboard?.instantiateViewController(withIdentifier: "PreviewListViewController") as! PreviewListViewController
-            self.navigationController?.pushViewController(previewListVC, animated: true)
+//            let previewListVC = storyboard?.instantiateViewController(withIdentifier: "PreviewListViewController") as! PreviewListViewController
+//            self.navigationController?.pushViewController(previewListVC, animated: true)
+           
         }
         
     }
@@ -366,6 +387,7 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
             coreDataPreviewList.modified_time = Date()
         }
         CoreDataStack.saveContext()
+      
     }
     
     func captureImageForPreview() -> String? {
@@ -373,13 +395,26 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
 //        self.drawVieww.layer.render(in: UIGraphicsGetCurrentContext()!)
 //        let image = UIGraphicsGetImageFromCurrentImageContext();
 //        UIGraphicsEndImageContext();
-        let image = drawVieww?.snapshot
+        var getpreviewimage: UIImage!
+        if(getnewImage == nil)
+        {
+            getpreviewimage = drawVieww?.snapshot
+
+        }else{
+            getpreviewimage = filteredImageView?.snapshot
+
+        }
+        //let DiaryListVC = storyboard?.instantiateViewController(withIdentifier: "DiaryViewController") as! DiaryViewController
+        let DiaryListVC = self.navigationController?.viewControllers[(self.navigationController?.viewControllers.count)!-2] as! DiaryViewController!
+        DiaryListVC?.PreviewSelectedimage = getpreviewimage
+        self.navigationController?.popToViewController(DiaryListVC!, animated: true)
+       // self.navigationController?.pushViewController(DiaryListVC, animated: true)
         var imageName = Date().description
         imageName = imageName.replacingOccurrences(of: " ", with: "") + ".png"
         imageName = imageName.replacingOccurrences(of: ":", with: "")
         let fullImagePath = previewImagesDirectoryPath + "/\(imageName)"
         
-        let data = UIImagePNGRepresentation((image)!)
+        let data = UIImagePNGRepresentation((getpreviewimage)!)
         let success = FileManager.default.createFile(atPath: fullImagePath, contents: data, attributes: nil)
         if(success){
             print("Preview Image saved successfully in local")

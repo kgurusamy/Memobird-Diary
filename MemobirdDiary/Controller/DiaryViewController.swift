@@ -61,6 +61,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
     @IBOutlet weak var sliderFontSize : UISlider!
     @IBOutlet weak var btnTextFont : UIButton!
     @IBOutlet weak var btnTextFormat : UIButton!
+    var PreviewSelectedimage: UIImage?
     var fontArray = UIFont.familyNames
     let collectionViewRows = 2
     let columnsInFirstPage = 5
@@ -648,7 +649,6 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         }
         collectionView.reloadData()
     }
-    
     // MARK:- ViewController delegate methods
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -672,12 +672,18 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         //0,450
       
     
-        self.editorBGview.layer.zPosition = 1;
+        //self.editorBGview.layer.zPosition = 1;
        // editorBGview.frame = CGRect(x: 0, y: 532, width: self.editorBGview.frame.width, height: self.editorBGview.frame.height)
-       // editorBGview.bringSubview(toFront: scrollView)
+        self.view.bringSubview(toFront: editorBGview)
         materialBGview.frame = CGRect(x: 0, y: 1000, width: self.materialBGview.frame.width, height: self.materialBGview.frame.height)
      //self.view.bringSubview(toFront: self.tabBarview)
-        self.view.bringSubview(toFront: self.vwTextOptions)    
+        
+        
+        self.view.bringSubview(toFront: self.vwTextOptions)
+        ////////////////////////Image view
+        
+       
+        ///////////////////////
      
     }
  
@@ -693,7 +699,21 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
             }
             mode = ""
         }
-        
+        if(PreviewSelectedimage !== nil){
+            var imageName = Date().description
+            imageName = imageName.replacingOccurrences(of: " ", with: "") + ".png"
+            imageName = imageName.replacingOccurrences(of: ":", with: "")
+            let fullImagePath = imagesDirectoryPath + "/\(imageName)"
+            let myImage = self.fixOrientation(image: PreviewSelectedimage!)
+            
+            dragzoomroatateview(img:myImage, imgName: imageName, type: contentType.image.rawValue, attributedString: NSAttributedString(string:""))
+            let data = UIImagePNGRepresentation(myImage)
+            let success = FileManager.default.createFile(atPath: fullImagePath, contents: data, attributes: nil)
+            if(success){
+                print("image saved successfully in local")
+            }
+            PreviewSelectedimage = nil
+        }
         // Collection view UI changes
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
@@ -710,7 +730,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         super.viewDidLayoutSubviews()
         
       //  scrollView.frame = CGRect(x: 10, y: 70, width: self.view.frame.size.width-20, height: self.view.frame.size.height-180)
-          scrollView.frame = CGRect(x: 10, y: 70, width: self.view.frame.size.width-20, height: self.view.frame.size.height-150)
+          scrollView.frame = CGRect(x: 10, y: 70, width: self.view.frame.size.width-20, height: self.view.frame.size.height)
     }
     
 
@@ -734,6 +754,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         {
             self.scrollView.isScrollEnabled = true
             hideOtherViewSelection()
+             self.backgroundTextView.resignFirstResponder()
             //stickerView.hideEditingHandles()
         }
     }
@@ -883,16 +904,17 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
     @IBAction func PreDefineimgbtn(_ sender: Any)
     {
         materialBGview.frame = CGRect(x: 0, y: 420, width: self.materialBGview.frame.width, height: self.materialBGview.frame.height)
-        scrollView.frame = CGRect(x: 10, y: 70, width: self.view.frame.size.width-20, height: self.view.frame.size.height-320)
+        scrollView.frame = CGRect(x: 10, y: 70, width: self.view.frame.size.width-20, height: self.view.frame.size.height)
         print("PreDefineimgbtn")
+        
       //  editorBGview.frame = CGRect(x: 0, y: 672, width: self.editorBGview.frame.width, height: self.editorBGview.frame.height)
       //  scrollView.frame = CGRect(x: 10, y: 70, width: self.view.frame.size.width-20, height: self.view.frame.size.height-160)
     }
     @IBAction func morebtn(_ sender: Any)
     {
         print("morebtn")
-        editorBGview.frame = CGRect(x: 0, y: 530, width: self.editorBGview.frame.width, height: self.editorBGview.frame.height)
-            scrollView.frame = CGRect(x: 10, y: 70, width: self.view.frame.size.width-20, height: self.view.frame.size.height-280)
+        editorBGview.frame = CGRect(x: 0, y: 480, width: self.editorBGview.frame.width, height: self.editorBGview.frame.height)
+            scrollView.frame = CGRect(x: 10, y: 70, width: self.view.frame.size.width-20, height: self.view.frame.size.height)
 
     }
     @IBAction func PredefineTextimgbtn(_ sender: Any)
@@ -903,6 +925,9 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
     @IBAction func Grafittbtn(_ sender: Any)
     {
         print("Grafittbtn")
+        camselectedimage = nil
+        performSegue(withIdentifier: "ExportFiltersViewController", sender: self)
+
 
     }
     @IBAction func Barcodebtn(_ sender: Any)
@@ -958,12 +983,12 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         let fullImagePath = imagesDirectoryPath + "/\(imageName)"
         let myImage = self.fixOrientation(image: (info[UIImagePickerControllerOriginalImage] as? UIImage)!)
         
-        dragzoomroatateview(img:myImage, imgName: imageName, type: contentType.image.rawValue, attributedString: NSAttributedString(string:""))
-        let data = UIImagePNGRepresentation(myImage)
-        let success = FileManager.default.createFile(atPath: fullImagePath, contents: data, attributes: nil)
-        if(success){
-            print("image saved successfully in local")
-        }
+        //dragzoomroatateview(img:myImage, imgName: imageName, type: contentType.image.rawValue, attributedString: NSAttributedString(string:""))
+        //let data = UIImagePNGRepresentation(myImage)
+        //let success = FileManager.default.createFile(atPath: fullImagePath, contents: data, attributes: nil)
+//        if(success){
+//            print("image saved successfully in local")
+//        }
         
         self.dismiss(animated: true, completion: nil)
         for descriptor in filterDescriptors {
@@ -984,7 +1009,9 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         if segue.identifier == "ExportFiltersViewController" {
             if let nextViewController = segue.destination as? ExportFiltersViewController
             {
+                if(camselectedimage !== nil){
                 nextViewController.getnewImage = camselectedimage
+                }
 
                 
             }
