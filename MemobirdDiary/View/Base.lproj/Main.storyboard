@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="nAL-aO-gXs">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="nAL-aO-gXs">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
         <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -103,13 +103,13 @@
                                                     <action selector="PreDefineimgbtn:" destination="RSf-TL-MCZ" eventType="touchUpInside" id="Ig2-Bz-PlJ"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A3J-Gx-uKV">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A3J-Gx-uKV" userLabel="btnTextBox">
                                                 <rect key="frame" x="8" y="64" width="40" height="40"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="40" id="FpB-yK-SbX"/>
                                                     <constraint firstAttribute="width" constant="40" id="jFC-qL-Ohp"/>
                                                 </constraints>
-                                                <state key="normal" backgroundImage="ico_format.png"/>
+                                                <state key="normal" backgroundImage="ico_text"/>
                                                 <connections>
                                                     <action selector="PredefineTextimgbtn:" destination="RSf-TL-MCZ" eventType="touchUpInside" id="eSM-Cs-D7W"/>
                                                 </connections>
@@ -557,6 +557,71 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZMZ-RO-AV7" userLabel="vwTextBoxOptions">
+                                <rect key="frame" x="0.0" y="367" width="320" height="201"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BCo-gl-9Sl" userLabel="btnTextBox">
+                                        <rect key="frame" x="10" y="10" width="48" height="48"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="48" id="Bhm-Fv-NNq"/>
+                                            <constraint firstAttribute="width" constant="48" id="dT6-vU-DAc"/>
+                                        </constraints>
+                                        <state key="normal" backgroundImage="ico_text"/>
+                                        <connections>
+                                            <action selector="btnTextFormat:" destination="RSf-TL-MCZ" eventType="touchUpInside" id="w2A-6G-20E"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ord-Qu-cTs" userLabel="btnTextBoxComplete">
+                                        <rect key="frame" x="256" y="10" width="48" height="48"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="48" id="hhH-6e-1aJ"/>
+                                            <constraint firstAttribute="width" constant="48" id="vrX-MF-kkA"/>
+                                        </constraints>
+                                        <state key="normal" backgroundImage="ico_complete_checked"/>
+                                        <connections>
+                                            <action selector="btnCompleteTextBoxOption:" destination="RSf-TL-MCZ" eventType="touchUpInside" id="uBP-Cd-NfG"/>
+                                        </connections>
+                                    </button>
+                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="fQN-ZM-2kF">
+                                        <rect key="frame" x="0.0" y="64" width="320" height="127"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="127" id="Mwq-hL-2dB"/>
+                                        </constraints>
+                                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="naw-wr-rBe">
+                                            <size key="itemSize" width="50" height="50"/>
+                                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        </collectionViewFlowLayout>
+                                        <cells>
+                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cellTextBox" id="Aga-ev-7Km">
+                                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                </view>
+                                            </collectionViewCell>
+                                        </cells>
+                                        <connections>
+                                            <outlet property="dataSource" destination="RSf-TL-MCZ" id="cfv-eL-XIf"/>
+                                            <outlet property="delegate" destination="RSf-TL-MCZ" id="z8q-xF-5RR"/>
+                                        </connections>
+                                    </collectionView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="ord-Qu-cTs" secondAttribute="trailing" constant="16" id="8Rh-4d-R6I"/>
+                                    <constraint firstItem="fQN-ZM-2kF" firstAttribute="leading" secondItem="ZMZ-RO-AV7" secondAttribute="leading" id="AJ7-SY-lhs"/>
+                                    <constraint firstItem="ord-Qu-cTs" firstAttribute="top" secondItem="ZMZ-RO-AV7" secondAttribute="top" constant="10" id="LW3-Zb-xRj"/>
+                                    <constraint firstItem="BCo-gl-9Sl" firstAttribute="top" secondItem="ZMZ-RO-AV7" secondAttribute="top" constant="10" id="RNz-UB-GS0"/>
+                                    <constraint firstAttribute="bottom" secondItem="fQN-ZM-2kF" secondAttribute="bottom" constant="10" id="XLg-1r-SLO"/>
+                                    <constraint firstItem="BCo-gl-9Sl" firstAttribute="leading" secondItem="ZMZ-RO-AV7" secondAttribute="leading" constant="10" id="hxE-91-jWT"/>
+                                    <constraint firstAttribute="height" constant="201" id="nlF-lf-bSm"/>
+                                    <constraint firstAttribute="trailing" secondItem="fQN-ZM-2kF" secondAttribute="trailing" id="tua-y3-Lys"/>
+                                </constraints>
+                            </view>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NFn-98-5nC" userLabel="vwTextOptions">
                                 <rect key="frame" x="0.0" y="367" width="320" height="201"/>
                                 <subviews>
@@ -719,6 +784,7 @@
                             <constraint firstItem="0rm-fi-8y3" firstAttribute="centerX" secondItem="22o-Em-koE" secondAttribute="centerX" id="Kbq-6g-7T7"/>
                             <constraint firstItem="U6L-sS-Xf9" firstAttribute="leading" secondItem="H7e-az-h9A" secondAttribute="leading" id="PrE-eS-lTA"/>
                             <constraint firstItem="0rm-fi-8y3" firstAttribute="centerY" secondItem="22o-Em-koE" secondAttribute="centerY" id="T6M-da-6r0"/>
+                            <constraint firstItem="H0U-VP-0lV" firstAttribute="bottom" secondItem="ZMZ-RO-AV7" secondAttribute="bottom" id="Xc4-cI-cVe"/>
                             <constraint firstItem="H0U-VP-0lV" firstAttribute="bottom" secondItem="NFn-98-5nC" secondAttribute="bottom" id="Zyj-Bi-dE2"/>
                             <constraint firstAttribute="bottom" secondItem="U6L-sS-Xf9" secondAttribute="bottom" constant="-204" id="acF-Ts-zfC"/>
                             <constraint firstItem="H0U-VP-0lV" firstAttribute="trailing" secondItem="eHF-Fa-KNq" secondAttribute="trailing" constant="16" id="bTM-S5-NrS"/>
@@ -726,11 +792,13 @@
                             <constraint firstItem="U6L-sS-Xf9" firstAttribute="top" secondItem="22o-Em-koE" secondAttribute="top" constant="568" id="ewq-ZL-7fA"/>
                             <constraint firstItem="H7e-az-h9A" firstAttribute="leading" secondItem="H0U-VP-0lV" secondAttribute="leading" id="fFb-4E-WVp"/>
                             <constraint firstItem="nwb-Ry-pNg" firstAttribute="top" secondItem="22o-Em-koE" secondAttribute="top" id="frA-iE-UfA"/>
+                            <constraint firstItem="ZMZ-RO-AV7" firstAttribute="leading" secondItem="H0U-VP-0lV" secondAttribute="leading" id="fyi-uz-aZ9"/>
                             <constraint firstItem="U6L-sS-Xf9" firstAttribute="trailing" secondItem="H7e-az-h9A" secondAttribute="trailing" id="kWg-7d-Qnh"/>
                             <constraint firstItem="U6L-sS-Xf9" firstAttribute="trailing" secondItem="nwb-Ry-pNg" secondAttribute="trailing" id="l2e-1c-hQb"/>
                             <constraint firstItem="U6L-sS-Xf9" firstAttribute="top" secondItem="nwb-Ry-pNg" secondAttribute="bottom" id="mFA-Gt-gsF"/>
                             <constraint firstItem="NFn-98-5nC" firstAttribute="trailing" secondItem="H0U-VP-0lV" secondAttribute="trailing" id="sA3-oL-oJN"/>
                             <constraint firstAttribute="bottom" secondItem="H7e-az-h9A" secondAttribute="bottom" constant="-140" id="vBj-pN-yAm"/>
+                            <constraint firstItem="ZMZ-RO-AV7" firstAttribute="trailing" secondItem="H0U-VP-0lV" secondAttribute="trailing" id="zSh-xY-ily"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="H0U-VP-0lV"/>
                     </view>
@@ -750,9 +818,11 @@
                         <outlet property="materialBGview" destination="U6L-sS-Xf9" id="HcG-gy-yUh"/>
                         <outlet property="morebtnoutlet" destination="3vI-iE-iXk" id="MTt-sh-WlI"/>
                         <outlet property="sliderFontSize" destination="wa0-pm-8il" id="lch-n3-dua"/>
+                        <outlet property="textBoxCollectionView" destination="fQN-ZM-2kF" id="AOm-zu-4VF"/>
                         <outlet property="txtVwQRCode" destination="tR8-pY-Vse" id="Oul-yr-YwI"/>
                         <outlet property="vwOverlay" destination="nwb-Ry-pNg" id="vwl-Tg-uzM"/>
                         <outlet property="vwQRCode" destination="0rm-fi-8y3" id="qbQ-Uv-ZNc"/>
+                        <outlet property="vwTextBoxOption" destination="ZMZ-RO-AV7" id="S64-gK-0wO"/>
                         <outlet property="vwTextFont" destination="d1d-Ix-P6E" id="mhJ-CK-T7U"/>
                         <outlet property="vwTextFormat" destination="6fe-N0-Z7r" id="IJc-hW-C2t"/>
                         <outlet property="vwTextOptions" destination="NFn-98-5nC" id="tal-h2-jf8"/>
@@ -1574,6 +1644,7 @@
         <image name="font.png" width="24" height="24"/>
         <image name="ico_bold_unchecked.png" width="104" height="104"/>
         <image name="ico_center_unchecked.png" width="104" height="104"/>
+        <image name="ico_complete_checked" width="90" height="90"/>
         <image name="ico_complete_unchecked.png" width="90" height="90"/>
         <image name="ico_font.png" width="90" height="90"/>
         <image name="ico_format.png" width="90" height="90"/>
@@ -1582,6 +1653,7 @@
         <image name="ico_more.png" width="90" height="90"/>
         <image name="ico_right_unchecked.png" width="104" height="104"/>
         <image name="ico_save.png" width="90" height="90"/>
+        <image name="ico_text" width="90" height="90"/>
         <image name="ico_underline_unchecked.png" width="104" height="104"/>
         <image name="icon_plus.png" width="24" height="24"/>
         <image name="memobirdicon" width="310" height="310"/>

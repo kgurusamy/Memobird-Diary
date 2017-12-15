@@ -59,33 +59,44 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
     @IBOutlet weak var vwTextOptions : UIView!
     @IBOutlet weak var vwTextFormat : UIView!
     @IBOutlet weak var vwTextFont : UIView!
+    
     @IBOutlet weak var sliderFontSize : UISlider!
     @IBOutlet weak var btnTextFont : UIButton!
     @IBOutlet weak var btnTextFormat : UIButton!
     @IBOutlet weak var fontCollectionView:UICollectionView!
+   
     var fontArray = UIFont.familyNames
     let columnsInFirstPage = 5
     var selectedCollectionItemIndex : Int = -1
     var selectedFontName : String = UIFont.familyNames[0]
     var sliderFontSizeValue : Float = 0.0
     let collectionViewRows = 2
-
+    
     var PreviewSelectedimage: UIImage?
+    
+    // MARK:- TextBox Option controls
+    @IBOutlet weak var vwTextBoxOption : UIView!
+    @IBOutlet weak var textBoxCollectionView:UICollectionView!
+    var textBoxImagesArray = ["text_01.png","text_02.png","text_03.png","text_04.png","text_05.png","text_06.png","text_07.png"]
+    
     // MARK:- QRCode related controls
     @IBOutlet weak var vwOverlay : UIView!
     @IBOutlet weak var vwQRCode : UIView!
     @IBOutlet weak var txtVwQRCode : UITextView!
     
+     // MARK:- Image filter related
     @IBOutlet weak var materialBGview: UIView!
     var filters = [CIFilter]()
     fileprivate var colorControl = ColorControl()
     //////////
-    @IBOutlet weak var editorBGview: UIView!
+   
     /////////////////
     @IBOutlet weak var filterscollectionView: UICollectionView!
     @IBOutlet weak var filterscontrastsliderBGview: UIView!
     @IBOutlet weak var filtercollectionviewbg: UIView!
     
+     // MARK:- Editor controls
+    @IBOutlet weak var editorBGview: UIView!
     @IBOutlet weak var EditorBGTempView: UIView!
     @IBOutlet weak var brightnesssliderBGview: UIView!
     @IBOutlet weak var morebtnoutlet: UIButton!
@@ -163,6 +174,8 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
     }
     @IBAction func Rotateimgbtn(_ sender: Any) {
     }
+    
+     // MARK:- Local storage coredata related
     func loadData(atIndex : Int)
     {
         self.scrollView.subviews.forEach({ $0.removeFromSuperview() })
@@ -330,6 +343,8 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         }
         return imageName
     }
+    
+    
     func getSavedData()
     {
         let fetchRequest: NSFetchRequest<DiaryEntry> = DiaryEntry.fetchRequest()
@@ -347,8 +362,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         }
     }
     // MARK:- QR Code related methods
- 
-    
+
     @IBAction func btnQRPopupClose_clicked(_ sender : UIButton){
         self.vwOverlay.isHidden = true
         self.vwQRCode.isHidden = true
@@ -522,6 +536,11 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
     {
         vwTextOptions.isHidden = true
     }
+    
+    @IBAction func btnCompleteTextBoxOption(_ sender : UIButton)
+    {
+        vwTextBoxOption.isHidden = true
+    }
     func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView)
     {
         self.scrollView.isScrollEnabled = true
@@ -552,12 +571,20 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
    
     // MARK:- Font CollectionView delegate methods
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if(collectionView == fontCollectionView){
         return columns*collectionViewRows
+        }
+        else if(collectionView == textBoxCollectionView){
+            return textBoxImagesArray.count
+        }
+        else{
+            return 0
+        }
         //return 50
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
+        if(collectionView == fontCollectionView){
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
         
         //cell.backgroundColor = UIColor.green
@@ -593,12 +620,26 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
                 labelFontCheck.textColor = UIColor.black
             }
         }
-        
-        return cell
+          return cell
+        }
+        else if(collectionView == textBoxCollectionView)
+        {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellTextBox", for: indexPath)
+            let imgTextBoxItem = UIImageView()
+            imgTextBoxItem.image = UIImage(named: textBoxImagesArray[indexPath.row])
+            
+            if(cell.contentView.subviews.count==0){
+                imgTextBoxItem.frame = CGRect(x:0, y:0, width:80, height:80)
+                cell.addSubview(imgTextBoxItem)
+            }
+            return cell
+        }
+        return UICollectionViewCell()
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath)
     {
+        if(collectionView == fontCollectionView){
         let btnBold = self.view.viewWithTag(textFormat.bold.rawValue) as! UIButton
         let btnItalic = self.view.viewWithTag(textFormat.italic.rawValue) as! UIButton
         selectedCollectionItemIndex = indexPath.row
@@ -617,7 +658,9 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
             backgroundTextView.font = backgroundTextView.font?.bold().italic()
         }
         collectionView.reloadData()
+        }
     }
+    
     // MARK:- ViewController delegate methods
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -740,15 +783,25 @@ addDoneButtonOnKeyboard()
             PreviewSelectedimage = nil
         }
         // Collection view UI changes
-        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
-        layout.itemSize = CGSize(width: 50, height: 50)
-        layout.scrollDirection = .horizontal
+        let fontCollectionlayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        fontCollectionlayout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+        fontCollectionlayout.itemSize = CGSize(width: 50, height: 50)
+        fontCollectionlayout.scrollDirection = .horizontal
         fontCollectionView.frame = CGRect(x:0,y:0,width:self.view.frame.width,height:120)
-        fontCollectionView.collectionViewLayout = layout
+        fontCollectionView.collectionViewLayout = fontCollectionlayout
         fontCollectionView.dataSource = self
         fontCollectionView.delegate = self
         fontCollectionView.backgroundColor = UIColor.white
+        
+        let textBoxCollectionLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        textBoxCollectionLayout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+        textBoxCollectionLayout.itemSize = CGSize(width: 80, height: 80)
+        textBoxCollectionLayout.scrollDirection = .horizontal
+        textBoxCollectionView.frame = CGRect(x:0,y:0,width:self.view.frame.width,height:160)
+        textBoxCollectionView.collectionViewLayout = textBoxCollectionLayout
+        textBoxCollectionView.dataSource = self
+        textBoxCollectionView.delegate = self
+        textBoxCollectionView.backgroundColor = UIColor.white
         //self.vwOverlay.isHidden = true
 
     }
@@ -953,6 +1006,8 @@ addDoneButtonOnKeyboard()
     }
     @IBAction func PredefineTextimgbtn(_ sender: Any)
     {
+        self.view.bringSubview(toFront: vwTextBoxOption)
+        vwTextBoxOption.isHidden = false
     }
     @IBAction func Grafittbtn(_ sender: Any)
     {
@@ -1269,19 +1324,5 @@ extension UIFont {
     func noBold() -> UIFont {
         return withoutTraits(.traitBold)
     }
-    // MARK:- Material methods IN PROGRESS
-    @IBAction func materialimg6btn(_ sender: Any) {
-    }
-    @IBAction func materialimg5btn(_ sender: Any) {
-    }
-    @IBAction func materialimg4btn(_ sender: Any) {
-    }
-    @IBAction func materialimg3btn(_ sender: Any) {
-    }
-    @IBAction func materialimg2btn(_ sender: Any) {
-    }
-    @IBAction func materialimg1btn(_ sender: Any) {
-    }
-    @IBAction func materialOKbtn(_ sender: Any) {
-    }
+    
 }
