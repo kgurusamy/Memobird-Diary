@@ -78,7 +78,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
     @IBOutlet weak var vwTextBoxOption : UIView!
     @IBOutlet weak var textBoxCollectionView:UICollectionView!
     var textBoxImagesArray = ["text_01.png","text_02.png","text_03.png","text_04.png","text_05.png","text_06.png","text_07.png"]
-    
+    var materialImagesArray = ["material1.png","material2.png","material3.png","material4.png","material5.png","material6.png","material7.png","material8.png","material9.png"]
     // MARK:- QRCode related controls
     @IBOutlet weak var vwOverlay : UIView!
     @IBOutlet weak var vwQRCode : UIView!
@@ -592,7 +592,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         else if(collectionView == textBoxCollectionView){
             return textBoxImagesArray.count
         }else if(collectionView == materialcollectionView){
-            return textBoxImagesArray.count
+            return materialImagesArray.count
         }
         else{
             return 0
@@ -655,7 +655,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellMaterial", for: indexPath)
             let imgTextBoxItem = UIImageView()
-            imgTextBoxItem.image = UIImage(named: textBoxImagesArray[indexPath.row])
+            imgTextBoxItem.image = UIImage(named: materialImagesArray[indexPath.row])
             
             if(cell.contentView.subviews.count==0){
                 imgTextBoxItem.frame = CGRect(x:0, y:0, width:80, height:80)
@@ -695,7 +695,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
             imageName = imageName.replacingOccurrences(of: " ", with: "") + ".png"
             imageName = imageName.replacingOccurrences(of: ":", with: "")
             let fullImagePath = imagesDirectoryPath + "/\(imageName)"
-            var getimageName : UIImage = UIImage(named:textBoxImagesArray[indexPath.row])!
+            var getimageName : UIImage = UIImage(named:materialImagesArray[indexPath.row])!
             let myImage = self.fixOrientation(image: getimageName)
             
             dragzoomroatateview(img:myImage, imgName: imageName, type: contentType.image.rawValue, attributedString: NSAttributedString(string:""))
