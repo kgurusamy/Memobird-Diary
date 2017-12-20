@@ -84,7 +84,12 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
     @IBOutlet weak var vwQRCode : UIView!
     @IBOutlet weak var txtVwQRCode : UITextView!
     
-     // MARK:- Image filter related
+    @IBOutlet weak var materialsBGview: UIView!
+    
+    @IBOutlet weak var materialcollectionView: UICollectionView!
+    
+    
+    // MARK:- Image filter related
     @IBOutlet weak var materialBGview: UIView!
     var filters = [CIFilter]()
     fileprivate var colorControl = ColorControl()
@@ -105,8 +110,18 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
     var columns: Int { return fontArray.count<=columnsInFirstPage ? fontArray.count : fontArray.count > collectionViewRows*columnsInFirstPage ? (fontArray.count-1)/collectionViewRows + 1 : columnsInFirstPage }
     
     
+    @IBAction func materialSavebtn(_ sender: Any)
+    {
+        self.materialsBGview.isHidden = true
+
+    }
     
-  
+    @IBAction func materialbackbtn(_ sender: Any)
+    {
+        self.materialsBGview.isHidden = true
+
+    }
+    
     @IBAction func cambtn(_ sender: Any)
     {
         let optionMenu = UIAlertController(title: nil, message: "Choose Image", preferredStyle: .actionSheet)
@@ -576,6 +591,8 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         }
         else if(collectionView == textBoxCollectionView){
             return textBoxImagesArray.count
+        }else if(collectionView == materialcollectionView){
+            return textBoxImagesArray.count
         }
         else{
             return 0
@@ -634,6 +651,18 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
             }
             return cell
         }
+        else if(collectionView == materialcollectionView)
+        {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellMaterial", for: indexPath)
+            let imgTextBoxItem = UIImageView()
+            imgTextBoxItem.image = UIImage(named: textBoxImagesArray[indexPath.row])
+            
+            if(cell.contentView.subviews.count==0){
+                imgTextBoxItem.frame = CGRect(x:0, y:0, width:80, height:80)
+                cell.addSubview(imgTextBoxItem)
+            }
+            return cell
+        }
         return UICollectionViewCell()
     }
     
@@ -657,7 +686,24 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         {
             backgroundTextView.font = backgroundTextView.font?.bold().italic()
         }
+            
         collectionView.reloadData()
+        }
+        if(collectionView == materialcollectionView)
+        {
+            var imageName = Date().description
+            imageName = imageName.replacingOccurrences(of: " ", with: "") + ".png"
+            imageName = imageName.replacingOccurrences(of: ":", with: "")
+            let fullImagePath = imagesDirectoryPath + "/\(imageName)"
+            var getimageName : UIImage = UIImage(named:textBoxImagesArray[indexPath.row])!
+            let myImage = self.fixOrientation(image: getimageName)
+            
+            dragzoomroatateview(img:myImage, imgName: imageName, type: contentType.image.rawValue, attributedString: NSAttributedString(string:""))
+            let data = UIImagePNGRepresentation(myImage)
+            let success = FileManager.default.createFile(atPath: fullImagePath, contents: data, attributes: nil)
+            if(success){
+                print("image saved successfully in local")
+            }
         }
     }
     
@@ -691,8 +737,9 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         materialBGview.frame = CGRect(x: 0, y: 1000, width: self.materialBGview.frame.width, height: self.materialBGview.frame.height)
      //self.view.bringSubview(toFront: self.tabBarview)
         
-        
+        self.view.bringSubview(toFront: self.materialsBGview)
         self.view.bringSubview(toFront: self.vwTextOptions)
+        self.materialsBGview.isHidden = true
         ////////////////////////Image view
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: .UIKeyboardWillShow, object: nil)
@@ -802,6 +849,16 @@ addDoneButtonOnKeyboard()
         textBoxCollectionView.dataSource = self
         textBoxCollectionView.delegate = self
         textBoxCollectionView.backgroundColor = UIColor.white
+        /////////Material collection view
+        let materialCollectionLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        materialCollectionLayout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+        materialCollectionLayout.itemSize = CGSize(width: 80, height: 80)
+        materialCollectionLayout.scrollDirection = .horizontal
+        materialcollectionView.frame = CGRect(x:0,y:0,width:self.view.frame.width,height:160)
+        materialcollectionView.collectionViewLayout = materialCollectionLayout
+        materialcollectionView.dataSource = self
+        materialcollectionView.delegate = self
+        materialcollectionView.backgroundColor = UIColor.white
         //self.vwOverlay.isHidden = true
 
     }
@@ -983,9 +1040,11 @@ addDoneButtonOnKeyboard()
     }
     @IBAction func PreDefineimgbtn(_ sender: Any)
     {
-        materialBGview.frame = CGRect(x: 0, y: 420, width: self.materialBGview.frame.width, height: self.materialBGview.frame.height)
-        scrollView.frame = CGRect(x: 10, y: 70, width: self.view.frame.size.width-20, height: self.view.frame.size.height)
-        print("PreDefineimgbtn")
+//        materialBGview.frame = CGRect(x: 0, y: 420, width: self.materialBGview.frame.width, height: self.materialBGview.frame.height)
+//        scrollView.frame = CGRect(x: 10, y: 70, width: self.view.frame.size.width-20, height: self.view.frame.size.height)
+//        print("PreDefineimgbtn")
+        self.view.bringSubview(toFront: self.materialsBGview)
+        self.materialsBGview.isHidden = false
         
       //  editorBGview.frame = CGRect(x: 0, y: 672, width: self.editorBGview.frame.width, height: self.editorBGview.frame.height)
       //  scrollView.frame = CGRect(x: 10, y: 70, width: self.view.frame.size.width-20, height: self.view.frame.size.height-160)

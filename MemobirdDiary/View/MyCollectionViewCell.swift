@@ -12,3 +12,4 @@ class MyCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var textlabel: UILabel!
 }
+
