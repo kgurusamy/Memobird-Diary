@@ -19,6 +19,7 @@ var previewImagesDirectoryPath : String!
 enum contentType: Int {
     case image = 0
     case text = 1
+    case imageAndText = 2
 }
 // For checking text Formatting buttons tag
 enum textFormat: Int {
@@ -654,12 +655,12 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         else if(collectionView == materialcollectionView)
         {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellMaterial", for: indexPath)
-            let imgTextBoxItem = UIImageView()
-            imgTextBoxItem.image = UIImage(named: materialImagesArray[indexPath.row])
+            let imgMaterialItem = UIImageView()
+            imgMaterialItem.image = UIImage(named: materialImagesArray[indexPath.row])
             
             if(cell.contentView.subviews.count==0){
-                imgTextBoxItem.frame = CGRect(x:0, y:0, width:80, height:80)
-                cell.addSubview(imgTextBoxItem)
+                imgMaterialItem.frame = CGRect(x:0, y:0, width:80, height:80)
+                cell.addSubview(imgMaterialItem)
             }
             return cell
         }
@@ -691,11 +692,24 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         }
         if(collectionView == materialcollectionView)
         {
-            var imageName = Date().description
-            imageName = imageName.replacingOccurrences(of: " ", with: "") + ".png"
-            imageName = imageName.replacingOccurrences(of: ":", with: "")
+            let imageName = getImageNameFromDate()
             let fullImagePath = imagesDirectoryPath + "/\(imageName)"
-            var getimageName : UIImage = UIImage(named:materialImagesArray[indexPath.row])!
+            let getimageName : UIImage = UIImage(named:materialImagesArray[indexPath.row])!
+            let myImage = self.fixOrientation(image: getimageName)
+            
+            dragzoomroatateview(img:myImage, imgName: imageName, type: contentType.image.rawValue, attributedString: NSAttributedString(string:""))
+            let data = UIImagePNGRepresentation(myImage)
+            let success = FileManager.default.createFile(atPath: fullImagePath, contents: data, attributes: nil)
+            if(success){
+                print("image saved successfully in local")
+            }
+        }
+        
+        if(collectionView == textBoxCollectionView)
+        {
+            let imageName = getImageNameFromDate()
+            let fullImagePath = imagesDirectoryPath + "/\(imageName)"
+            let getimageName : UIImage = UIImage(named:textBoxImagesArray[indexPath.row])!
             let myImage = self.fixOrientation(image: getimageName)
             
             dragzoomroatateview(img:myImage, imgName: imageName, type: contentType.image.rawValue, attributedString: NSAttributedString(string:""))
