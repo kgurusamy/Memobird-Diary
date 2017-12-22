@@ -79,7 +79,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
     @IBOutlet weak var vwTextBoxOption : UIView!
     @IBOutlet weak var textBoxCollectionView:UICollectionView!
     var textBoxImagesArray = ["text_01.png","text_02.png","text_03.png","text_04.png","text_05.png","text_06.png","text_07.png"]
-    var materialImagesArray = ["material1.png","material2.png","material3.png","material4.png","material5.png","material6.png","material7.png","material8.png","material9.png"]
+    var materialImagesArray = ["bubble_graph_1.png","bubble_graph_2.png","bubble_graph_3.png","bubble_graph_4.png","bubble_graph_5.png.png","food_breakfast.png","food_cake.png","food_drinking.png","food_spice.png","food_tea.png","im31.png","im32.png","im33.png","im34.png","im35.png","im36.png","im37.png","im38.png","im39.png","im40.png","im44.png","im45.png","im46.png","im47.png","im48.png","im49.png","im50.png","line_1.png","line_2.png","line_3.png","line_4.png","line_5.png","iine_6.png","iine_dash.png","line_dot.png","line_head_bold.png","im50.png","im50.png","im50.png","im50.png","im50.png","im50.png"]
     // MARK:- QRCode related controls
     @IBOutlet weak var vwOverlay : UIView!
     @IBOutlet weak var vwQRCode : UIView!
