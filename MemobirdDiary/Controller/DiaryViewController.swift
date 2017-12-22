@@ -31,14 +31,14 @@ enum textFormat: Int {
     case rightAlign = 106
 }
 
-class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIGestureRecognizerDelegate,UIScrollViewDelegate,UICollectionViewDelegate, UICollectionViewDataSource {
-
+class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIGestureRecognizerDelegate,UIScrollViewDelegate,UICollectionViewDelegate, UICollectionViewDataSource, UITextViewDelegate {
     
     @IBOutlet weak var contrastslider: UISlider!
     @IBOutlet weak var brightnessslider: UISlider!
     let imagePicker = UIImagePickerController()
     var picimageView = UIImageView()
     var textLabel = UILabel()
+    var btnImageWithText = UIButton()
     var scrollView: UIScrollView!
     var diaryEntries = [DiaryEntry]()
     var dataModelArr = [dataModel]()
@@ -47,6 +47,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
     var stickerView = LDStickerView()
     var addremovecount : Int = 0
     var backgroundTextView : UITextView!
+    var keyboardHeight : CGFloat! = 0
     @IBOutlet weak var filteredImageView: FilteredImageView!
     
     // MARK:- Material Format controls
@@ -78,6 +79,10 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
     // MARK:- TextBox Option controls
     @IBOutlet weak var vwTextBoxOption : UIView!
     @IBOutlet weak var textBoxCollectionView:UICollectionView!
+    @IBOutlet weak var vwEditTextBox : UIView!
+    @IBOutlet weak var textViewEditTextBox : UITextView!
+    var selectedTextBoxButton : UIButton!
+    
     var textBoxImagesArray = ["text_01.png","text_02.png","text_03.png","text_04.png","text_05.png","text_06.png","text_07.png"]
     var materialImagesArray = ["material1.png","material2.png","material3.png","material4.png","material5.png","material6.png","material7.png","material8.png","material9.png"]
     // MARK:- QRCode related controls
@@ -430,7 +435,18 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         UIGraphicsEndImageContext();
         return resized!;
     }
+    // MARK:- TextBox methods
+    @IBAction func btnCompleteTextBox_action(_ sender : UIButton){
+        
+        selectedTextBoxButton.setAttributedTitle(textViewEditTextBox.attributedText, for: .normal)
+        textViewEditTextBox.resignFirstResponder()
+        self.vwEditTextBox.isHidden = true
+    }
     
+    func textViewDidChange(_ textView: UITextView) {
+        selectedTextBoxButton.setAttributedTitle(textViewEditTextBox.attributedText, for: .normal)
+    }
+        
      // MARK:- TextFormating methods
     @IBAction func textFormatActions(_ sender : UIButton){
         let btnLeftAlign = self.view.viewWithTag(textFormat.leftAlign.rawValue) as! UIButton
@@ -712,7 +728,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
             let getimageName : UIImage = UIImage(named:textBoxImagesArray[indexPath.row])!
             let myImage = self.fixOrientation(image: getimageName)
             
-            dragzoomroatateview(img:myImage, imgName: imageName, type: contentType.image.rawValue, attributedString: NSAttributedString(string:""))
+            dragzoomroatateview(img:myImage, imgName: imageName, type: contentType.imageAndText.rawValue, attributedString: NSAttributedString(string:"Double Tab to edit"))
             let data = UIImagePNGRepresentation(myImage)
             let success = FileManager.default.createFile(atPath: fullImagePath, contents: data, attributes: nil)
             if(success){
@@ -756,8 +772,9 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         self.materialsBGview.isHidden = true
         ////////////////////////Image view
         
+        textViewEditTextBox.delegate = self
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: .UIKeyboardWillShow, object: nil)
-addDoneButtonOnKeyboard()
+        addDoneButtonOnKeyboard()
         ///////////////////////
 
     }
@@ -778,6 +795,7 @@ addDoneButtonOnKeyboard()
     }
     @objc func doneButtonAction() {
         self.backgroundTextView.resignFirstResponder()
+        self.textViewEditTextBox.resignFirstResponder()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -792,6 +810,7 @@ addDoneButtonOnKeyboard()
     @objc func keyboardWillAppear() {
         //Do something here
         didDisplayedKeyboard = true
+       
     }
     
     @objc func keyboardWillDisappear() {
@@ -802,6 +821,9 @@ addDoneButtonOnKeyboard()
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         NotificationCenter.default.removeObserver(self)
+        if(vwTextBoxOption.isHidden == false){
+            vwTextBoxOption.isHidden = true
+        }
     }
     var getkeyboardHeight : CGFloat = CGFloat()
     var didDisplayedKeyboard:Bool = false
@@ -810,7 +832,18 @@ addDoneButtonOnKeyboard()
     @objc func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
             getkeyboardHeight = keyboardSize.height
-            print(getkeyboardHeight)
+           
+            if(self.vwTextBoxOption.isHidden == false && self.textViewEditTextBox.isFirstResponder == true){
+                //vwEditTextBox.isHidden = false
+                
+                if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+                    keyboardHeight = keyboardSize.height
+                    self.vwEditTextBox.frame = CGRect(x:self.vwEditTextBox.frame.origin.x,y: self.view.frame.size.height - keyboardSize.height - vwEditTextBox.frame.size.height+5, width : self.view.frame.size.width, height : self.vwEditTextBox.frame.size.height)
+                    //self.textViewEditTextBox.backgroundColor = .lightGray
+                    self.vwEditTextBox.isHidden = false
+                }
+                
+            }
            
         }
     }
@@ -932,6 +965,7 @@ addDoneButtonOnKeyboard()
             calcHeight = CGFloat(120)
         }
 
+        
         stickerView = LDStickerView(frame: CGRect(x: 40, y: self.scrollView.contentSize.height - 400, width: calcWidth, height: calcHeight))
         stickerView.accessibilityIdentifier = "drag"
 
@@ -942,6 +976,25 @@ addDoneButtonOnKeyboard()
             picimageView.accessibilityIdentifier = imgName
             picimageView.contentMode = UIViewContentMode.scaleToFill
             stickerView.setContentView(picimageView)
+        }
+        else if(type == contentType.imageAndText.rawValue){
+            let doubleTap = UITapGestureRecognizer(target: self, action: #selector(textBoxDoubleTapped))
+            doubleTap.numberOfTapsRequired = 2
+            
+            btnImageWithText = UIButton(type : .custom)
+            btnImageWithText.setBackgroundImage(img, for: .normal)
+            btnImageWithText.frame = CGRect(x: 20 , y: 20, width: calcWidth-40, height: calcHeight-40)
+            btnImageWithText.titleLabel?.textColor = .black
+            btnImageWithText.titleLabel?.numberOfLines = 0
+            btnImageWithText.setAttributedTitle(attributedString, for: .normal)
+            btnImageWithText.adjustsImageWhenHighlighted = false
+            btnImageWithText.accessibilityIdentifier = imgName
+            btnImageWithText.titleEdgeInsets = UIEdgeInsets(top:-15, left: 0, bottom: 0, right: 0)
+            btnImageWithText.isUserInteractionEnabled = false
+            stickerView.addGestureRecognizer(doubleTap)
+            
+            stickerView.setContentView(btnImageWithText)
+            
         }
         else{
             textLabel = UILabel()
@@ -962,6 +1015,18 @@ addDoneButtonOnKeyboard()
         self.scrollView.addSubview(stickerView)
         self.scrollView.isScrollEnabled = false
     }
+    
+    @objc func textBoxDoubleTapped(_ gesture : UIGestureRecognizer){
+        self.view.bringSubview(toFront: self.vwEditTextBox)
+        
+        selectedTextBoxButton = gesture.view?.subviews[0] as! UIButton
+        self.textViewEditTextBox.layer.borderWidth = 1.0
+        self.textViewEditTextBox.layer.borderColor = UIColor.gray.cgColor
+        self.textViewEditTextBox.text = selectedTextBoxButton.titleLabel?.text
+        self.textViewEditTextBox.becomeFirstResponder()
+ 
+        //addDoneButtonOnKeyboard()
+    }
 
     // MARK:- Tab bar
     func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
@@ -977,8 +1042,6 @@ addDoneButtonOnKeyboard()
         }
         if(item.tag == 1){
           
-            
-            
         }
         if(item.tag == 2){
             

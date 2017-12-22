@@ -784,11 +784,11 @@
                                 <rect key="frame" x="0.0" y="167" width="320" height="201"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qNS-uF-btB">
-                                        <rect key="frame" x="10" y="10" width="48" height="48"/>
+                                        <rect key="frame" x="10" y="10" width="36" height="36"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="48" id="YCS-8w-cDS"/>
-                                            <constraint firstAttribute="width" constant="48" id="xnp-4I-01m"/>
+                                            <constraint firstAttribute="height" constant="36" id="YCS-8w-cDS"/>
+                                            <constraint firstAttribute="width" constant="36" id="xnp-4I-01m"/>
                                         </constraints>
                                         <state key="normal" backgroundImage="cancel"/>
                                         <connections>
@@ -847,6 +847,29 @@
                                     <constraint firstAttribute="trailing" secondItem="qnu-FX-t3C" secondAttribute="trailing" id="zho-4p-5bh"/>
                                 </constraints>
                             </view>
+                            <view hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GVT-9n-C7H" userLabel="vwEditTextBox">
+                                <rect key="frame" x="0.0" y="245" width="320" height="80"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="A5U-i4-Hig">
+                                        <rect key="frame" x="5" y="8" width="269" height="64"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7ln-YK-yEH">
+                                        <rect key="frame" x="272" y="16" width="48" height="48"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <state key="normal" image="ico_complete_checked"/>
+                                        <connections>
+                                            <action selector="btnCompleteTextBox_action:" destination="RSf-TL-MCZ" eventType="touchUpInside" id="grU-v9-dmj"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="0.75290595279999994" blue="0.51700460410000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -901,7 +924,9 @@
                         <outlet property="morebtnoutlet" destination="3vI-iE-iXk" id="MTt-sh-WlI"/>
                         <outlet property="sliderFontSize" destination="wa0-pm-8il" id="lch-n3-dua"/>
                         <outlet property="textBoxCollectionView" destination="fQN-ZM-2kF" id="AOm-zu-4VF"/>
+                        <outlet property="textViewEditTextBox" destination="A5U-i4-Hig" id="EOb-ZO-V8J"/>
                         <outlet property="txtVwQRCode" destination="tR8-pY-Vse" id="Oul-yr-YwI"/>
+                        <outlet property="vwEditTextBox" destination="GVT-9n-C7H" id="YeE-GR-xXA"/>
                         <outlet property="vwOverlay" destination="nwb-Ry-pNg" id="vwl-Tg-uzM"/>
                         <outlet property="vwQRCode" destination="0rm-fi-8y3" id="qbQ-Uv-ZNc"/>
                         <outlet property="vwTextBoxOption" destination="ZMZ-RO-AV7" id="S64-gK-0wO"/>
@@ -998,7 +1023,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iyH-Qo-fzO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2542" y="-674"/>
+            <point key="canvasLocation" x="2540.625" y="-675"/>
         </scene>
         <!--History View Controller-->
         <scene sceneID="9JE-Fs-UTt">
