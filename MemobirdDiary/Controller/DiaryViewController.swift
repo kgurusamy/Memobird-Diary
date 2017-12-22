@@ -49,18 +49,10 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
     var backgroundTextView : UITextView!
     @IBOutlet weak var filteredImageView: FilteredImageView!
     
-    // MARK:- Material Format controls
-    @IBOutlet weak var materialG1BGview: UIView!
-    @IBOutlet weak var materialG2BGview: UIView!
-    @IBOutlet weak var materialG3BGview: UIView!
-    @IBOutlet weak var materialG6BGview: UIView!
-    @IBOutlet weak var materialG4BGview: UIView!
-    @IBOutlet weak var materialG5BGview: UIView!
     // MARK:- Text Format controls
     @IBOutlet weak var vwTextOptions : UIView!
     @IBOutlet weak var vwTextFormat : UIView!
     @IBOutlet weak var vwTextFont : UIView!
-    
     @IBOutlet weak var sliderFontSize : UISlider!
     @IBOutlet weak var btnTextFont : UIButton!
     @IBOutlet weak var btnTextFormat : UIButton!
@@ -85,8 +77,8 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
     @IBOutlet weak var vwQRCode : UIView!
     @IBOutlet weak var txtVwQRCode : UITextView!
     
+    // MARK:- MAterial Related
     @IBOutlet weak var materialsBGview: UIView!
-    
     @IBOutlet weak var materialcollectionView: UICollectionView!
     
     
@@ -736,17 +728,10 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         
         let gestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(scrolltouchhandlePan))
         self.view.addGestureRecognizer(gestureRecognizer)
-        
         //tabBarview.delegate = self
         imagePicker.delegate = self
-        
         createImagesFolder()
         createDiaryImagesFolder()
-        //0,450
-      
-    
-        //self.editorBGview.layer.zPosition = 1;
-       // editorBGview.frame = CGRect(x: 0, y: 532, width: self.editorBGview.frame.width, height: self.editorBGview.frame.height)
         self.view.bringSubview(toFront: editorBGview)
         materialBGview.frame = CGRect(x: 0, y: 1000, width: self.materialBGview.frame.width, height: self.materialBGview.frame.height)
      //self.view.bringSubview(toFront: self.tabBarview)
@@ -755,11 +740,9 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         self.view.bringSubview(toFront: self.vwTextOptions)
         self.materialsBGview.isHidden = true
         ////////////////////////Image view
-        
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: .UIKeyboardWillShow, object: nil)
 addDoneButtonOnKeyboard()
         ///////////////////////
-
     }
     func addDoneButtonOnKeyboard() {
         let doneToolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
@@ -967,8 +950,6 @@ addDoneButtonOnKeyboard()
     func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         
         if(item.tag == 0){
-            //let TextEditVC = storyboard?.instantiateViewController(withIdentifier: "TextEditViewController") as! TextEditViewController
-            //self.navigationController?.pushViewController(TextEditVC, animated: true)
             self.vwTextOptions.isHidden = false
             self.vwTextFormat.isHidden = false
             self.vwTextFont.isHidden = true
@@ -1020,8 +1001,6 @@ addDoneButtonOnKeyboard()
    
     @IBAction func Textbtn(_ sender: Any)
     {
-//        let TextEditVC = storyboard?.instantiateViewController(withIdentifier: "TextEditViewController") as! TextEditViewController
-//        self.navigationController?.pushViewController(TextEditVC, animated: true)
         self.vwTextOptions.isHidden = false
         self.vwTextFormat.isHidden = false
         self.vwTextFont.isHidden = true
@@ -1054,14 +1033,8 @@ addDoneButtonOnKeyboard()
     }
     @IBAction func PreDefineimgbtn(_ sender: Any)
     {
-//        materialBGview.frame = CGRect(x: 0, y: 420, width: self.materialBGview.frame.width, height: self.materialBGview.frame.height)
-//        scrollView.frame = CGRect(x: 10, y: 70, width: self.view.frame.size.width-20, height: self.view.frame.size.height)
-//        print("PreDefineimgbtn")
         self.view.bringSubview(toFront: self.materialsBGview)
         self.materialsBGview.isHidden = false
-        
-      //  editorBGview.frame = CGRect(x: 0, y: 672, width: self.editorBGview.frame.width, height: self.editorBGview.frame.height)
-      //  scrollView.frame = CGRect(x: 10, y: 70, width: self.view.frame.size.width-20, height: self.view.frame.size.height-160)
     }
     @IBAction func morebtn(_ sender: UIButton)
     {
@@ -1112,7 +1085,7 @@ addDoneButtonOnKeyboard()
    
     func openCamera()
     {
-        if(UIImagePickerController .isSourceTypeAvailable(UIImagePickerControllerSourceType.camera)){
+    if(UIImagePickerController .isSourceTypeAvailable(UIImagePickerControllerSourceType.camera)){
             imagePicker.sourceType = UIImagePickerControllerSourceType.camera
             imagePicker.allowsEditing = true
             self.present(imagePicker, animated: true, completion: nil)

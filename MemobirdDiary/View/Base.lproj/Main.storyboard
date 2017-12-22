@@ -780,15 +780,17 @@
                                     <constraint firstAttribute="bottom" secondItem="6fe-N0-Z7r" secondAttribute="bottom" id="apY-jJ-9cy"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1s4-Th-zvQ">
-                                <rect key="frame" x="0.0" y="167" width="320" height="201"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1s4-Th-zvQ">
+                                <rect key="frame" x="0.0" y="367" width="320" height="201"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qNS-uF-btB">
                                         <rect key="frame" x="10" y="10" width="48" height="48"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="48" id="YCS-8w-cDS"/>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="38" id="eyh-lq-kZ5"/>
                                             <constraint firstAttribute="width" constant="48" id="xnp-4I-01m"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="39" id="yIa-AK-hkf"/>
                                         </constraints>
                                         <state key="normal" backgroundImage="cancel"/>
                                         <connections>
@@ -840,10 +842,12 @@
                                     <constraint firstAttribute="height" constant="201" id="C1o-r2-1eZ"/>
                                     <constraint firstItem="qNS-uF-btB" firstAttribute="leading" secondItem="1s4-Th-zvQ" secondAttribute="leading" constant="10" id="L3i-nt-7LT"/>
                                     <constraint firstItem="qnu-FX-t3C" firstAttribute="leading" secondItem="1s4-Th-zvQ" secondAttribute="leading" id="LWC-Sh-A1a"/>
+                                    <constraint firstItem="qNS-uF-btB" firstAttribute="leading" secondItem="1s4-Th-zvQ" secondAttribute="leading" constant="10" id="NXf-bV-cuI"/>
                                     <constraint firstAttribute="bottom" secondItem="qnu-FX-t3C" secondAttribute="bottom" constant="10" id="VFD-TW-Gjk"/>
                                     <constraint firstItem="KhS-fS-rav" firstAttribute="top" secondItem="1s4-Th-zvQ" secondAttribute="top" constant="10" id="YlF-oR-gf6"/>
                                     <constraint firstAttribute="trailing" secondItem="KhS-fS-rav" secondAttribute="trailing" constant="8" id="ZMo-wc-dPs"/>
                                     <constraint firstItem="qNS-uF-btB" firstAttribute="top" secondItem="1s4-Th-zvQ" secondAttribute="top" constant="10" id="arJ-Wy-fVt"/>
+                                    <constraint firstItem="qNS-uF-btB" firstAttribute="top" secondItem="1s4-Th-zvQ" secondAttribute="top" constant="10" id="hxf-zJ-B27"/>
                                     <constraint firstAttribute="trailing" secondItem="qnu-FX-t3C" secondAttribute="trailing" id="zho-4p-5bh"/>
                                 </constraints>
                             </view>
