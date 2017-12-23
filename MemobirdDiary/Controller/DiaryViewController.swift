@@ -50,18 +50,10 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
     var keyboardHeight : CGFloat! = 0
     @IBOutlet weak var filteredImageView: FilteredImageView!
     
-    // MARK:- Material Format controls
-    @IBOutlet weak var materialG1BGview: UIView!
-    @IBOutlet weak var materialG2BGview: UIView!
-    @IBOutlet weak var materialG3BGview: UIView!
-    @IBOutlet weak var materialG6BGview: UIView!
-    @IBOutlet weak var materialG4BGview: UIView!
-    @IBOutlet weak var materialG5BGview: UIView!
     // MARK:- Text Format controls
     @IBOutlet weak var vwTextOptions : UIView!
     @IBOutlet weak var vwTextFormat : UIView!
     @IBOutlet weak var vwTextFont : UIView!
-    
     @IBOutlet weak var sliderFontSize : UISlider!
     @IBOutlet weak var btnTextFont : UIButton!
     @IBOutlet weak var btnTextFormat : UIButton!
@@ -84,14 +76,14 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
     var selectedTextBoxButton : UIButton!
     
     var textBoxImagesArray = ["text_01.png","text_02.png","text_03.png","text_04.png","text_05.png","text_06.png","text_07.png"]
-    var materialImagesArray = ["material1.png","material2.png","material3.png","material4.png","material5.png","material6.png","material7.png","material8.png","material9.png"]
+    var materialImagesArray = ["bubble_graph_1.png","bubble_graph_2.png","bubble_graph_3.png","bubble_graph_4.png","bubble_graph_5.png.png","food_breakfast.png","food_cake.png","food_drinking.png","food_spice.png","food_tea.png","im31.png","im32.png","im33.png","im34.png","im35.png","im36.png","im37.png","im38.png","im39.png","im40.png","im44.png","im45.png","im46.png","im47.png","im48.png","im49.png","im50.png","line_1.png","line_2.png","line_3.png","line_4.png","line_5.png","iine_6.png","iine_dash.png","line_dot.png","line_head_bold.png","im50.png","im50.png","im50.png","im50.png","im50.png","im50.png"]
     // MARK:- QRCode related controls
     @IBOutlet weak var vwOverlay : UIView!
     @IBOutlet weak var vwQRCode : UIView!
     @IBOutlet weak var txtVwQRCode : UITextView!
     
+    // MARK:- MAterial Related
     @IBOutlet weak var materialsBGview: UIView!
-    
     @IBOutlet weak var materialcollectionView: UICollectionView!
     
     
@@ -752,17 +744,10 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         
         let gestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(scrolltouchhandlePan))
         self.view.addGestureRecognizer(gestureRecognizer)
-        
         //tabBarview.delegate = self
         imagePicker.delegate = self
-        
         createImagesFolder()
         createDiaryImagesFolder()
-        //0,450
-      
-    
-        //self.editorBGview.layer.zPosition = 1;
-       // editorBGview.frame = CGRect(x: 0, y: 532, width: self.editorBGview.frame.width, height: self.editorBGview.frame.height)
         self.view.bringSubview(toFront: editorBGview)
         materialBGview.frame = CGRect(x: 0, y: 1000, width: self.materialBGview.frame.width, height: self.materialBGview.frame.height)
      //self.view.bringSubview(toFront: self.tabBarview)
@@ -773,10 +758,10 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         ////////////////////////Image view
         
         textViewEditTextBox.delegate = self
+
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: .UIKeyboardWillShow, object: nil)
         addDoneButtonOnKeyboard()
         ///////////////////////
-
     }
     func addDoneButtonOnKeyboard() {
         let doneToolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
@@ -1032,8 +1017,6 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
     func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         
         if(item.tag == 0){
-            //let TextEditVC = storyboard?.instantiateViewController(withIdentifier: "TextEditViewController") as! TextEditViewController
-            //self.navigationController?.pushViewController(TextEditVC, animated: true)
             self.vwTextOptions.isHidden = false
             self.vwTextFormat.isHidden = false
             self.vwTextFont.isHidden = true
@@ -1083,8 +1066,6 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
    
     @IBAction func Textbtn(_ sender: Any)
     {
-//        let TextEditVC = storyboard?.instantiateViewController(withIdentifier: "TextEditViewController") as! TextEditViewController
-//        self.navigationController?.pushViewController(TextEditVC, animated: true)
         self.vwTextOptions.isHidden = false
         self.vwTextFormat.isHidden = false
         self.vwTextFont.isHidden = true
@@ -1117,14 +1098,8 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
     }
     @IBAction func PreDefineimgbtn(_ sender: Any)
     {
-//        materialBGview.frame = CGRect(x: 0, y: 420, width: self.materialBGview.frame.width, height: self.materialBGview.frame.height)
-//        scrollView.frame = CGRect(x: 10, y: 70, width: self.view.frame.size.width-20, height: self.view.frame.size.height)
-//        print("PreDefineimgbtn")
         self.view.bringSubview(toFront: self.materialsBGview)
         self.materialsBGview.isHidden = false
-        
-      //  editorBGview.frame = CGRect(x: 0, y: 672, width: self.editorBGview.frame.width, height: self.editorBGview.frame.height)
-      //  scrollView.frame = CGRect(x: 10, y: 70, width: self.view.frame.size.width-20, height: self.view.frame.size.height-160)
     }
     @IBAction func morebtn(_ sender: UIButton)
     {
@@ -1175,7 +1150,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
    
     func openCamera()
     {
-        if(UIImagePickerController .isSourceTypeAvailable(UIImagePickerControllerSourceType.camera)){
+    if(UIImagePickerController .isSourceTypeAvailable(UIImagePickerControllerSourceType.camera)){
             imagePicker.sourceType = UIImagePickerControllerSourceType.camera
             imagePicker.allowsEditing = true
             self.present(imagePicker, animated: true, completion: nil)

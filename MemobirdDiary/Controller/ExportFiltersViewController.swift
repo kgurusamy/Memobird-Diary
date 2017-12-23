@@ -342,12 +342,20 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
     @IBAction func saveBtn(_ sender: Any)
     {
         if(self.rightBarButtonItem.title == "OK"){
-            self.rightBarButtonItem.title = "Preview"
+            self.rightBarButtonItem.title = "Print"
             // Show filter options here
         }else if(self.rightBarButtonItem.title == "Preview"){
             saveDataToPreviewList()
         }
-        
+        else if(self.rightBarButtonItem.title == "Print")
+        {
+            let alertView = UIAlertController(title: "", message: "Coming Soon", preferredStyle: .alert)
+            let action = UIAlertAction(title: "OK", style: .default, handler: { (alert) in
+                
+            })
+            alertView.addAction(action)
+            self.present(alertView, animated: true, completion: nil)
+        }
     }
     
     @IBAction func stroke4btn(_ sender: Any) {
