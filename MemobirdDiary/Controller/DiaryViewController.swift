@@ -1,3 +1,4 @@
+
 //
 //  DiaryViewController.swift
 //  MemobirdDiary
@@ -289,7 +290,9 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         {
             if(diaryEntries.count > 0 && selectedDiaryEntryIndex != -1)
             {
-                deleteFileWithImageName(imageName: diaryEntries[selectedDiaryEntryIndex].diary_image!, isDiary: true)
+                if(diaryEntries[selectedDiaryEntryIndex].diary_image != nil){
+                    deleteFileWithImageName(imageName: diaryEntries[selectedDiaryEntryIndex].diary_image!, isDiary: true)
+                }
                 CoreDataStack.managedObjectContext.delete(diaryEntries[selectedDiaryEntryIndex])
             }
             dataModelArr.removeAll()
@@ -365,8 +368,18 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
             }
             CoreDataStack.saveContext()
         }
-        let HistoryVC = storyboard?.instantiateViewController(withIdentifier: "HistoryViewController") as! HistoryViewController
-        self.navigationController?.pushViewController(HistoryVC, animated: true)
+        // the alert view
+        let alert = UIAlertController(title: "", message: "Saved successfully!", preferredStyle: .alert)
+        self.present(alert, animated: true, completion: nil)
+        
+        // change to desired number of seconds (in this case 5 seconds)
+        let when = DispatchTime.now() + 3
+        DispatchQueue.main.asyncAfter(deadline: when){
+            // your code with delay
+            alert.dismiss(animated: true, completion: nil)
+        }
+        //let HistoryVC = storyboard?.instantiateViewController(withIdentifier: "HistoryViewController") as! HistoryViewController
+        //self.navigationController?.pushViewController(HistoryVC, animated: true)
         
 //        UIGraphicsBeginImageContextWithOptions(scrollView.frame.size, false, scrollView.layer.contentsScale)
 //
@@ -856,7 +869,16 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         if(self.vwOverlay.isHidden == false){
             self.vwOverlay.isHidden = true
         }
-//    
+        if(self.vwEditTextBox.isHidden == false){
+            self.vwEditTextBox.isHidden = true
+        }
+        if(self.vwTextBoxOption.isHidden == false){
+            self.vwTextBoxOption.isHidden = true
+        }
+        if(self.materialsBGview.isHidden == false){
+            self.materialsBGview.isHidden = true
+        }
+
     }
    
     @objc func keyboardWillAppear() {
@@ -885,7 +907,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
             getkeyboardHeight = keyboardSize.height
            
-            if(self.vwTextBoxOption.isHidden == false && self.textViewEditTextBox.isFirstResponder == true){
+            if(/*self.vwTextBoxOption.isHidden == false &&*/self.textViewEditTextBox.isFirstResponder == true){
                 //vwEditTextBox.isHidden = false
                 
                 if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
@@ -1086,6 +1108,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         self.textViewEditTextBox.layer.borderWidth = 1.0
         self.textViewEditTextBox.layer.borderColor = UIColor.gray.cgColor
         self.textViewEditTextBox.attributedText = selectedTextBoxButton.titleLabel?.attributedText
+        self.textViewEditTextBox.font = UIFont.systemFont(ofSize: 18.0)
         self.textViewEditTextBox.becomeFirstResponder()
  
         //addDoneButtonOnKeyboard()
@@ -1222,7 +1245,8 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
     }
     @IBAction func Draftbtn(_ sender: Any)
     {
-
+        let HistoryVC = storyboard?.instantiateViewController(withIdentifier: "HistoryViewController") as! HistoryViewController
+        self.navigationController?.pushViewController(HistoryVC, animated: true)
     }
     // MARK:- Image picker methods
    
@@ -1251,10 +1275,10 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         didFinishPickingMediaWithInfo info: [String : Any])
     {
         
-        var imageName = Date().description
-        imageName = imageName.replacingOccurrences(of: " ", with: "") + ".png"
-        imageName = imageName.replacingOccurrences(of: ":", with: "")
-        let fullImagePath = imagesDirectoryPath + "/\(imageName)"
+        //var imageName = Date().description
+        //imageName = imageName.replacingOccurrences(of: " ", with: "") + ".png"
+        //imageName = imageName.replacingOccurrences(of: ":", with: "")
+        //let fullImagePath = imagesDirectoryPath + "/\(imageName)"
         let myImage = self.fixOrientation(image: (info[UIImagePickerControllerOriginalImage] as? UIImage)!)
  
         self.dismiss(animated: true, completion: nil)
