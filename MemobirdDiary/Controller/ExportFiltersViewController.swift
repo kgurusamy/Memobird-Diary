@@ -342,7 +342,8 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
     @IBAction func saveBtn(_ sender: Any)
     {
         if(self.rightBarButtonItem.title == "OK"){
-            self.rightBarButtonItem.title = "Print"
+            //self.rightBarButtonItem.title = "Print"
+            insertImageToMainDairyView()
             // Show filter options here
         }else if(self.rightBarButtonItem.title == "Preview"){
             saveDataToPreviewList()
@@ -392,7 +393,34 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
         CoreDataStack.saveContext()
       
     }
-    
+    func insertImageToMainDairyView() {
+        
+        var getpreviewimage: UIImage!
+        if(getnewImage == nil)
+        {
+            getpreviewimage = drawVieww?.snapshot
+            
+        }else{
+            getpreviewimage = filteredImageView?.snapshot
+            
+        }
+        
+        let DiaryListVC = self.navigationController?.viewControllers[(self.navigationController?.viewControllers.count)!-2] as! DiaryViewController!
+        DiaryListVC?.PreviewSelectedimage = getpreviewimage
+        self.navigationController?.popToViewController(DiaryListVC!, animated: true)
+        // self.navigationController?.pushViewController(DiaryListVC, animated: true)
+        var imageName = Date().description
+        imageName = imageName.replacingOccurrences(of: " ", with: "") + ".png"
+        imageName = imageName.replacingOccurrences(of: ":", with: "")
+        let fullImagePath = previewImagesDirectoryPath + "/\(imageName)"
+        
+        let data = UIImagePNGRepresentation((getpreviewimage)!)
+        let success = FileManager.default.createFile(atPath: fullImagePath, contents: data, attributes: nil)
+        if(success){
+            print("Inserted image successfully in local")
+        }
+       
+    }
     func captureImageForPreview() -> String? {
 
         var getpreviewimage: UIImage!

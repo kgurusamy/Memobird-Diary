@@ -54,11 +54,11 @@ class LDStickerView: UIView, UIGestureRecognizerDelegate, LDStickerViewDelegate 
             _closeView.transform = t.inverted()
             _resizeView.transform = t.inverted()
             _rotateView.transform = t.inverted()
-            if ((_isShowingEditingHandles) != false){
-                _contentView.layer.borderWidth = 1/scale.width
-            } else {
+            //if ((_isShowingEditingHandles) != false){
+            //    _contentView.layer.borderWidth = 1/scale.width
+            //} else {
                 _contentView.layer.borderWidth = 0.0
-            }
+            //}
         }
     }
     
@@ -337,12 +337,13 @@ class LDStickerView: UIView, UIGestureRecognizerDelegate, LDStickerViewDelegate 
 
     @objc func rotateViewPanGesture(_ recognizer: UIPanGestureRecognizer){
         _touchLocation =  recognizer.location(in: superview)
-        let label = self._contentView as? UILabel
+        let btnPlainTextBox = self._contentView as? UIButton
+        let label = btnPlainTextBox?.titleLabel //self._contentView as? UILabel
         var initialFontSize : CGFloat = CGFloat(0)
         let c: CGPoint = CGRectGetCenter(frame);
         if (recognizer.state == UIGestureRecognizerState.began){
             _deltaAngle = atan2(_touchLocation.y - c.y, _touchLocation.x - c.x) - CGAffineTransformGetAngle(transform)
-            if(self._contentView.accessibilityIdentifier == "dragText"){
+            if(self._contentView.accessibilityIdentifier == "dragPlainTextBox"){
                 initialFontSize = (label?.font.pointSize)!
             }
             _initialBounds = bounds;
@@ -361,7 +362,7 @@ class LDStickerView: UIView, UIGestureRecognizerDelegate, LDStickerViewDelegate 
             if (scaleRect.size.width >= (1 + _globalInset*2) && scaleRect.size.height >= (1 + _globalInset*2)){
                 bounds = scaleRect
             }
-            if(self._contentView.accessibilityIdentifier == "dragText")
+            if(self._contentView.accessibilityIdentifier == "dragPlainTextBox")
             {
                 let scaleVal = Float((scaleRect.size.height+scaleRect.size.height)/2) + Float((_initialBounds.size.height+_initialBounds.size.width)/2)
                 
@@ -370,7 +371,7 @@ class LDStickerView: UIView, UIGestureRecognizerDelegate, LDStickerViewDelegate 
                 label?.numberOfLines = 0
                 label?.lineBreakMode = .byWordWrapping
                 label?.minimumScaleFactor = 0.5
-                //print("scaleval : \((scaleVal/16)*2)")
+                print("scaleval : \((scaleVal/16)*2)")
             }
             
             if responds(to: #selector(LDStickerViewDelegate.stickerViewDidChangeEditing(_:))) {

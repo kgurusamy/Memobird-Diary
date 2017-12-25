@@ -39,6 +39,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
     var picimageView = UIImageView()
     var textLabel = UILabel()
     var btnImageWithText = UIButton()
+    var btnPlainTextBox = UIButton()
     var scrollView: UIScrollView!
     var diaryEntries = [DiaryEntry]()
     var dataModelArr = [dataModel]()
@@ -75,7 +76,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
     @IBOutlet weak var textViewEditTextBox : UITextView!
     var selectedTextBoxButton : UIButton!
     
-    var textBoxImagesArray = ["text_01.png","text_02.png","text_03.png","text_04.png","text_05.png","text_06.png","text_07.png"]
+    var textBoxImagesArray = ["[ Text ]","text_01.png","text_02.png","text_03.png","text_04.png","text_05.png","text_06.png","text_07.png"]
     var materialImagesArray = ["bubble_graph_1.png","bubble_graph_2.png","bubble_graph_3.png","bubble_graph_4.png","bubble_graph_5.png.png","food_breakfast.png","food_cake.png","food_drinking.png","food_spice.png","food_tea.png","im31.png","im32.png","im33.png","im34.png","im35.png","im36.png","im37.png","im38.png","im39.png","im40.png","im44.png","im45.png","im46.png","im47.png","im48.png","im49.png","im50.png","line_1.png","line_2.png","line_3.png","line_4.png","line_5.png","iine_6.png","iine_dash.png","line_dot.png","line_head_bold.png","im50.png","im50.png","im50.png","im50.png","im50.png","im50.png"]
     // MARK:- QRCode related controls
     @IBOutlet weak var vwOverlay : UIView!
@@ -204,7 +205,9 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
                 stickerView.center = CGPoint(x:dataModelObj.xPos, y:dataModelObj.yPos)
                 stickerView.backgroundColor = UIColor.clear
                 stickerView.accessibilityIdentifier = "drag"
-        
+                let doubleTap = UITapGestureRecognizer(target: self, action: #selector(textBoxDoubleTapped))
+                doubleTap.numberOfTapsRequired = 2
+            
                 if(dataModelObj.type == contentType.image.rawValue){
                     let fullImagePath = imagesDirectoryPath + "/\(dataModelObj.imageName)"
                     do {
@@ -220,18 +223,57 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
                         print("Error loading image : \(error)")
                     }
                 }
-                else
-                {
-                    textLabel = UILabel()
-                    textLabel.attributedText = dataModelObj.attributedString
-                    textLabel.numberOfLines = 0
-                    textLabel.frame = CGRect(x: 20 , y: 20, width: stickerView.frame.size.width-40, height: stickerView.frame.size.height-40)
-                    textLabel.accessibilityIdentifier = "dragText"
-                    textLabel.adjustsFontSizeToFitWidth = true
-                    textLabel.minimumScaleFactor = 0.5
-                    textLabel.textAlignment = .center
-                    stickerView.setContentView(textLabel)
+                else if(dataModelObj.type == contentType.imageAndText.rawValue){
+                    let fullImagePath = imagesDirectoryPath + "/\(dataModelObj.imageName)"
+                    do{
+                    let fileURLPath = URL(fileURLWithPath : fullImagePath)
+                    let imageData = try Data(contentsOf: fileURLPath)
+                    let myImg = UIImage(data: imageData)
+                    
+                    btnImageWithText = UIButton(type : .custom)
+                    btnImageWithText.setBackgroundImage(myImg, for: .normal)
+                    btnImageWithText.frame = CGRect(x: 20 , y: 20, width: stickerView.frame.size.width-40, height: stickerView.frame.size.height-40)
+                    btnImageWithText.titleLabel?.textColor = .black
+                    btnImageWithText.titleLabel?.numberOfLines = 0
+                    btnImageWithText.setAttributedTitle(dataModelObj.attributedString, for: .normal)
+                    btnImageWithText.adjustsImageWhenHighlighted = false
+                    btnImageWithText.accessibilityIdentifier = dataModelObj.imageName
+                    btnImageWithText.titleEdgeInsets = UIEdgeInsets(top:-15, left: 0, bottom: 0, right: 0)
+                    btnImageWithText.isUserInteractionEnabled = false
+                    //btnImageWithText.accessibilityIdentifier = "dragImageTextBox"
+                    stickerView.addGestureRecognizer(doubleTap)
+                    
+                    stickerView.setContentView(btnImageWithText)
+                    }catch {
+                        print("Error loading image : \(error)")
+                    }
+                    
                 }
+                else{
+
+                    btnPlainTextBox = UIButton(type:.custom)
+                    btnPlainTextBox.frame = CGRect(x: 20 , y: 20, width: stickerView.frame.size.width-40, height: stickerView.frame.size.height-40)
+                    btnPlainTextBox.titleLabel?.textColor = .black
+                    btnPlainTextBox.titleLabel?.numberOfLines = 0
+                    btnPlainTextBox.setAttributedTitle(dataModelObj.attributedString, for: .normal)
+                    btnPlainTextBox.isUserInteractionEnabled = false
+                    btnPlainTextBox.accessibilityIdentifier = "dragPlainTextBox"
+                    stickerView.addGestureRecognizer(doubleTap)
+                    stickerView.setContentView(btnPlainTextBox)
+                }
+//                else
+//                {
+//
+//                    textLabel = UILabel()
+//                    textLabel.attributedText = dataModelObj.attributedString
+//                    textLabel.numberOfLines = 0
+//                    textLabel.frame = CGRect(x: 20 , y: 20, width: stickerView.frame.size.width-40, height: stickerView.frame.size.height-40)
+//                    textLabel.accessibilityIdentifier = "dragText"
+//                    textLabel.adjustsFontSizeToFitWidth = true
+//                    textLabel.minimumScaleFactor = 0.5
+//                    textLabel.textAlignment = .center
+//                    stickerView.setContentView(textLabel)
+//                }
                 stickerView.transform = CGAffineTransform(rotationAngle : dataModelObj.radians)
                 self.scrollView.addSubview(stickerView)
 
@@ -258,7 +300,8 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
                      let radians:Double = Double(atan2f(Float(Double(dragView.transform.b)), Float(Double(dragView.transform.a))))
                     
                     let dataModelObj : dataModel
-                    if(dragView.subviews[0].accessibilityIdentifier != "dragText")
+                    if (dragView.subviews[0] as? UIButton == nil)
+                    //if(dragView.subviews[0].accessibilityIdentifier != "dragPlainTextBox" && dragView.subviews[0].accessibilityIdentifier != "dragImageTextBox")
                     {
                         
                         let imageView = dragView.subviews[0] as? UIImageView
@@ -267,10 +310,17 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
                     }
                     else
                     {
-                        let labelView = dragView.subviews[0] as? UILabel
-                        dataModelObj = dataModel(imageName : (labelView?.accessibilityIdentifier)!, xPos :dragView.center.x, yPos :dragView.center.y, width : dragView.bounds.size.width, height : dragView.bounds.size.height,radians : CGFloat(radians), angle : CGFloat(0), type: contentType.text.rawValue, attributedString : (labelView?.attributedText)!)
+//                        let labelView = dragView.subviews[0] as? UILabel
+//                        dataModelObj = dataModel(imageName : (labelView?.accessibilityIdentifier)!, xPos :dragView.center.x, yPos :dragView.center.y, width : dragView.bounds.size.width, height : dragView.bounds.size.height,radians : CGFloat(radians), angle : CGFloat(0), type: contentType.text.rawValue, attributedString : (labelView?.attributedText)!)
+                        let buttonTextBox = dragView.subviews[0] as? UIButton
+                        if(dragView.subviews[0].accessibilityIdentifier == "dragPlainTextBox") {
+                            dataModelObj = dataModel(imageName : (buttonTextBox?.accessibilityIdentifier)!, xPos :dragView.center.x, yPos :dragView.center.y, width : dragView.bounds.size.width, height : dragView.bounds.size.height,radians : CGFloat(radians), angle : CGFloat(0), type: contentType.text.rawValue, attributedString : (buttonTextBox?.titleLabel?.attributedText)!)
+                        }
+                        else{
+                            dataModelObj = dataModel(imageName : (buttonTextBox?.accessibilityIdentifier)!, xPos :dragView.center.x, yPos :dragView.center.y, width : dragView.bounds.size.width, height : dragView.bounds.size.height,radians : CGFloat(radians), angle : CGFloat(0), type: contentType.imageAndText.rawValue, attributedString : (buttonTextBox?.titleLabel?.attributedText)!)
+                        }
+
                     }
-                    
                     
                     dataModelArr.append(dataModelObj)
                 }
@@ -315,21 +365,24 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
             }
             CoreDataStack.saveContext()
         }
-        UIGraphicsBeginImageContextWithOptions(scrollView.frame.size, false, scrollView.layer.contentsScale)
-      
-        let savedFrame = scrollView.frame
+        let HistoryVC = storyboard?.instantiateViewController(withIdentifier: "HistoryViewController") as! HistoryViewController
+        self.navigationController?.pushViewController(HistoryVC, animated: true)
         
-        scrollView.contentOffset = CGPoint.zero
-        scrollView.frame = CGRect(x: 0, y: 60, width: scrollView.frame.width, height: scrollView.contentSize.height)
-        scrollView.layer.render(in: UIGraphicsGetCurrentContext()!)
-        let image = UIGraphicsGetImageFromCurrentImageContext()
-        
-        scrollView.frame = savedFrame
-        
-        UIGraphicsEndImageContext()
-        let ExportVC = storyboard?.instantiateViewController(withIdentifier: "ExportFiltersViewController") as! ExportFiltersViewController
-        ExportVC.getnewImage = image
-        self.navigationController?.pushViewController(ExportVC, animated: true)
+//        UIGraphicsBeginImageContextWithOptions(scrollView.frame.size, false, scrollView.layer.contentsScale)
+//
+//        let savedFrame = scrollView.frame
+//
+//        scrollView.contentOffset = CGPoint.zero
+//        scrollView.frame = CGRect(x: 0, y: 60, width: scrollView.frame.width, height: scrollView.contentSize.height)
+//        scrollView.layer.render(in: UIGraphicsGetCurrentContext()!)
+//        let image = UIGraphicsGetImageFromCurrentImageContext()
+//
+//        scrollView.frame = savedFrame
+//
+//        UIGraphicsEndImageContext()
+//        let ExportVC = storyboard?.instantiateViewController(withIdentifier: "ExportFiltersViewController") as! ExportFiltersViewController
+//        ExportVC.getnewImage = image
+//        self.navigationController?.pushViewController(ExportVC, animated: true)
         
     }
     func getImageOfScrollView() -> String?{
@@ -651,12 +704,22 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         else if(collectionView == textBoxCollectionView)
         {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellTextBox", for: indexPath)
-            let imgTextBoxItem = UIImageView()
-            imgTextBoxItem.image = UIImage(named: textBoxImagesArray[indexPath.row])
+            // Checking for plain textbox
+            if(indexPath.row == 0){
+                let plainText = UILabel()
+                plainText.text = textBoxImagesArray[indexPath.row]
+                if(cell.contentView.subviews.count==0){
+                    plainText.frame = CGRect(x:0, y:0, width:80, height:80)
+                    cell.addSubview(plainText)
+                }
+            }else{ // If it is not plain textbox adding image to the cell
+                let imgTextBoxItem = UIImageView()
+                imgTextBoxItem.image = UIImage(named: textBoxImagesArray[indexPath.row])
             
-            if(cell.contentView.subviews.count==0){
-                imgTextBoxItem.frame = CGRect(x:0, y:0, width:80, height:80)
-                cell.addSubview(imgTextBoxItem)
+                if(cell.contentView.subviews.count==0){
+                    imgTextBoxItem.frame = CGRect(x:0, y:0, width:80, height:80)
+                    cell.addSubview(imgTextBoxItem)
+                }
             }
             return cell
         }
@@ -715,16 +778,21 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         
         if(collectionView == textBoxCollectionView)
         {
-            let imageName = getImageNameFromDate()
-            let fullImagePath = imagesDirectoryPath + "/\(imageName)"
-            let getimageName : UIImage = UIImage(named:textBoxImagesArray[indexPath.row])!
-            let myImage = self.fixOrientation(image: getimageName)
+            if(indexPath.row == 0){
+                 dragzoomroatateview(img:UIImage(), imgName: "", type: contentType.text.rawValue, attributedString: NSAttributedString(string:"Double Tab to edit"))
+            }
+            else{
+                let imageName = getImageNameFromDate()
+                let fullImagePath = imagesDirectoryPath + "/\(imageName)"
+                let getimageName : UIImage = UIImage(named:textBoxImagesArray[indexPath.row])!
+                let myImage = self.fixOrientation(image: getimageName)
             
-            dragzoomroatateview(img:myImage, imgName: imageName, type: contentType.imageAndText.rawValue, attributedString: NSAttributedString(string:"Double Tab to edit"))
-            let data = UIImagePNGRepresentation(myImage)
-            let success = FileManager.default.createFile(atPath: fullImagePath, contents: data, attributes: nil)
-            if(success){
-                print("image saved successfully in local")
+                dragzoomroatateview(img:myImage, imgName: imageName, type: contentType.imageAndText.rawValue, attributedString: NSAttributedString(string:"Double Tab to edit"))
+                let data = UIImagePNGRepresentation(myImage)
+                let success = FileManager.default.createFile(atPath: fullImagePath, contents: data, attributes: nil)
+                if(success){
+                    print("image saved successfully in local")
+                }
             }
         }
     }
@@ -784,12 +852,11 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
     }
 
     override func viewDidAppear(_ animated: Bool) {
-        print(getkeyboardHeight)
-        print(self.view.frame.size.height-getkeyboardHeight-60)
+        
         if(self.vwOverlay.isHidden == false){
             self.vwOverlay.isHidden = true
         }
-    
+//    
     }
    
     @objc func keyboardWillAppear() {
@@ -954,6 +1021,9 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         stickerView = LDStickerView(frame: CGRect(x: 40, y: self.scrollView.contentSize.height - 400, width: calcWidth, height: calcHeight))
         stickerView.accessibilityIdentifier = "drag"
 
+        let doubleTap = UITapGestureRecognizer(target: self, action: #selector(textBoxDoubleTapped))
+        doubleTap.numberOfTapsRequired = 2
+        
         if(type == contentType.image.rawValue){
             picimageView = UIImageView()
             picimageView.image = img
@@ -963,8 +1033,6 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
             stickerView.setContentView(picimageView)
         }
         else if(type == contentType.imageAndText.rawValue){
-            let doubleTap = UITapGestureRecognizer(target: self, action: #selector(textBoxDoubleTapped))
-            doubleTap.numberOfTapsRequired = 2
             
             btnImageWithText = UIButton(type : .custom)
             btnImageWithText.setBackgroundImage(img, for: .normal)
@@ -976,21 +1044,31 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
             btnImageWithText.accessibilityIdentifier = imgName
             btnImageWithText.titleEdgeInsets = UIEdgeInsets(top:-15, left: 0, bottom: 0, right: 0)
             btnImageWithText.isUserInteractionEnabled = false
+            //btnImageWithText.accessibilityIdentifier = "dragImageTextBox"
             stickerView.addGestureRecognizer(doubleTap)
             
             stickerView.setContentView(btnImageWithText)
             
         }
         else{
-            textLabel = UILabel()
-            textLabel.attributedText = attributedString
-            textLabel.numberOfLines = 0
-            textLabel.frame = CGRect(x: 20 , y: 20, width: calcWidth-40, height: calcHeight-40)
-            textLabel.accessibilityIdentifier = "dragText"
-            textLabel.adjustsFontSizeToFitWidth = true
-            textLabel.textAlignment = .center
-            textLabel.sizeToFit()
-            stickerView.setContentView(textLabel)
+//            textLabel = UILabel()
+//            textLabel.attributedText = attributedString
+//            textLabel.numberOfLines = 0
+//            textLabel.frame = CGRect(x: 20 , y: 20, width: calcWidth-40, height: calcHeight-40)
+//            textLabel.accessibilityIdentifier = "dragText"
+//            textLabel.adjustsFontSizeToFitWidth = true
+//            textLabel.textAlignment = .center
+//            textLabel.sizeToFit()
+//            stickerView.setContentView(textLabel)
+            btnPlainTextBox = UIButton(type:.custom)
+            btnPlainTextBox.frame = CGRect(x: 20 , y: 20, width: calcWidth-40, height: calcHeight-40)
+            btnPlainTextBox.titleLabel?.textColor = .black
+            btnPlainTextBox.titleLabel?.numberOfLines = 0
+            btnPlainTextBox.setAttributedTitle(attributedString, for: .normal)
+            btnPlainTextBox.isUserInteractionEnabled = false
+            btnPlainTextBox.accessibilityIdentifier = "dragPlainTextBox"
+            stickerView.addGestureRecognizer(doubleTap)
+            stickerView.setContentView(btnPlainTextBox)
         }
     
         if(stickerView.subviews.count == 3){
@@ -1007,7 +1085,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         selectedTextBoxButton = gesture.view?.subviews[0] as! UIButton
         self.textViewEditTextBox.layer.borderWidth = 1.0
         self.textViewEditTextBox.layer.borderColor = UIColor.gray.cgColor
-        self.textViewEditTextBox.text = selectedTextBoxButton.titleLabel?.text
+        self.textViewEditTextBox.attributedText = selectedTextBoxButton.titleLabel?.attributedText
         self.textViewEditTextBox.becomeFirstResponder()
  
         //addDoneButtonOnKeyboard()
@@ -1150,7 +1228,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
    
     func openCamera()
     {
-    if(UIImagePickerController .isSourceTypeAvailable(UIImagePickerControllerSourceType.camera)){
+        if(UIImagePickerController .isSourceTypeAvailable(UIImagePickerControllerSourceType.camera)){
             imagePicker.sourceType = UIImagePickerControllerSourceType.camera
             imagePicker.allowsEditing = true
             self.present(imagePicker, animated: true, completion: nil)
