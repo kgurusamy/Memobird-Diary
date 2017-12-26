@@ -43,7 +43,7 @@ class LDStickerView: UIView, UIGestureRecognizerDelegate, LDStickerViewDelegate 
     fileprivate var _showCloseView: Bool! //Default is YES. If set to NO, user can't delete the view
     fileprivate var _showResizeView: Bool! //Default is YES. If set to NO, user can't resize the view
     fileprivate var _showRotateView: Bool! //Default is YES. If set to NO, user can't rotate the view
-    
+    var initialFontSize : CGFloat = CGFloat(0)
     var lastTouchedView: LDStickerView!
     
     func refresh(){
@@ -136,7 +136,7 @@ class LDStickerView: UIView, UIGestureRecognizerDelegate, LDStickerViewDelegate 
     }
     
     @objc func contentTapped(_ tapGesture:UITapGestureRecognizer){
-        
+        self.superview?.endEditing(true)
         hideOtherViewSelection()
         showEditingHandles()
         superview?.bringSubview(toFront: self)
@@ -249,7 +249,7 @@ class LDStickerView: UIView, UIGestureRecognizerDelegate, LDStickerViewDelegate 
     }
     
     @objc func singleTap(_ recognizer: UITapGestureRecognizer){
-       
+
         if(self.accessibilityIdentifier == "drag")
         {
             let imageName = self.subviews[0].accessibilityIdentifier
@@ -339,11 +339,11 @@ class LDStickerView: UIView, UIGestureRecognizerDelegate, LDStickerViewDelegate 
         _touchLocation =  recognizer.location(in: superview)
         let btnPlainTextBox = self._contentView as? UIButton
         let label = btnPlainTextBox?.titleLabel //self._contentView as? UILabel
-        var initialFontSize : CGFloat = CGFloat(0)
+        
         let c: CGPoint = CGRectGetCenter(frame);
         if (recognizer.state == UIGestureRecognizerState.began){
             _deltaAngle = atan2(_touchLocation.y - c.y, _touchLocation.x - c.x) - CGAffineTransformGetAngle(transform)
-            if(self._contentView.accessibilityIdentifier == "dragPlainTextBox"){
+            if(self._contentView as? UIButton != nil){
                 initialFontSize = (label?.font.pointSize)!
             }
             _initialBounds = bounds;
@@ -362,16 +362,16 @@ class LDStickerView: UIView, UIGestureRecognizerDelegate, LDStickerViewDelegate 
             if (scaleRect.size.width >= (1 + _globalInset*2) && scaleRect.size.height >= (1 + _globalInset*2)){
                 bounds = scaleRect
             }
-            if(self._contentView.accessibilityIdentifier == "dragPlainTextBox")
-            {
-                let scaleVal = Float((scaleRect.size.height+scaleRect.size.height)/2) + Float((_initialBounds.size.height+_initialBounds.size.width)/2)
-                
-                label?.font = UIFont.systemFont(ofSize:CGFloat((scaleVal/16)*2)+initialFontSize)
-                label?.adjustsFontSizeToFitWidth = true
-                label?.numberOfLines = 0
+            //if(self._contentView.accessibilityIdentifier == "dragPlainTextBox")
+            if(self._contentView as? UIButton != nil){           
+                let scaleVal = Float((scaleRect.size.width+scaleRect.size.height)/2) - Float((_initialBounds.size.height+_initialBounds.size.width)/2)
+            
+                label?.font = UIFont.systemFont(ofSize:CGFloat(initialFontSize)+(CGFloat(scaleVal)/3))
+            
                 label?.lineBreakMode = .byWordWrapping
-                label?.minimumScaleFactor = 0.5
-                print("scaleval : \((scaleVal/16)*2)")
+                
+                print("label frame : \(label?.font.pointSize)")
+                //print("initial fontsize : \(initialFontSize) scaleval : \(scaleVal)")
             }
             
             if responds(to: #selector(LDStickerViewDelegate.stickerViewDidChangeEditing(_:))) {

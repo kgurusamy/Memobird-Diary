@@ -489,7 +489,7 @@
                                 <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                             </view>
                             <view hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0rm-fi-8y3" userLabel="vwQRCodePopup">
-                                <rect key="frame" x="40" y="185" width="240" height="198"/>
+                                <rect key="frame" x="40" y="145" width="240" height="198"/>
                                 <subviews>
                                     <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mJM-7u-XjJ">
                                         <rect key="frame" x="211" y="0.0" width="29" height="30"/>
@@ -880,12 +880,12 @@
                             <constraint firstItem="nwb-Ry-pNg" firstAttribute="leading" secondItem="H0U-VP-0lV" secondAttribute="leading" id="6K8-Yw-Ghv"/>
                             <constraint firstItem="H7e-az-h9A" firstAttribute="trailing" secondItem="H0U-VP-0lV" secondAttribute="trailing" id="AT2-DJ-Jfq"/>
                             <constraint firstItem="eHF-Fa-KNq" firstAttribute="leading" secondItem="H0U-VP-0lV" secondAttribute="leading" constant="16" id="DGs-KV-hs4"/>
-                            <constraint firstItem="nwb-Ry-pNg" firstAttribute="centerY" secondItem="0rm-fi-8y3" secondAttribute="centerY" id="GV7-aC-Bmj"/>
+                            <constraint firstItem="nwb-Ry-pNg" firstAttribute="centerY" secondItem="0rm-fi-8y3" secondAttribute="centerY" constant="40" id="GV7-aC-Bmj"/>
                             <constraint firstItem="eHF-Fa-KNq" firstAttribute="top" secondItem="H0U-VP-0lV" secondAttribute="top" constant="9" id="IKo-my-RsQ"/>
                             <constraint firstItem="nwb-Ry-pNg" firstAttribute="trailing" secondItem="H0U-VP-0lV" secondAttribute="trailing" id="IWQ-A1-MiL"/>
                             <constraint firstItem="0rm-fi-8y3" firstAttribute="centerX" secondItem="22o-Em-koE" secondAttribute="centerX" id="Kbq-6g-7T7"/>
                             <constraint firstItem="U6L-sS-Xf9" firstAttribute="leading" secondItem="H7e-az-h9A" secondAttribute="leading" id="PrE-eS-lTA"/>
-                            <constraint firstItem="0rm-fi-8y3" firstAttribute="centerY" secondItem="22o-Em-koE" secondAttribute="centerY" id="T6M-da-6r0"/>
+                            <constraint firstItem="0rm-fi-8y3" firstAttribute="centerY" secondItem="22o-Em-koE" secondAttribute="centerY" constant="-40" id="T6M-da-6r0"/>
                             <constraint firstItem="H0U-VP-0lV" firstAttribute="bottom" secondItem="ZMZ-RO-AV7" secondAttribute="bottom" id="Xc4-cI-cVe"/>
                             <constraint firstItem="H0U-VP-0lV" firstAttribute="bottom" secondItem="NFn-98-5nC" secondAttribute="bottom" id="Zyj-Bi-dE2"/>
                             <constraint firstItem="1s4-Th-zvQ" firstAttribute="leading" secondItem="H0U-VP-0lV" secondAttribute="leading" id="aAC-8w-dNh"/>
@@ -1675,7 +1675,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="81" id="ctT-6o-ama" customClass="PreviewlistTableViewCell" customModule="MemobirdDiary" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="81" id="ctT-6o-ama" customClass="PreviewlistTableViewCell" customModule="MemobirdDiary" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="81"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ctT-6o-ama" id="9d5-Br-Bp4">

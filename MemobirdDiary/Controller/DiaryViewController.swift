@@ -75,7 +75,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
     @IBOutlet weak var textBoxCollectionView:UICollectionView!
     @IBOutlet weak var vwEditTextBox : UIView!
     @IBOutlet weak var textViewEditTextBox : UITextView!
-    var selectedTextBoxButton : UIButton!
+    var selectedTextBoxButton = UIButton(type:.custom)
     
     var textBoxImagesArray = ["[ Text ]","text_01.png","text_02.png","text_03.png","text_04.png","text_05.png","text_06.png","text_07.png"]
     var materialImagesArray = ["bubble_graph_1.png","bubble_graph_2.png","bubble_graph_3.png","bubble_graph_4.png","bubble_graph_5.png.png","food_breakfast.png","food_cake.png","food_drinking.png","food_spice.png","food_tea.png","im31.png","im32.png","im33.png","im34.png","im35.png","im36.png","im37.png","im38.png","im39.png","im40.png","im44.png","im45.png","im46.png","im47.png","im48.png","im49.png","im50.png","line_1.png","line_2.png","line_3.png","line_4.png","line_5.png","iine_6.png","iine_dash.png","line_dot.png","line_head_bold.png","im50.png","im50.png","im50.png","im50.png","im50.png","im50.png"]
@@ -445,6 +445,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
     @IBAction func btnQRPopupClose_clicked(_ sender : UIButton){
         self.vwOverlay.isHidden = true
         self.vwQRCode.isHidden = true
+        self.txtVwQRCode.text = ""
     }
     
     @IBAction func btnQRCodeOK_clicked(_ sender : UIButton){
@@ -457,6 +458,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         let data = UIImagePNGRepresentation(myImage)
         let success = FileManager.default.createFile(atPath: fullImagePath, contents: data, attributes: nil)
         if(success){
+            self.txtVwQRCode.text = ""
             self.vwOverlay.isHidden = true
             self.vwQRCode.isHidden = true
         }
@@ -503,6 +505,21 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
     
     func textViewDidChange(_ textView: UITextView) {
         selectedTextBoxButton.setAttributedTitle(textViewEditTextBox.attributedText, for: .normal)
+    }
+    
+    func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
+        if(textView == backgroundTextView){
+            self.vwEditTextBox.isHidden = true
+        }
+        
+        return true
+    }
+    
+    func showEditTextBox(){
+        self.view.bringSubview(toFront: self.vwEditTextBox)
+        self.vwEditTextBox.frame = CGRect(x:self.vwEditTextBox.frame.origin.x,y: self.view.frame.size.height - getkeyboardHeight - vwEditTextBox.frame.size.height+5, width : self.view.frame.size.width, height : self.vwEditTextBox.frame.size.height)
+        //self.textViewEditTextBox.frame = CGRect(x:5.0,y:5.0,width:self.view.frame.size.width/0.75,height:self.vwEditTextBox.frame.size.height-5)
+        self.vwEditTextBox.isHidden = false
     }
         
      // MARK:- TextFormating methods
@@ -841,7 +858,10 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         textViewEditTextBox.delegate = self
 
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: .UIKeyboardWillShow, object: nil)
+        backgroundTextView.autocorrectionType = .no
         addDoneButtonOnKeyboard()
+        
+        self.hideKeyboardWhenTappedAround()
         ///////////////////////
     }
     func addDoneButtonOnKeyboard() {
@@ -912,11 +932,15 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
                 
                 if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
                     keyboardHeight = keyboardSize.height
-                    self.vwEditTextBox.frame = CGRect(x:self.vwEditTextBox.frame.origin.x,y: self.view.frame.size.height - keyboardSize.height - vwEditTextBox.frame.size.height+5, width : self.view.frame.size.width, height : self.vwEditTextBox.frame.size.height)
+                    
+                    showEditTextBox()
+                    //self.vwEditTextBox.frame = CGRect(x:self.vwEditTextBox.frame.origin.x,y: self.view.frame.size.height - keyboardSize.height - vwEditTextBox.frame.size.height+5, width : self.view.frame.size.width, height : self.vwEditTextBox.frame.size.height)
                     //self.textViewEditTextBox.backgroundColor = .lightGray
-                    self.vwEditTextBox.isHidden = false
+                    //self.vwEditTextBox.isHidden = false
                 }
                 
+            }else{
+                self.vwEditTextBox.isHidden = true
             }
            
         }
@@ -1025,6 +1049,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
     
     func dragzoomroatateview(img : UIImage, imgName : String, type : Int, attributedString : NSAttributedString)
     {
+        hideOtherViewSelection()
         var calcWidth = CGFloat(0)
         var calcHeight = CGFloat(0)
         
@@ -1061,6 +1086,8 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
             btnImageWithText.frame = CGRect(x: 20 , y: 20, width: calcWidth-40, height: calcHeight-40)
             btnImageWithText.titleLabel?.textColor = .black
             btnImageWithText.titleLabel?.numberOfLines = 0
+            btnImageWithText.titleLabel?.minimumScaleFactor = 0.5
+            btnImageWithText.titleLabel?.adjustsFontSizeToFitWidth = true
             btnImageWithText.setAttributedTitle(attributedString, for: .normal)
             btnImageWithText.adjustsImageWhenHighlighted = false
             btnImageWithText.accessibilityIdentifier = imgName
@@ -1109,9 +1136,19 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         self.textViewEditTextBox.layer.borderColor = UIColor.gray.cgColor
         self.textViewEditTextBox.attributedText = selectedTextBoxButton.titleLabel?.attributedText
         self.textViewEditTextBox.font = UIFont.systemFont(ofSize: 18.0)
+        self.textViewEditTextBox.autocorrectionType = .no
+        //self.backgroundTextView.resignFirstResponder()
+        
+        print("textview Frame : \(self.textViewEditTextBox.frame)")
+        if(didDisplayedKeyboard == true){
+           
+            //getkeyboardHeight -= 90
+            showEditTextBox()
+           
+        }
         self.textViewEditTextBox.becomeFirstResponder()
- 
-        //addDoneButtonOnKeyboard()
+    
+
     }
 
     // MARK:- Tab bar
@@ -1234,6 +1271,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         self.view.bringSubview(toFront: self.vwQRCode)
         self.vwOverlay.isHidden = false
         self.vwQRCode.isHidden = false
+        self.txtVwQRCode.becomeFirstResponder()
 
     }
     @IBAction func MicBtn(_ sender: Any)
@@ -1539,3 +1577,17 @@ extension UIFont {
     }
     
 }
+
+extension UIViewController {
+    func hideKeyboardWhenTappedAround() {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
+}
+
+

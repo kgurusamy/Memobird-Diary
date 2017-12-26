@@ -67,8 +67,8 @@ class HistoryViewController: UIViewController, UITableViewDelegate, UITableViewD
             myImageView.image = UIImage(data: data!)
             myImageView.frame = CGRect(x : 30, y: 15, width : CGFloat((myImageView.image?.size.width)!/2), height:CGFloat(diaryEntries[indexPath.row].diary_height/2))
             myImageView.center = cell.contentView.center
-            myImageView.layer.borderWidth = 2
-            myImageView.layer.cornerRadius = 20
+            myImageView.layer.borderWidth = 1
+           
             myImageView.layer.borderColor = UIColor.init(red:222/255.0, green:225/255.0, blue:227/255.0, alpha: 1.0).cgColor
         }
         return cell
