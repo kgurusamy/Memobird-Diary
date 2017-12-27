@@ -473,14 +473,18 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
     }
     // MARK:- TextBox methods
     @IBAction func btnCompleteTextBox_action(_ sender : UIButton){
-        
         selectedTextBoxButton.setAttributedTitle(textViewEditTextBox.attributedText, for: .normal)
+        //selectedTextBoxButton.titleLabel?.text = textViewEditTextBox.text
         textViewEditTextBox.resignFirstResponder()
         self.vwEditTextBox.isHidden = true
     }
     
     func textViewDidChange(_ textView: UITextView) {
-        selectedTextBoxButton.setAttributedTitle(textViewEditTextBox.attributedText, for: .normal)
+        if(textView == textViewEditTextBox){
+           //selectedTextBoxButton.titleLabel?.text = textViewEditTextBox.text
+          selectedTextBoxButton.setAttributedTitle(textViewEditTextBox.attributedText, for: .normal)
+        }
+        //selectedTextBoxButton.setAttributedTitle(textViewEditTextBox.attributedText, for: .normal)
     }
     
     func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
@@ -497,12 +501,11 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         selectedTextBoxButton = gesture.view?.subviews[0] as! UIButton
         self.textViewEditTextBox.layer.borderWidth = 1.0
         self.textViewEditTextBox.layer.borderColor = UIColor.gray.cgColor
-        self.textViewEditTextBox.attributedText = selectedTextBoxButton.titleLabel?.attributedText
-        self.textViewEditTextBox.font = UIFont.systemFont(ofSize: 18.0)
+        self.textViewEditTextBox.text = selectedTextBoxButton.titleLabel?.text
+        //self.textViewEditTextBox.font = UIFont.systemFont(ofSize: 18.0)
         self.textViewEditTextBox.autocorrectionType = .no
         //self.backgroundTextView.resignFirstResponder()
         
-        print("textview Frame : \(self.textViewEditTextBox.frame)")
         if(didDisplayedKeyboard == true){
             
             //getkeyboardHeight -= 90
@@ -756,7 +759,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         if(collectionView == materialcollectionView)
         {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellMaterial", for: indexPath)
-            print("subviews count : \(cell.contentView.subviews.count)")
+            
             //if(cell.contentView.subviews.count==0){
                 cell.contentView.subviews.forEach { $0.removeFromSuperview() }
                 let imgMaterialItem = UIImageView()
@@ -764,7 +767,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
                 imgMaterialItem.contentMode = .scaleAspectFit
                 imgMaterialItem.frame = CGRect(x:0, y:0,width :80, height:80)
                 cell.contentView.addSubview(imgMaterialItem)
-                print("material array index : \(indexPath.row)")
+            
             //}
             return cell
         }
@@ -1106,13 +1109,15 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
             btnImageWithText.frame = CGRect(x: 20 , y: 20, width: calcWidth-40, height: calcHeight-40)
             btnImageWithText.titleLabel?.textColor = .black
             btnImageWithText.titleLabel?.numberOfLines = 0
-            btnImageWithText.titleLabel?.minimumScaleFactor = 0.5
+            btnImageWithText.titleLabel?.minimumScaleFactor = 0.2
             btnImageWithText.titleLabel?.adjustsFontSizeToFitWidth = true
             btnImageWithText.setAttributedTitle(attributedString, for: .normal)
-            btnImageWithText.adjustsImageWhenHighlighted = false
+            //btnImageWithText.setTitle(attributedString.string, for: .normal)
+            //btnImageWithText.titleLabel?.attributedText = attributedString
+        
             btnImageWithText.accessibilityIdentifier = imgName
             
-            btnImageWithText.titleEdgeInsets = UIEdgeInsets(top:-15, left: 0, bottom: 0, right: 0)
+            btnImageWithText.titleEdgeInsets = UIEdgeInsets(top:-10, left: 0, bottom: 0, right: 0)
             btnImageWithText.isUserInteractionEnabled = false
             //btnImageWithText.accessibilityIdentifier = "dragImageTextBox"
             stickerView.addGestureRecognizer(doubleTap)

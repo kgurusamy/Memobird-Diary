@@ -365,13 +365,12 @@ class LDStickerView: UIView, UIGestureRecognizerDelegate, LDStickerViewDelegate 
             //if(self._contentView.accessibilityIdentifier == "dragPlainTextBox")
             if(self._contentView as? UIButton != nil){           
                 let scaleVal = Float((scaleRect.size.width+scaleRect.size.height)/2) - Float((_initialBounds.size.height+_initialBounds.size.width)/2)
-            
                 label?.font = UIFont.systemFont(ofSize:CGFloat(initialFontSize)+(CGFloat(scaleVal)/3))
-            
-                label?.lineBreakMode = .byWordWrapping
-                
-                print("label frame : \(label?.font.pointSize)")
-                //print("initial fontsize : \(initialFontSize) scaleval : \(scaleVal)")
+                //let myAttribute = [ NSAttributedStringKey.font: UIFont.systemFont(ofSize:CGFloat(initialFontSize)+(CGFloat(scaleVal)/3)) ]
+                //let myString = NSMutableAttributedString(string:(label?.text)!, attributes: myAttribute )
+                //label?.lineBreakMode = .byWordWrapping
+                //label?.attributedText = myString
+                print("Label attribtext : \(label?.text)")
             }
             
             if responds(to: #selector(LDStickerViewDelegate.stickerViewDidChangeEditing(_:))) {
