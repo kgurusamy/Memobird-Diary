@@ -84,12 +84,12 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
     @IBOutlet weak var vwQRCode : UIView!
     @IBOutlet weak var txtVwQRCode : UITextView!
     
-    // MARK:- MAterial Related
+    // MARK:- Material Related controls
     @IBOutlet weak var materialsBGview: UIView!
     @IBOutlet weak var materialcollectionView: UICollectionView!
     
     
-    // MARK:- Image filter related
+    // MARK:- Image filter related controls
     @IBOutlet weak var materialBGview: UIView!
     var filters = [CIFilter]()
     fileprivate var colorControl = ColorControl()
@@ -100,7 +100,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
     @IBOutlet weak var filterscontrastsliderBGview: UIView!
     @IBOutlet weak var filtercollectionviewbg: UIView!
     
-     // MARK:- Editor controls
+     // MARK:- Editor controls and methods
     @IBOutlet weak var editorBGview: UIView!
     @IBOutlet weak var EditorBGTempView: UIView!
     @IBOutlet weak var brightnesssliderBGview: UIView!
@@ -398,31 +398,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
 //        self.navigationController?.pushViewController(ExportVC, animated: true)
         
     }
-    func getImageOfScrollView() -> String?{
-        UIGraphicsBeginImageContextWithOptions(scrollView.frame.size, false, scrollView.layer.contentsScale)
-
-        let savedFrame = scrollView.frame
-        
-        scrollView.contentOffset = CGPoint.zero
-        scrollView.frame = CGRect(x: 0, y: 60, width: scrollView.frame.width, height: scrollView.contentSize.height)
-        scrollView.layer.render(in: UIGraphicsGetCurrentContext()!)
-        let image = UIGraphicsGetImageFromCurrentImageContext()
-        scrollView.frame = savedFrame
-        UIGraphicsEndImageContext()
-        ///////
-        var imageName = Date().description
-        imageName = imageName.replacingOccurrences(of: " ", with: "") + ".png"
-        imageName = imageName.replacingOccurrences(of: ":", with: "")
-        let fullImagePath = diaryImagesDirectoryPath + "/\(imageName)"
-        
-        let data = UIImagePNGRepresentation((image)!)
-        let success = FileManager.default.createFile(atPath: fullImagePath, contents: data, attributes: nil)
-        if(success){
-            print("DiaryImage saved successfully in local")
-        }
-        return imageName
-    }
-    
+   
     
     func getSavedData()
     {
@@ -515,6 +491,28 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         return true
     }
     
+    @objc func textBoxDoubleTapped(_ gesture : UIGestureRecognizer){
+        self.view.bringSubview(toFront: self.vwEditTextBox)
+        
+        selectedTextBoxButton = gesture.view?.subviews[0] as! UIButton
+        self.textViewEditTextBox.layer.borderWidth = 1.0
+        self.textViewEditTextBox.layer.borderColor = UIColor.gray.cgColor
+        self.textViewEditTextBox.attributedText = selectedTextBoxButton.titleLabel?.attributedText
+        self.textViewEditTextBox.font = UIFont.systemFont(ofSize: 18.0)
+        self.textViewEditTextBox.autocorrectionType = .no
+        //self.backgroundTextView.resignFirstResponder()
+        
+        print("textview Frame : \(self.textViewEditTextBox.frame)")
+        if(didDisplayedKeyboard == true){
+            
+            //getkeyboardHeight -= 90
+            showEditTextBox()
+            
+        }
+        self.textViewEditTextBox.becomeFirstResponder()
+        
+    }
+
     func showEditTextBox(){
         self.view.bringSubview(toFront: self.vwEditTextBox)
         self.vwEditTextBox.frame = CGRect(x:self.vwEditTextBox.frame.origin.x,y: self.view.frame.size.height - getkeyboardHeight - vwEditTextBox.frame.size.height+5, width : self.view.frame.size.width, height : self.vwEditTextBox.frame.size.height)
@@ -676,7 +674,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
     }
     
    
-    // MARK:- Font CollectionView delegate methods
+    // MARK:- CollectionView delegate methods
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if(collectionView == fontCollectionView){
         return columns*collectionViewRows
@@ -740,15 +738,15 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
                 plainText.text = textBoxImagesArray[indexPath.row]
                 if(cell.contentView.subviews.count==0){
                     plainText.frame = CGRect(x:0, y:0, width:80, height:80)
-                    cell.addSubview(plainText)
+                    cell.contentView.addSubview(plainText)
                 }
             }else{ // If it is not plain textbox adding image to the cell
                 let imgTextBoxItem = UIImageView()
                 imgTextBoxItem.image = UIImage(named: textBoxImagesArray[indexPath.row])
-            
+                imgTextBoxItem.contentMode = .scaleAspectFit
                 if(cell.contentView.subviews.count==0){
                     imgTextBoxItem.frame = CGRect(x:0, y:0, width:80, height:80)
-                    cell.addSubview(imgTextBoxItem)
+                    cell.contentView.addSubview(imgTextBoxItem)
                 }
             }
             return cell
@@ -758,10 +756,10 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellMaterial", for: indexPath)
             let imgMaterialItem = UIImageView()
             imgMaterialItem.image = UIImage(named: materialImagesArray[indexPath.row])
-            
+            imgMaterialItem.contentMode = .scaleAspectFit
             if(cell.contentView.subviews.count==0){
-                imgMaterialItem.frame = CGRect(x:0, y:0, width:80, height:80)
-                cell.addSubview(imgMaterialItem)
+                imgMaterialItem.frame = CGRect(x:0, y:0,width :80, height:80)
+                cell.contentView.addSubview(imgMaterialItem)
             }
             return cell
         }
@@ -864,25 +862,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         self.hideKeyboardWhenTappedAround()
         ///////////////////////
     }
-    func addDoneButtonOnKeyboard() {
-        let doneToolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
-        doneToolbar.barStyle       = UIBarStyle.default
-        let flexSpace              = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
-        let done: UIBarButtonItem  = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.done, target: self, action: #selector(DiaryViewController.doneButtonAction))
-        
-        var items = [UIBarButtonItem]()
-        items.append(flexSpace)
-        items.append(done)
-        
-        doneToolbar.items = items
-        doneToolbar.sizeToFit()
-        
-        self.backgroundTextView.inputAccessoryView = doneToolbar
-    }
-    @objc func doneButtonAction() {
-        self.backgroundTextView.resignFirstResponder()
-        self.textViewEditTextBox.resignFirstResponder()
-    }
+    
 
     override func viewDidAppear(_ animated: Bool) {
         
@@ -900,17 +880,6 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         }
 
     }
-   
-    @objc func keyboardWillAppear() {
-        //Do something here
-        didDisplayedKeyboard = true
-       
-    }
-    
-    @objc func keyboardWillDisappear() {
-        //Do something here
-        didDisplayedKeyboard = false
-    }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -919,38 +888,13 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
             vwTextBoxOption.isHidden = true
         }
     }
-    var getkeyboardHeight : CGFloat = CGFloat()
-    var didDisplayedKeyboard:Bool = false
-    var checkmorebtn : Bool = true
-
-    @objc func keyboardWillShow(notification: NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
-            getkeyboardHeight = keyboardSize.height
-           
-            if(/*self.vwTextBoxOption.isHidden == false &&*/self.textViewEditTextBox.isFirstResponder == true){
-                //vwEditTextBox.isHidden = false
-                
-                if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-                    keyboardHeight = keyboardSize.height
-                    
-                    showEditTextBox()
-                    //self.vwEditTextBox.frame = CGRect(x:self.vwEditTextBox.frame.origin.x,y: self.view.frame.size.height - keyboardSize.height - vwEditTextBox.frame.size.height+5, width : self.view.frame.size.width, height : self.vwEditTextBox.frame.size.height)
-                    //self.textViewEditTextBox.backgroundColor = .lightGray
-                    //self.vwEditTextBox.isHidden = false
-                }
-                
-            }else{
-                self.vwEditTextBox.isHidden = true
-            }
-           
-        }
-    }
-
+    
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillDisappear), name: Notification.Name.UIKeyboardWillHide, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillAppear), name: Notification.Name.UIKeyboardWillShow, object: nil)
-         materialBGview.frame = CGRect(x: 0, y: 1000, width: self.materialBGview.frame.width, height: self.materialBGview.frame.height)
+        materialBGview.frame = CGRect(x: 0, y: 1000, width: self.materialBGview.frame.width, height: self.materialBGview.frame.height)
         getSavedData()
         if(mode == "edit"){
             if(selectedDiaryEntryIndex != -1){
@@ -1005,22 +949,79 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         materialcollectionView.delegate = self
         materialcollectionView.backgroundColor = UIColor.white
         //self.vwOverlay.isHidden = true
-
+        
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-      //  scrollView.frame = CGRect(x: 10, y: 70, width: self.view.frame.size.width-20, height: self.view.frame.size.height-180)
-          scrollView.frame = CGRect(x: 10, y: 70, width: self.view.frame.size.width-20, height: self.view.frame.size.height)
+        //  scrollView.frame = CGRect(x: 10, y: 70, width: self.view.frame.size.width-20, height: self.view.frame.size.height-180)
+        scrollView.frame = CGRect(x: 10, y: 70, width: self.view.frame.size.width-20, height: self.view.frame.size.height)
     }
-    
-
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    // MARK:- Keypad/Keyboard related methods
+    @objc func keyboardWillAppear() {
+        //Do something here
+        didDisplayedKeyboard = true
+       
+    }
+    
+    @objc func keyboardWillDisappear() {
+        //Do something here
+        didDisplayedKeyboard = false
+    }
+    var getkeyboardHeight : CGFloat = CGFloat()
+    var didDisplayedKeyboard:Bool = false
+    var checkmorebtn : Bool = true
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            getkeyboardHeight = keyboardSize.height
+            
+            if(/*self.vwTextBoxOption.isHidden == false &&*/self.textViewEditTextBox.isFirstResponder == true){
+                //vwEditTextBox.isHidden = false
+                
+                if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+                    keyboardHeight = keyboardSize.height
+                    
+                    showEditTextBox()
+                    //self.vwEditTextBox.frame = CGRect(x:self.vwEditTextBox.frame.origin.x,y: self.view.frame.size.height - keyboardSize.height - vwEditTextBox.frame.size.height+5, width : self.view.frame.size.width, height : self.vwEditTextBox.frame.size.height)
+                    //self.textViewEditTextBox.backgroundColor = .lightGray
+                    //self.vwEditTextBox.isHidden = false
+                }
+                
+            }else{
+                self.vwEditTextBox.isHidden = true
+            }
+            
+        }
+    }
+    
+    func addDoneButtonOnKeyboard() {
+        let doneToolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
+        doneToolbar.barStyle       = UIBarStyle.default
+        let flexSpace              = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
+        let done: UIBarButtonItem  = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.done, target: self, action: #selector(DiaryViewController.doneButtonAction))
+        
+        var items = [UIBarButtonItem]()
+        items.append(flexSpace)
+        items.append(done)
+        
+        doneToolbar.items = items
+        doneToolbar.sizeToFit()
+        
+        self.backgroundTextView.inputAccessoryView = doneToolbar
+    }
+    @objc func doneButtonAction() {
+        self.backgroundTextView.resignFirstResponder()
+        self.textViewEditTextBox.resignFirstResponder()
+    }
+   
     func addBackgroundTextView(){
         self.backgroundTextView = UITextView()
         self.backgroundTextView.allowsEditingTextAttributes = true
@@ -1030,6 +1031,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
     
         self.scrollView.addSubview(backgroundTextView)
     }
+    
     // MARK:- ScrollView methods
     @objc func scrolltouchhandlePan(_ gestureRecognizer: UIPanGestureRecognizer) {
         if gestureRecognizer.state == .began
@@ -1053,13 +1055,25 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         var calcWidth = CGFloat(0)
         var calcHeight = CGFloat(0)
         
-        if(type == contentType.image.rawValue)
-        {
+        if(type == contentType.image.rawValue){
+            if(img.size.width > 200){
+                calcWidth = 200
+            }
+            else{
+                calcWidth = img.size.width
+            }
+            if(img.size.height > 200){
+                calcHeight = 200
+            }
+            else{
+                calcHeight = img.size.height
+            }
+        }
+        else if(type == contentType.imageAndText.rawValue){
             calcWidth = CGFloat(200)
             calcHeight = CGFloat(200)
         }
-        else
-        {
+        else{
             calcWidth = CGFloat(200)
             calcHeight = CGFloat(120)
         }
@@ -1091,6 +1105,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
             btnImageWithText.setAttributedTitle(attributedString, for: .normal)
             btnImageWithText.adjustsImageWhenHighlighted = false
             btnImageWithText.accessibilityIdentifier = imgName
+            
             btnImageWithText.titleEdgeInsets = UIEdgeInsets(top:-15, left: 0, bottom: 0, right: 0)
             btnImageWithText.isUserInteractionEnabled = false
             //btnImageWithText.accessibilityIdentifier = "dragImageTextBox"
@@ -1128,29 +1143,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         self.scrollView.isScrollEnabled = false
     }
     
-    @objc func textBoxDoubleTapped(_ gesture : UIGestureRecognizer){
-        self.view.bringSubview(toFront: self.vwEditTextBox)
-        
-        selectedTextBoxButton = gesture.view?.subviews[0] as! UIButton
-        self.textViewEditTextBox.layer.borderWidth = 1.0
-        self.textViewEditTextBox.layer.borderColor = UIColor.gray.cgColor
-        self.textViewEditTextBox.attributedText = selectedTextBoxButton.titleLabel?.attributedText
-        self.textViewEditTextBox.font = UIFont.systemFont(ofSize: 18.0)
-        self.textViewEditTextBox.autocorrectionType = .no
-        //self.backgroundTextView.resignFirstResponder()
-        
-        print("textview Frame : \(self.textViewEditTextBox.frame)")
-        if(didDisplayedKeyboard == true){
-           
-            //getkeyboardHeight -= 90
-            showEditTextBox()
-           
-        }
-        self.textViewEditTextBox.becomeFirstResponder()
-    
-
-    }
-
+   
     // MARK:- Tab bar
     func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         
@@ -1404,6 +1397,32 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
             }
         }
     }
+    
+    func getImageOfScrollView() -> String?{
+        UIGraphicsBeginImageContextWithOptions(scrollView.frame.size, false, scrollView.layer.contentsScale)
+        
+        let savedFrame = scrollView.frame
+        
+        scrollView.contentOffset = CGPoint.zero
+        scrollView.frame = CGRect(x: 0, y: 60, width: scrollView.frame.width, height: scrollView.contentSize.height)
+        scrollView.layer.render(in: UIGraphicsGetCurrentContext()!)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        scrollView.frame = savedFrame
+        UIGraphicsEndImageContext()
+        ///////
+        var imageName = Date().description
+        imageName = imageName.replacingOccurrences(of: " ", with: "") + ".png"
+        imageName = imageName.replacingOccurrences(of: ":", with: "")
+        let fullImagePath = diaryImagesDirectoryPath + "/\(imageName)"
+        
+        let data = UIImagePNGRepresentation((image)!)
+        let success = FileManager.default.createFile(atPath: fullImagePath, contents: data, attributes: nil)
+        if(success){
+            print("DiaryImage saved successfully in local")
+        }
+        return imageName
+    }
+    
     
     func fixOrientation(image: UIImage) -> UIImage {
         // No-op if the orientation is already correct
