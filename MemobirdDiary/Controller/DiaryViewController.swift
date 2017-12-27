@@ -78,7 +78,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
     var selectedTextBoxButton = UIButton(type:.custom)
     
     var textBoxImagesArray = ["[ Text ]","text_01.png","text_02.png","text_03.png","text_04.png","text_05.png","text_06.png","text_07.png"]
-    var materialImagesArray = ["bubble_graph_1.png","bubble_graph_2.png","bubble_graph_3.png","bubble_graph_4.png","bubble_graph_5.png.png","food_breakfast.png","food_cake.png","food_drinking.png","food_spice.png","food_tea.png","im31.png","im32.png","im33.png","im34.png","im35.png","im36.png","im37.png","im38.png","im39.png","im40.png","im44.png","im45.png","im46.png","im47.png","im48.png","im49.png","im50.png","line_1.png","line_2.png","line_3.png","line_4.png","line_5.png","iine_6.png","iine_dash.png","line_dot.png","line_head_bold.png","im50.png","im50.png","im50.png","im50.png","im50.png","im50.png"]
+    var materialImagesArray = ["bubble_graph_1.png","bubble_graph_2.png","bubble_graph_3.png","bubble_graph_4.png","bubble_graph_5.png.png","food_breakfast.png","food_cake.png","food_drinking.png","food_spice.png","food_tea.png","im31.png","im32.png","im33.png","im34.png","im35.png","im36.png","im37.png","im38.png","im39.png","im40.png","im44.png","im45.png","im46.png","im47.png","im48.png","im49.png","im50.png","line_1.png","line_2.png","line_3.png","line_4.png","line_5.png","line_6.png","line_dash.png","line_dot.png","line_head_bold.png","other_birthday.png","other_love.png","other_travel.png","postmark_1.png","postmark_2.png","postmark_3.png", "postmark_4.png", "quest_bottle.png","quest_dream.png","quest_plane.png","quest_robot.png","quest_rocket.png","quest_sailing.png","quest_telescope.png","run_1.png","run_2.png"]
     // MARK:- QRCode related controls
     @IBOutlet weak var vwOverlay : UIView!
     @IBOutlet weak var vwQRCode : UIView!
@@ -679,14 +679,15 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         if(collectionView == fontCollectionView){
         return columns*collectionViewRows
         }
-        else if(collectionView == textBoxCollectionView){
+        if(collectionView == textBoxCollectionView){
             return textBoxImagesArray.count
-        }else if(collectionView == materialcollectionView){
+        }
+        if(collectionView == materialcollectionView){
             return materialImagesArray.count
         }
-        else{
-            return 0
-        }
+        //else{
+        return 0
+        //}
         //return 50
     }
     
@@ -729,38 +730,42 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         }
           return cell
         }
-        else if(collectionView == textBoxCollectionView)
+        if(collectionView == textBoxCollectionView)
         {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellTextBox", for: indexPath)
             // Checking for plain textbox
             if(indexPath.row == 0){
-                let plainText = UILabel()
-                plainText.text = textBoxImagesArray[indexPath.row]
                 if(cell.contentView.subviews.count==0){
+                    let plainText = UILabel()
+                    plainText.text = textBoxImagesArray[indexPath.row]
                     plainText.frame = CGRect(x:0, y:0, width:80, height:80)
                     cell.contentView.addSubview(plainText)
                 }
             }else{ // If it is not plain textbox adding image to the cell
-                let imgTextBoxItem = UIImageView()
-                imgTextBoxItem.image = UIImage(named: textBoxImagesArray[indexPath.row])
-                imgTextBoxItem.contentMode = .scaleAspectFit
+                
                 if(cell.contentView.subviews.count==0){
+                    let imgTextBoxItem = UIImageView()
+                    imgTextBoxItem.image = UIImage(named: textBoxImagesArray[indexPath.row])
+                    imgTextBoxItem.contentMode = .scaleAspectFit
                     imgTextBoxItem.frame = CGRect(x:0, y:0, width:80, height:80)
                     cell.contentView.addSubview(imgTextBoxItem)
                 }
             }
             return cell
         }
-        else if(collectionView == materialcollectionView)
+        if(collectionView == materialcollectionView)
         {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellMaterial", for: indexPath)
-            let imgMaterialItem = UIImageView()
-            imgMaterialItem.image = UIImage(named: materialImagesArray[indexPath.row])
-            imgMaterialItem.contentMode = .scaleAspectFit
-            if(cell.contentView.subviews.count==0){
+            print("subviews count : \(cell.contentView.subviews.count)")
+            //if(cell.contentView.subviews.count==0){
+                cell.contentView.subviews.forEach { $0.removeFromSuperview() }
+                let imgMaterialItem = UIImageView()
+                imgMaterialItem.image = UIImage(named: materialImagesArray[indexPath.row])
+                imgMaterialItem.contentMode = .scaleAspectFit
                 imgMaterialItem.frame = CGRect(x:0, y:0,width :80, height:80)
                 cell.contentView.addSubview(imgMaterialItem)
-            }
+                print("material array index : \(indexPath.row)")
+            //}
             return cell
         }
         return UICollectionViewCell()
@@ -802,6 +807,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
             if(success){
                 print("image saved successfully in local")
             }
+          
         }
         
         if(collectionView == textBoxCollectionView)

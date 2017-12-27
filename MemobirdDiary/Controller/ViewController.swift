@@ -22,7 +22,7 @@ class ViewController: UIViewController,UITabBarDelegate {
     func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         print("Test")
         if(item.tag == 1){
-            print("Test1")
+          
             let DiaryVC = storyboard?.instantiateViewController(withIdentifier: "DiaryViewController") as! DiaryViewController
             self.navigationController?.pushViewController(DiaryVC, animated: true)
         }
