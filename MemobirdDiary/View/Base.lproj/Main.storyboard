@@ -1436,7 +1436,7 @@
                                             <action selector="cancelbtn:" destination="YND-hH-jaq" eventType="touchUpInside" id="FsI-El-TOH"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M6Q-um-nn5">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M6Q-um-nn5" userLabel="StrokeButton">
                                         <rect key="frame" x="196" y="1" width="60" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="Urx-hq-7QB"/>
@@ -1463,7 +1463,7 @@
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cancel" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3v2-oL-8Be">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Undo" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3v2-oL-8Be">
                                         <rect key="frame" x="260" y="30" width="52" height="16"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="16" id="MMO-8y-4Wu"/>
@@ -1480,7 +1480,7 @@
                                             <constraint firstAttribute="height" constant="26" id="ZdQ-kf-f3U"/>
                                         </constraints>
                                     </imageView>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dotcircle.png" translatesAutoresizingMaskIntoConstraints="NO" id="jhR-gd-QSC">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ico_dot_01.png" translatesAutoresizingMaskIntoConstraints="NO" id="jhR-gd-QSC">
                                         <rect key="frame" x="210" y="3" width="32" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="32" id="Ht6-M2-LCX"/>
@@ -1646,6 +1646,9 @@
                         <outlet property="drawbgview" destination="V4K-lJ-C22" id="B2d-cl-BjL"/>
                         <outlet property="filterBGView" destination="Ur0-eC-sh2" id="neq-UQ-gBW"/>
                         <outlet property="filteredImageView" destination="WTo-BN-xBj" id="d9u-jH-zDT"/>
+                        <outlet property="imgEraserIcon" destination="byi-Q6-RWu" id="NjM-qS-DGG"/>
+                        <outlet property="imgPencilIcon" destination="QP5-S0-dX7" id="jYm-ag-uDL"/>
+                        <outlet property="imgStrokeIcon" destination="jhR-gd-QSC" id="Nnz-BJ-VSU"/>
                         <outlet property="photoFilterCollectionView" destination="16P-UQ-5py" id="QX9-6G-XZB"/>
                         <outlet property="rightBarButtonItem" destination="wp8-Ha-E0y" id="Dd7-0u-vbA"/>
                         <outlet property="stroke1btn" destination="QUa-n5-NsQ" id="tSV-9D-JWU"/>
@@ -1751,12 +1754,12 @@
         <image name="diaryicon" width="300" height="300"/>
         <image name="diaryicon.png" width="300" height="300"/>
         <image name="diaryiconsmal" width="32" height="32"/>
-        <image name="dotcircle.png" width="2000" height="2000"/>
         <image name="font.png" width="24" height="24"/>
         <image name="ico_bold_unchecked.png" width="104" height="104"/>
         <image name="ico_center_unchecked.png" width="104" height="104"/>
         <image name="ico_complete_checked" width="90" height="90"/>
         <image name="ico_complete_unchecked.png" width="90" height="90"/>
+        <image name="ico_dot_01.png" width="90" height="90"/>
         <image name="ico_font.png" width="90" height="90"/>
         <image name="ico_format.png" width="90" height="90"/>
         <image name="ico_italic_unchecked.png" width="104" height="104"/>

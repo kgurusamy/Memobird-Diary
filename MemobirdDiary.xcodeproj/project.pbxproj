@@ -113,6 +113,11 @@
 		AEEE4F361FEA837700231315 /* im34.png in Resources */ = {isa = PBXBuildFile; fileRef = AEEE4F021FEA837700231315 /* im34.png */; };
 		AEEE4F371FEA837700231315 /* im40.png in Resources */ = {isa = PBXBuildFile; fileRef = AEEE4F031FEA837700231315 /* im40.png */; };
 		C0D75A34ED8DDAA0022F79C3 /* Pods_MemobirdDiaryUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48ECE9D0D469D3669ED63426 /* Pods_MemobirdDiaryUITests.framework */; };
+		EABD620D1FF48C1900B6A5AF /* ico_dot_02.png in Resources */ = {isa = PBXBuildFile; fileRef = EABD62081FF48C1400B6A5AF /* ico_dot_02.png */; };
+		EABD620E1FF48C1900B6A5AF /* ico_dot_03.png in Resources */ = {isa = PBXBuildFile; fileRef = EABD62091FF48C1600B6A5AF /* ico_dot_03.png */; };
+		EABD620F1FF48C1900B6A5AF /* ico_dot_04.png in Resources */ = {isa = PBXBuildFile; fileRef = EABD620A1FF48C1700B6A5AF /* ico_dot_04.png */; };
+		EABD62101FF48C1900B6A5AF /* ico_dot_05.png in Resources */ = {isa = PBXBuildFile; fileRef = EABD620B1FF48C1800B6A5AF /* ico_dot_05.png */; };
+		EABD62111FF48C1900B6A5AF /* ico_dot_01.png in Resources */ = {isa = PBXBuildFile; fileRef = EABD620C1FF48C1800B6A5AF /* ico_dot_01.png */; };
 		F1A5836C031E1B8271B35527 /* Pods_MemobirdDiaryTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 057BB54695BA1A563F74C043 /* Pods_MemobirdDiaryTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -304,6 +309,11 @@
 		AEFFB7931FBD9347007D3221 /* diaryiconsmal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = diaryiconsmal.png; sourceTree = "<group>"; };
 		C18B265EF384B840DA18DF39 /* Pods-MemobirdDiaryUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MemobirdDiaryUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MemobirdDiaryUITests/Pods-MemobirdDiaryUITests.release.xcconfig"; sourceTree = "<group>"; };
 		E095E3DE873C03ED46E5B49E /* Pods-MemobirdDiary.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MemobirdDiary.release.xcconfig"; path = "Pods/Target Support Files/Pods-MemobirdDiary/Pods-MemobirdDiary.release.xcconfig"; sourceTree = "<group>"; };
+		EABD62081FF48C1400B6A5AF /* ico_dot_02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ico_dot_02.png; sourceTree = "<group>"; };
+		EABD62091FF48C1600B6A5AF /* ico_dot_03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ico_dot_03.png; sourceTree = "<group>"; };
+		EABD620A1FF48C1700B6A5AF /* ico_dot_04.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ico_dot_04.png; sourceTree = "<group>"; };
+		EABD620B1FF48C1800B6A5AF /* ico_dot_05.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ico_dot_05.png; sourceTree = "<group>"; };
+		EABD620C1FF48C1800B6A5AF /* ico_dot_01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ico_dot_01.png; sourceTree = "<group>"; };
 		F266EBC1D71239A84896CFC7 /* Pods_MemobirdDiary.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MemobirdDiary.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -514,6 +524,11 @@
 		AE6A5A001FD69BB700F59033 /* EDITORICONS */ = {
 			isa = PBXGroup;
 			children = (
+				EABD620C1FF48C1800B6A5AF /* ico_dot_01.png */,
+				EABD62081FF48C1400B6A5AF /* ico_dot_02.png */,
+				EABD62091FF48C1600B6A5AF /* ico_dot_03.png */,
+				EABD620A1FF48C1700B6A5AF /* ico_dot_04.png */,
+				EABD620B1FF48C1800B6A5AF /* ico_dot_05.png */,
 				33084A251FE107E2009672BC /* text */,
 				33084A1D1FE107D9009672BC /* ico_complete_unchecked.png */,
 				33084A1E1FE107D9009672BC /* ico_draft.png */,
@@ -794,6 +809,7 @@
 				AEEE4F1C1FEA837700231315 /* line_5.png in Resources */,
 				33084A1B1FE1074F009672BC /* ico_bold_checked.png in Resources */,
 				AEEE4F341FEA837700231315 /* line_4.png in Resources */,
+				EABD62111FF48C1900B6A5AF /* ico_dot_01.png in Resources */,
 				AEEE4F0D1FEA837700231315 /* run_1.png in Resources */,
 				AEEE4F121FEA837700231315 /* run_2.png in Resources */,
 				AEEE4F141FEA837700231315 /* im39.png in Resources */,
@@ -806,17 +822,21 @@
 				AEEE4F151FEA837700231315 /* quest_telescope.png in Resources */,
 				339814A21F85F60B006810D8 /* notes.png in Resources */,
 				AEEE4F2A1FEA837700231315 /* bubble_graph_1.png in Resources */,
+				EABD620D1FF48C1900B6A5AF /* ico_dot_02.png in Resources */,
 				AEEE4F051FEA837700231315 /* im50.png in Resources */,
 				AEEE4F231FEA837700231315 /* im31.png in Resources */,
 				339814A11F85F60B006810D8 /* minus.png in Resources */,
 				AEEE4F171FEA837700231315 /* postmark_4.png in Resources */,
 				AEEE4F2C1FEA837700231315 /* im45.png in Resources */,
+				EABD62101FF48C1900B6A5AF /* ico_dot_05.png in Resources */,
 				339814A61F85F966006810D8 /* picture-icon.png in Resources */,
 				AEEE4F371FEA837700231315 /* im40.png in Resources */,
 				AEEE4F2D1FEA837700231315 /* bubble_graph_4.png in Resources */,
 				33084A301FE107E2009672BC /* text_04.png in Resources */,
+				EABD620E1FF48C1900B6A5AF /* ico_dot_03.png in Resources */,
 				33084A221FE107DA009672BC /* ico_draft.png in Resources */,
 				AEEE4F221FEA837700231315 /* quest_plane.png in Resources */,
+				EABD620F1FF48C1900B6A5AF /* ico_dot_04.png in Resources */,
 				AEEE4F071FEA837700231315 /* bubble_graph_5.png in Resources */,
 				AEEE4F201FEA837700231315 /* other_travel.png in Resources */,
 				AEEE4F331FEA837700231315 /* im33.png in Resources */,

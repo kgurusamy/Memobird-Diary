@@ -77,6 +77,9 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
     @IBOutlet weak var stroke3btn: UIButton!
     @IBOutlet weak var stroke4btn: UIButton!
     @IBOutlet weak var stroke5btn: UIButton!
+    @IBOutlet weak var imgStrokeIcon : UIImageView!
+    @IBOutlet weak var imgPencilIcon : UIImageView!
+    @IBOutlet weak var imgEraserIcon : UIImageView!
     @IBOutlet weak var filteredImageView: FilteredImageView!
     @IBOutlet weak var photoFilterCollectionView: UICollectionView!
     ////TabBarview
@@ -90,10 +93,7 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
     
     var getnewImage: UIImage!
 
-    var picimageView = UIImageView()
-    var picimageView1 = UIImageView()
     
-    @IBOutlet weak var tabBarDrawView: UITabBar!
     
     @IBOutlet weak var drawbgview: UIView!
     var textLabel = UILabel()
@@ -167,7 +167,7 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
             filterBGView.isHidden = true
             
             tabBarView.isHidden = true
-            tabBarView.delegate = nil
+            //tabBarView.delegate = nil
             drawbgview.isHidden = false
             drawVieww.delegate = self
        
@@ -178,6 +178,11 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
         drawVieww.setColor(nil)
         strokesbgview.isHidden = true
         createPreviewImagesFolder()
+        
+        // Icon background color change
+        imgPencilIcon.backgroundColor = UIColor.lightGray
+        imgEraserIcon.backgroundColor = UIColor.clear
+        
     }
     
     @IBAction func cancelbtn(_ sender: Any) {
@@ -189,11 +194,20 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
     @IBAction func eraserbtn(_ sender: Any)
     {
         drawVieww.setColor(nil)
+        imgEraserIcon.backgroundColor = UIColor.lightGray
+        imgPencilIcon.backgroundColor = UIColor.clear
     }
-    @IBAction func pencilbtn(_ sender: Any) {
-    }
- 
     
+    @IBAction func pencilbtn(_ sender: Any) {
+        imgEraserIcon.backgroundColor = UIColor.clear
+        imgPencilIcon.backgroundColor = UIColor.lightGray
+    }
+
+//     @IBAction func closeDrawViewMenu(_ sender: Any) {
+//        drawbgview.isHidden = true
+//        tabBarView.isHidden = false
+//        strokesbgview.isHidden = true
+//    }
     // MARK: - Collection View
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -307,7 +321,7 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
                 filterBGView.isHidden = true
 
                 tabBarView.isHidden = true
-                tabBarView.delegate = nil
+                //tabBarView.delegate = nil
                 drawbgview.isHidden = false
                 drawVieww.delegate = self
                 let color = UIColor.black
@@ -327,16 +341,19 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
     @IBAction func stroke1btn(_ sender: Any) {
        drawVieww.setWidth(CGFloat(2.0))
         strokesbgview.isHidden = true
+        imgStrokeIcon.image = UIImage(named: "ico_dot_01.png")
 
     }
     @IBAction func stroke2btn(_ sender: Any) {
         drawVieww.setWidth(CGFloat(6.0))
         strokesbgview.isHidden = true
+        imgStrokeIcon.image = UIImage(named: "ico_dot_02.png")
 
     }
     @IBAction func stroke3btn(_ sender: Any) {
        drawVieww.setWidth(CGFloat(8.0))
         strokesbgview.isHidden = true
+        imgStrokeIcon.image = UIImage(named: "ico_dot_03.png")
 
     }
     @IBAction func saveBtn(_ sender: Any)
@@ -362,11 +379,13 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
     @IBAction func stroke4btn(_ sender: Any) {
         drawVieww.setWidth(CGFloat(12.0))
         strokesbgview.isHidden = true
+        imgStrokeIcon.image = UIImage(named: "ico_dot_04.png")
 
     }
     @IBAction func stroke5btn(_ sender: Any) {
         drawVieww.setWidth(CGFloat(14.0))
         strokesbgview.isHidden = true
+        imgStrokeIcon.image = UIImage(named: "ico_dot_05.png")
 
     }
     @IBAction func Graffitibtn(_ sender: Any)
