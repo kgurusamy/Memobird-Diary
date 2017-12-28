@@ -105,6 +105,7 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
     var stickerView = LDStickerView()
     var filters = [CIFilter]()
     fileprivate var colorControl = ColorControl()
+    var drawcheckbool:Bool = false
 
     let filterDescriptors: [(filterName: String, filterDisplayName: String)] = [
         ("CIColorControls", "None"),
@@ -170,7 +171,6 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
             //tabBarView.delegate = nil
             drawbgview.isHidden = false
             drawVieww.delegate = self
-       
             drawVieww.setWidth(ExportFiltersViewController.deltaWidth)
 
         }
@@ -235,7 +235,10 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
     // MARK: - Private methods
     private func updateEditButtonEnabled() {
     }
-    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        drawcheckbool = false
+    }
     // MARK: - CropView
     func cropViewController(_ controller: CropViewController, didFinishCroppingImage image: UIImage) {
     }
@@ -342,18 +345,21 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
        drawVieww.setWidth(CGFloat(2.0))
         strokesbgview.isHidden = true
         imgStrokeIcon.image = UIImage(named: "ico_dot_01.png")
+        drawcheckbool = true
 
     }
     @IBAction func stroke2btn(_ sender: Any) {
         drawVieww.setWidth(CGFloat(6.0))
         strokesbgview.isHidden = true
         imgStrokeIcon.image = UIImage(named: "ico_dot_02.png")
+        drawcheckbool = true
 
     }
     @IBAction func stroke3btn(_ sender: Any) {
        drawVieww.setWidth(CGFloat(8.0))
         strokesbgview.isHidden = true
         imgStrokeIcon.image = UIImage(named: "ico_dot_03.png")
+        drawcheckbool = true
 
     }
     @IBAction func saveBtn(_ sender: Any)
@@ -380,12 +386,16 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
         drawVieww.setWidth(CGFloat(12.0))
         strokesbgview.isHidden = true
         imgStrokeIcon.image = UIImage(named: "ico_dot_04.png")
+        drawcheckbool = true
+
 
     }
     @IBAction func stroke5btn(_ sender: Any) {
         drawVieww.setWidth(CGFloat(14.0))
         strokesbgview.isHidden = true
         imgStrokeIcon.image = UIImage(named: "ico_dot_05.png")
+        drawcheckbool = true
+
 
     }
     @IBAction func Graffitibtn(_ sender: Any)
@@ -420,8 +430,12 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
             getpreviewimage = drawVieww?.snapshot
             
         }else{
-            getpreviewimage = filteredImageView?.snapshot
-            
+            if(drawcheckbool == true){
+                 getpreviewimage = drawVieww?.snapshot
+
+            }else{
+                getpreviewimage = filteredImageView?.snapshot
+            }
         }
         
         let DiaryListVC = self.navigationController?.viewControllers[(self.navigationController?.viewControllers.count)!-2] as! DiaryViewController!

@@ -1235,19 +1235,19 @@
                                 <rect key="frame" x="0.0" y="26" width="320" height="542"/>
                                 <subviews>
                                     <glkView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="WTo-BN-xBj" customClass="FilteredImageView" customModule="MemobirdDiary" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="56" width="320" height="300"/>
+                                        <rect key="frame" x="32" y="56" width="257" height="246"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="300" id="OiA-69-Kb0"/>
-                                            <constraint firstAttribute="width" constant="320" id="Ug8-K6-fUH"/>
+                                            <constraint firstAttribute="height" constant="246" id="OiA-69-Kb0"/>
+                                            <constraint firstAttribute="width" constant="257" id="Ug8-K6-fUH"/>
                                         </constraints>
                                     </glkView>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="WTo-BN-xBj" firstAttribute="leading" secondItem="GJX-OB-3ii" secondAttribute="leading" id="2b5-Ly-8cw"/>
+                                    <constraint firstItem="WTo-BN-xBj" firstAttribute="leading" secondItem="GJX-OB-3ii" secondAttribute="leading" constant="32" id="2b5-Ly-8cw"/>
                                     <constraint firstItem="WTo-BN-xBj" firstAttribute="top" secondItem="GJX-OB-3ii" secondAttribute="top" constant="56" id="uv4-5m-Fie"/>
-                                    <constraint firstAttribute="trailing" secondItem="WTo-BN-xBj" secondAttribute="trailing" id="wvR-XF-2c7"/>
+                                    <constraint firstAttribute="trailing" secondItem="WTo-BN-xBj" secondAttribute="trailing" constant="31" id="wvR-XF-2c7"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ur0-eC-sh2">
