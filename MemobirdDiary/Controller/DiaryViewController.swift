@@ -813,8 +813,9 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         materialBGview.frame = CGRect(x: 0, y: 1000, width: self.materialBGview.frame.width, height: self.materialBGview.frame.height)
      //self.view.bringSubview(toFront: self.tabBarview)
         
-        self.view.bringSubview(toFront: self.materialsBGview)
         self.view.bringSubview(toFront: self.vwTextOptions)
+        self.view.bringSubview(toFront: self.materialsBGview)
+
         self.materialsBGview.isHidden = true
         ////////////////////////Image view
         
@@ -898,7 +899,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         textBoxCollectionLayout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
         textBoxCollectionLayout.itemSize = CGSize(width: 80, height: 80)
         textBoxCollectionLayout.scrollDirection = .horizontal
-        textBoxCollectionView.frame = CGRect(x:0,y:0,width:self.view.frame.width,height:160)
+        textBoxCollectionView.frame = CGRect(x:0,y:60,width:self.view.frame.width,height:160)
         textBoxCollectionView.collectionViewLayout = textBoxCollectionLayout
         textBoxCollectionView.dataSource = self
         textBoxCollectionView.delegate = self
@@ -908,7 +909,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         materialCollectionLayout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
         materialCollectionLayout.itemSize = CGSize(width: 80, height: 80)
         materialCollectionLayout.scrollDirection = .horizontal
-        materialcollectionView.frame = CGRect(x:0,y:0,width:self.view.frame.width,height:160)
+        materialcollectionView.frame = CGRect(x:0,y:60,width:self.view.frame.width,height:160)
         materialcollectionView.collectionViewLayout = materialCollectionLayout
         materialcollectionView.dataSource = self
         materialcollectionView.delegate = self

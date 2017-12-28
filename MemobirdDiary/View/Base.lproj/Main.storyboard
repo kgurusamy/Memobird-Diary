@@ -401,57 +401,36 @@
                                         <rect key="frame" x="5" y="174" width="46" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <state key="normal" title="G1"/>
-                                        <connections>
-                                            <action selector="materialimg1btn:" destination="RSf-TL-MCZ" eventType="touchUpInside" id="nxK-bM-jjq"/>
-                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kuj-Vj-l9P">
                                         <rect key="frame" x="59" y="174" width="46" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <state key="normal" title="G2"/>
-                                        <connections>
-                                            <action selector="materialimg2btn:" destination="RSf-TL-MCZ" eventType="touchUpInside" id="3YP-uD-mN7"/>
-                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L0A-TF-Tla">
                                         <rect key="frame" x="113" y="174" width="46" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <state key="normal" title="G3"/>
-                                        <connections>
-                                            <action selector="materialimg3btn:" destination="RSf-TL-MCZ" eventType="touchUpInside" id="DsQ-yV-BBY"/>
-                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4pc-8Q-jhZ">
                                         <rect key="frame" x="216" y="174" width="46" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <state key="normal" title="G5"/>
-                                        <connections>
-                                            <action selector="materialimg5btn:" destination="RSf-TL-MCZ" eventType="touchUpInside" id="N3n-cZ-tzq"/>
-                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mhd-rG-age">
                                         <rect key="frame" x="270" y="174" width="46" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <state key="normal" title="G6"/>
-                                        <connections>
-                                            <action selector="materialimg6btn:" destination="RSf-TL-MCZ" eventType="touchUpInside" id="n4M-s2-lBc"/>
-                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MpV-1F-Z64">
                                         <rect key="frame" x="162" y="174" width="46" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <state key="normal" title="G4"/>
-                                        <connections>
-                                            <action selector="materialimg4btn:" destination="RSf-TL-MCZ" eventType="touchUpInside" id="6lq-cG-3Mv"/>
-                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qk5-Bz-eIb">
                                         <rect key="frame" x="266" y="8" width="46" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <state key="normal" title="Button"/>
-                                        <connections>
-                                            <action selector="materialOKbtn:" destination="RSf-TL-MCZ" eventType="touchUpInside" id="A4O-C8-L35"/>
-                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZaM-7j-gKg">
                                         <rect key="frame" x="8" y="8" width="46" height="30"/>
@@ -858,7 +837,6 @@
                                         </connections>
                                     </collectionView>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="201" id="C1o-r2-1eZ"/>
                                     <constraint firstItem="qNS-uF-btB" firstAttribute="leading" secondItem="1s4-Th-zvQ" secondAttribute="leading" constant="10" id="L3i-nt-7LT"/>

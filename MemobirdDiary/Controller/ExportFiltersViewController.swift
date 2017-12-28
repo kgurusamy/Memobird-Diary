@@ -172,6 +172,8 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
             drawbgview.isHidden = false
             drawVieww.delegate = self
             drawVieww.setWidth(ExportFiltersViewController.deltaWidth)
+            drawcheckbool = true
+
 
         }
         ///////////////////
@@ -330,6 +332,8 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
                 let color = UIColor.black
                 drawVieww.setColor(color)
                 drawVieww.setWidth(ExportFiltersViewController.deltaWidth)
+                drawcheckbool = true
+
             }
             if(item.tag == 4){
                 UIView.animate(withDuration: 1.0, animations: {
