@@ -159,6 +159,7 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
         filteredImageView.backgroundColor = UIColor.clear
         filteredImageView.filter = filters[0]
         colorControl.input(filteredImageView.inputImage!)
+             drawVieww.setColor(nil)
         }else{
             filteredImageView.isHidden = true
             undobtnoutlet.isHidden = true
@@ -173,11 +174,12 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
             drawVieww.delegate = self
             drawVieww.setWidth(ExportFiltersViewController.deltaWidth)
             drawcheckbool = true
-
+            
+           // strokesbgview.isHidden = true
 
         }
         ///////////////////
-        drawVieww.setColor(nil)
+      //  drawVieww.setColor(nil)
         strokesbgview.isHidden = true
         createPreviewImagesFolder()
         
