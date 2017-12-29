@@ -450,7 +450,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
             self.vwEditTextBox.isHidden = true
         }
         
-        return true
+        return true 
     }
     
     @objc func textBoxDoubleTapped(_ gesture : UIGestureRecognizer){
@@ -459,6 +459,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         selectedTextBoxButton = gesture.view?.subviews[0] as! UIButton
         self.textViewEditTextBox.layer.borderWidth = 1.0
         self.textViewEditTextBox.layer.borderColor = UIColor.gray.cgColor
+        self.textViewEditTextBox.font = selectedTextBoxButton.titleLabel?.font
         self.textViewEditTextBox.text = selectedTextBoxButton.titleLabel?.text
         self.textViewEditTextBox.autocorrectionType = .no
 
@@ -476,6 +477,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         self.view.bringSubview(toFront: self.vwEditTextBox)
         self.vwEditTextBox.frame = CGRect(x:self.vwEditTextBox.frame.origin.x,y: self.view.frame.size.height - getkeyboardHeight - vwEditTextBox.frame.size.height+5, width : self.view.frame.size.width, height : self.vwEditTextBox.frame.size.height)
         //self.textViewEditTextBox.frame = CGRect(x:5.0,y:5.0,width:self.view.frame.size.width/0.75,height:self.vwEditTextBox.frame.size.height-5)
+        print("vwEditTextBox frame : \(self.vwEditTextBox.frame)")
         self.vwEditTextBox.isHidden = false
     }
         

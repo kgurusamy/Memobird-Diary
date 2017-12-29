@@ -338,7 +338,7 @@ class LDStickerView: UIView, UIGestureRecognizerDelegate, LDStickerViewDelegate 
     @objc func rotateViewPanGesture(_ recognizer: UIPanGestureRecognizer){
         _touchLocation =  recognizer.location(in: superview)
         let btnPlainTextBox = self._contentView as? UIButton
-        let label = btnPlainTextBox?.titleLabel //self._contentView as? UILabel
+        let label = btnPlainTextBox?.titleLabel
         
         let c: CGPoint = CGRectGetCenter(frame);
         if (recognizer.state == UIGestureRecognizerState.began){
@@ -362,15 +362,16 @@ class LDStickerView: UIView, UIGestureRecognizerDelegate, LDStickerViewDelegate 
             if (scaleRect.size.width >= (1 + _globalInset*2) && scaleRect.size.height >= (1 + _globalInset*2)){
                 bounds = scaleRect
             }
-            //if(self._contentView.accessibilityIdentifier == "dragPlainTextBox")
+           
             if(self._contentView as? UIButton != nil){           
                 let scaleVal = Float((scaleRect.size.width+scaleRect.size.height)/2) - Float((_initialBounds.size.height+_initialBounds.size.width)/2)
                 label?.font = UIFont.systemFont(ofSize:CGFloat(initialFontSize)+(CGFloat(scaleVal)/3))
-                //let myAttribute = [ NSAttributedStringKey.font: UIFont.systemFont(ofSize:CGFloat(initialFontSize)+(CGFloat(scaleVal)/3)) ]
-                //let myString = NSMutableAttributedString(string:(label?.text)!, attributes: myAttribute )
-                //label?.lineBreakMode = .byWordWrapping
-                //label?.attributedText = myString
-                print("Label attribtext : \(label?.text)")
+                
+                let myAttribute = [ NSAttributedStringKey.font: UIFont.systemFont(ofSize:CGFloat(initialFontSize)+(CGFloat(scaleVal)/3)) ]
+                let myString = NSMutableAttributedString(string:(label?.text)!, attributes: myAttribute )
+                label?.lineBreakMode = .byWordWrapping
+                btnPlainTextBox?.setAttributedTitle(myString, for: .normal)
+                
             }
             
             if responds(to: #selector(LDStickerViewDelegate.stickerViewDidChangeEditing(_:))) {
