@@ -433,17 +433,20 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
     }
     // MARK:- TextBox methods
     @IBAction func btnCompleteTextBox_action(_ sender : UIButton){
-        selectedTextBoxButton.setAttributedTitle(textViewEditTextBox.attributedText, for: .normal)
+        let myAttribute = [ NSAttributedStringKey.font: selectedFont ]
+        let myString = NSMutableAttributedString(string:textViewEditTextBox.text, attributes: myAttribute )
+        selectedTextBoxButton.setAttributedTitle(myString, for: .normal)
+        //selectedTextBoxButton.titleLabel?.font = selectedFont
         //selectedTextBoxButton.titleLabel?.text = textViewEditTextBox.text
         textViewEditTextBox.resignFirstResponder()
         self.vwEditTextBox.isHidden = true
     }
     
-    func textViewDidChange(_ textView: UITextView) {
-        if(textView == textViewEditTextBox){
-          selectedTextBoxButton.setAttributedTitle(textViewEditTextBox.attributedText, for: .normal)
-        }
-    }
+//    func textViewDidChange(_ textView: UITextView) {
+//        if(textView == textViewEditTextBox){
+//          selectedTextBoxButton.setAttributedTitle(textViewEditTextBox.attributedText, for: .normal)
+//        }
+//    }
     
     func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
         if(textView == backgroundTextView){
@@ -452,14 +455,20 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         
         return true 
     }
-    
+    var selectedFont : UIFont!
     @objc func textBoxDoubleTapped(_ gesture : UIGestureRecognizer){
         self.view.bringSubview(toFront: self.vwEditTextBox)
         
         selectedTextBoxButton = gesture.view?.subviews[0] as! UIButton
         self.textViewEditTextBox.layer.borderWidth = 1.0
         self.textViewEditTextBox.layer.borderColor = UIColor.gray.cgColor
-        self.textViewEditTextBox.font = selectedTextBoxButton.titleLabel?.font
+        //self.textViewEditTextBox.font = selectedTextBoxButton.titleLabel?.font
+        selectedFont = selectedTextBoxButton.titleLabel?.font
+        if(selectedTextBoxButton.titleLabel?.text == "Double Tap to edit"){
+            self.textViewEditTextBox.text = ""
+            selectedTextBoxButton.titleLabel?.text = ""
+            selectedTextBoxButton.setAttributedTitle(NSAttributedString(string:""), for: .normal)
+        }
         self.textViewEditTextBox.text = selectedTextBoxButton.titleLabel?.text
         self.textViewEditTextBox.autocorrectionType = .no
 
@@ -774,7 +783,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         if(collectionView == textBoxCollectionView)
         {
             if(indexPath.row == 0){
-                 dragzoomroatateview(img:UIImage(), imgName: "", type: contentType.text.rawValue, attributedString: NSAttributedString(string:"Double Tab to edit"))
+                 dragzoomroatateview(img:UIImage(), imgName: "", type: contentType.text.rawValue, attributedString: NSAttributedString(string:"Double Tap to edit"))
             }
             else{
                 let imageName = getImageNameFromDate()
@@ -782,7 +791,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
                 let getimageName : UIImage = UIImage(named:textBoxImagesArray[indexPath.row])!
                 let myImage = self.fixOrientation(image: getimageName)
             
-                dragzoomroatateview(img:myImage, imgName: imageName, type: contentType.imageAndText.rawValue, attributedString: NSAttributedString(string:"Double Tab to edit"))
+                dragzoomroatateview(img:myImage, imgName: imageName, type: contentType.imageAndText.rawValue, attributedString: NSAttributedString(string:"Double Tap to edit"))
                 let data = UIImagePNGRepresentation(myImage)
                 let success = FileManager.default.createFile(atPath: fullImagePath, contents: data, attributes: nil)
                 if(success){
@@ -942,6 +951,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
     @objc func keyboardWillDisappear() {
         //Do something here
         didDisplayedKeyboard = false
+        self.vwEditTextBox.isHidden = true
     }
     var getkeyboardHeight : CGFloat = CGFloat()
     var didDisplayedKeyboard:Bool = false
