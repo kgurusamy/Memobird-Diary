@@ -866,9 +866,17 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         }
     }
     
-    
+ 
+    @objc func reducescrollviewheightNotification(notif: NSNotification) {
+        //Insert code here
+        self.scrollView.contentSize = CGSize(width: self.scrollView.contentSize.width, height: self.scrollView.contentSize.height - 200)
+    }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.reducescrollviewheightNotification), name: NSNotification.Name(rawValue: "reducescrollviewheightNotification"), object: nil)
+
+
+
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillDisappear), name: Notification.Name.UIKeyboardWillHide, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillAppear), name: Notification.Name.UIKeyboardWillShow, object: nil)
         materialBGview.frame = CGRect(x: 0, y: 1000, width: self.materialBGview.frame.width, height: self.materialBGview.frame.height)

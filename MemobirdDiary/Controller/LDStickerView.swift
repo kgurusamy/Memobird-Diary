@@ -57,7 +57,7 @@ class LDStickerView: UIView, UIGestureRecognizerDelegate, LDStickerViewDelegate 
             //if ((_isShowingEditingHandles) != false){
             //    _contentView.layer.borderWidth = 1/scale.width
             //} else {
-                _contentView.layer.borderWidth = 0.0
+                _contentView.layer.borderWidth = 1.0
             //}
         }
     }
@@ -249,6 +249,8 @@ class LDStickerView: UIView, UIGestureRecognizerDelegate, LDStickerViewDelegate 
     }
     
     @objc func singleTap(_ recognizer: UITapGestureRecognizer){
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reducescrollviewheightNotification"), object: nil)
+
 
         if(self.accessibilityIdentifier == "drag")
         {
