@@ -869,10 +869,20 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
  
     @objc func reducescrollviewheightNotification(notif: NSNotification) {
         //Insert code here
-        self.scrollView.contentSize = CGSize(width: self.scrollView.contentSize.width, height: self.scrollView.contentSize.height - 200)
+//        print(self.scrollView.contentSize.height)
+//        print(scrollView.subviews[scrollView.subviews.count - 1].frame.origin.y+scrollView.subviews[scrollView.subviews.count - 1].frame.size.height+220)
+        if(self.scrollView.contentSize.height < scrollView.subviews[scrollView.subviews.count - 1].frame.origin.y+scrollView.subviews[scrollView.subviews.count - 1].frame.size.height+220)
+        {
+       self.scrollView.contentSize = CGSize(width: self.scrollView.contentSize.width, height: self.scrollView.contentSize.height - 200)
+        scrollView.reloadInputViews()
+        }else
+        {
+        }
+
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         NotificationCenter.default.addObserver(self, selector: #selector(self.reducescrollviewheightNotification), name: NSNotification.Name(rawValue: "reducescrollviewheightNotification"), object: nil)
 
 
