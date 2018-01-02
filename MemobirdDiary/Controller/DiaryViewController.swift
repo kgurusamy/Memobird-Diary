@@ -1056,22 +1056,27 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         var calcHeight = CGFloat(0)
         
         if(type == contentType.image.rawValue){
-            if(img.size.width > 200){
-                calcWidth = 220
+            if(img.size.width > self.view.frame.width){
+                calcWidth = img.size.width/2
+                calcHeight = img.size.height/2
             }
             else{
                 calcWidth = img.size.width
-            }
-            if(img.size.height > 200){
-                calcHeight = 180
-            }
-            else{
                 calcHeight = img.size.height
             }
+  
         }
         else if(type == contentType.imageAndText.rawValue){
-            calcWidth = CGFloat(200)
-            calcHeight = CGFloat(200)
+            //calcWidth = CGFloat(200)
+            //calcHeight = CGFloat(200)
+            if(img.size.width > self.view.frame.width){
+                calcWidth = img.size.width/4
+                calcHeight = img.size.height/4
+            }
+            else{
+                calcWidth = img.size.width
+                calcHeight = img.size.height
+            }
         }
         else{
             calcWidth = CGFloat(200)
@@ -1084,9 +1089,9 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         if(type == contentType.image.rawValue){
             picimageView = UIImageView()
             picimageView.image = img
-            picimageView.frame = CGRect(x: 20 , y: 20, width: calcWidth-40, height: calcHeight-40)
+            picimageView.frame = CGRect(x: 20 , y: 20, width: stickerView.frame.width-40, height: stickerView.frame.height-40)
             picimageView.accessibilityIdentifier = imgName
-            picimageView.contentMode = UIViewContentMode.scaleToFill
+            picimageView.contentMode = UIViewContentMode.scaleAspectFit
             stickerView.setContentView(picimageView)
         }
         else if(type == contentType.imageAndText.rawValue){
@@ -1098,9 +1103,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
             btnImageWithText.titleLabel?.minimumScaleFactor = 0.2
             btnImageWithText.titleLabel?.adjustsFontSizeToFitWidth = true
             btnImageWithText.setAttributedTitle(attributedString, for: .normal)
-            //btnImageWithText.setTitle(attributedString.string, for: .normal)
-            //btnImageWithText.titleLabel?.attributedText = attributedString
-        
+            
             btnImageWithText.accessibilityIdentifier = imgName
             btnImageWithText.titleEdgeInsets = UIEdgeInsets(top:-10, left: 0, bottom: 0, right: 0)
             btnImageWithText.isUserInteractionEnabled = false
