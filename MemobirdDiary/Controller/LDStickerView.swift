@@ -249,9 +249,8 @@ class LDStickerView: UIView, UIGestureRecognizerDelegate, LDStickerViewDelegate 
     }
     
     @objc func singleTap(_ recognizer: UITapGestureRecognizer){
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reducescrollviewheightNotification"), object: nil)
-
-
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reduceScrollviewHeightNotification"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "dismissKeybordOnDeleteTextBoxNotification"), object: nil)
         if(self.accessibilityIdentifier == "drag")
         {
             let imageName = self.subviews[0].accessibilityIdentifier

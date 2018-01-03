@@ -436,17 +436,19 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         let myAttribute = [ NSAttributedStringKey.font: selectedFont ]
         let myString = NSMutableAttributedString(string:textViewEditTextBox.text, attributes: myAttribute )
         selectedTextBoxButton.setAttributedTitle(myString, for: .normal)
-        //selectedTextBoxButton.titleLabel?.font = selectedFont
-        //selectedTextBoxButton.titleLabel?.text = textViewEditTextBox.text
+      
         textViewEditTextBox.resignFirstResponder()
         self.vwEditTextBox.isHidden = true
     }
     
-//    func textViewDidChange(_ textView: UITextView) {
-//        if(textView == textViewEditTextBox){
-//          selectedTextBoxButton.setAttributedTitle(textViewEditTextBox.attributedText, for: .normal)
-//        }
-//    }
+    func textViewDidChange(_ textView: UITextView) {
+        if(textView == textViewEditTextBox){
+          //selectedTextBoxButton.setAttributedTitle(textViewEditTextBox.attributedText, for: .normal)
+            let myAttribute = [ NSAttributedStringKey.font: selectedFont ]
+            let myString = NSMutableAttributedString(string:textViewEditTextBox.text, attributes: myAttribute )
+            selectedTextBoxButton.setAttributedTitle(myString, for: .normal)
+        }
+    }
     
     func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
         if(textView == backgroundTextView){
@@ -455,6 +457,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         
         return true 
     }
+    
     var selectedFont : UIFont!
     @objc func textBoxDoubleTapped(_ gesture : UIGestureRecognizer){
         self.view.bringSubview(toFront: self.vwEditTextBox)
@@ -867,24 +870,12 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
     }
     
  
-    @objc func reducescrollviewheightNotification(notif: NSNotification) {
-        //Insert code here
-//        print(self.scrollView.contentSize.height)
-//        print(scrollView.subviews[scrollView.subviews.count - 1].frame.origin.y+scrollView.subviews[scrollView.subviews.count - 1].frame.size.height+220)
-        if(self.scrollView.contentSize.height < scrollView.subviews[scrollView.subviews.count - 1].frame.origin.y+scrollView.subviews[scrollView.subviews.count - 1].frame.size.height+220)
-        {
-       self.scrollView.contentSize = CGSize(width: self.scrollView.contentSize.width, height: self.scrollView.contentSize.height - 200)
-        scrollView.reloadInputViews()
-        }else
-        {
-        }
-
-    }
+   
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(self.reducescrollviewheightNotification), name: NSNotification.Name(rawValue: "reducescrollviewheightNotification"), object: nil)
-
+        NotificationCenter.default.addObserver(self, selector: #selector(self.reduceScrollviewHeight), name: NSNotification.Name(rawValue: "reduceScrollviewHeightNotification"), object: nil)
+         NotificationCenter.default.addObserver(self, selector: #selector(self.dismissKeyboardOnDeleteTextBox), name: NSNotification.Name(rawValue: "dismissKeybordOnDeleteTextBoxNotification"), object: nil)
 
 
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillDisappear), name: Notification.Name.UIKeyboardWillHide, object: nil)
@@ -963,7 +954,13 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
     @objc func keyboardWillAppear() {
         //Do something here
         didDisplayedKeyboard = true
-       
+        // Scroll Up when user selects background textView
+        if(backgroundTextView.isFirstResponder == true){
+            var offset = scrollView.contentOffset
+            offset.y = 0
+            self.scrollView.setContentOffset(offset, animated: true)
+            
+        }
     }
     
     @objc func keyboardWillDisappear() {
@@ -1028,7 +1025,29 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         self.scrollView.addSubview(backgroundTextView)
     }
     
+    @objc func dismissKeyboardOnDeleteTextBox(notification: NSNotification) {
+        if(self.textViewEditTextBox.isFirstResponder == true && didDisplayedKeyboard == true){
+            self.dismissKeyboard()
+        }
+    }
+    
     // MARK:- ScrollView methods
+    @objc func reduceScrollviewHeight(notification: NSNotification) {
+        //Insert code here
+        //        print(self.scrollView.contentSize.height)
+        //        print(scrollView.subviews[scrollView.subviews.count - 1].frame.origin.y+scrollView.subviews[scrollView.subviews.count - 1].frame.size.height+220)
+        if(self.scrollView.contentSize.height < scrollView.subviews[scrollView.subviews.count - 1].frame.origin.y+scrollView.subviews[scrollView.subviews.count - 1].frame.size.height+220)
+        {
+            self.scrollView.contentSize = CGSize(width: self.scrollView.contentSize.width, height: self.scrollView.contentSize.height - 200)
+           
+            backgroundTextView.frame.size = CGSize(width:backgroundTextView.frame.size.width, height:self.scrollView.contentSize.height)
+            scrollView.reloadInputViews()
+        }else
+        {
+        }
+        
+    }
+    
     @objc func scrolltouchhandlePan(_ gestureRecognizer: UIPanGestureRecognizer) {
         if gestureRecognizer.state == .began
         {
@@ -1051,6 +1070,9 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         var offset = scrollView.contentOffset
         offset.y = scrollView.contentSize.height + scrollView.contentInset.bottom - scrollView.bounds.size.height
         scrollView.setContentOffset(offset, animated: true)
+        backgroundTextView.frame.size = CGSize(width:backgroundTextView.frame.size.width, height:self.scrollView.contentSize.height)
+        //print("scrollview contentSize.height : \(scrollView.contentSize.height)")
+
         hideOtherViewSelection()
         var calcWidth = CGFloat(0)
         var calcHeight = CGFloat(0)
@@ -1220,7 +1242,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
     }
     @IBAction func morebtn(_ sender: UIButton)
     {
-        print("morebtn")
+        
         morebtnoutlet.isSelected = !sender.isSelected
         morebtnoutlet.backgroundColor = UIColor.clear
         if(checkmorebtn == true)
