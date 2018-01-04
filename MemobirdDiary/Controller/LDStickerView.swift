@@ -445,16 +445,14 @@ class LDStickerView: UIView, UIGestureRecognizerDelegate, LDStickerViewDelegate 
             for view in (self.superview?.subviews)!
         {
             if(view.accessibilityIdentifier == "drag"){
-                let dict = NSDictionary()
-                dict.setValue(view.frame.origin.y+view.frame.size.height, forKey: "viewSize")
-                dict.setValue(view, forKey: "view")
-                //dict.(forKey: "viewSize")
+                let dict = ["tag" : view.tag, "viewSize" :  Int(view.frame.origin.y)]
                 array.add(dict)
             }
         }
             let sizeDescriptor = NSSortDescriptor(key: "viewSize", ascending: false)
-            array.sortedArray(using: [sizeDescriptor])
-            print("bottom viewSize: ",array[0])
+            let sortedArray = array.sortedArray(using: [sizeDescriptor])
+            print("sorted array:\(sortedArray)")
+            print("bottom viewSize: ",sortedArray[0])
         }
     }
     /*
