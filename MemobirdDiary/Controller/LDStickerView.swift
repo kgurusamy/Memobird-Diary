@@ -306,7 +306,7 @@ class LDStickerView: UIView, UIGestureRecognizerDelegate, LDStickerViewDelegate 
             if responds(to: #selector(LDStickerViewDelegate.stickerViewDidEndEditing(_:))){
                 _prevPoint = _touchLocation
             }
-            getTheLastViewPosition()
+            //getTheLastViewPosition()
         }
         
         _prevPoint = _touchLocation;
