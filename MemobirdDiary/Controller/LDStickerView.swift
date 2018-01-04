@@ -54,11 +54,11 @@ class LDStickerView: UIView, UIGestureRecognizerDelegate, LDStickerViewDelegate 
             _closeView.transform = t.inverted()
             _resizeView.transform = t.inverted()
             _rotateView.transform = t.inverted()
-            //if ((_isShowingEditingHandles) != false){
-            //    _contentView.layer.borderWidth = 1/scale.width
-            //} else {
-                _contentView.layer.borderWidth = 1.0
-            //}
+            if ((_isShowingEditingHandles) != false){
+                _contentView.layer.borderWidth = 1/scale.width
+            } else {
+                _contentView.layer.borderWidth = 0.0
+            }
         }
     }
     
@@ -136,13 +136,20 @@ class LDStickerView: UIView, UIGestureRecognizerDelegate, LDStickerViewDelegate 
     }
     
     @objc func contentTapped(_ tapGesture:UITapGestureRecognizer){
-        self.superview?.endEditing(true)
-        hideOtherViewSelection()
-        showEditingHandles()
-        superview?.bringSubview(toFront: self)
-        let scrollView = self.superview as! UIScrollView
-        scrollView.isScrollEnabled = false
-
+//        self.superview?.endEditing(true)
+//        hideOtherViewSelection()
+//        showEditingHandles()
+//        superview?.bringSubview(toFront: self)
+       
+        if ((_isShowingEditingHandles) != false){
+            hideEditingHandles()
+            self.superview?.endEditing(true)
+            superview?.bringSubview(toFront: self)
+            let scrollView = self.superview as! UIScrollView
+            scrollView.isScrollEnabled = false
+        } else {
+            showEditingHandles()
+        }
     }
     
     func hideOtherViewSelection()
@@ -285,6 +292,12 @@ class LDStickerView: UIView, UIGestureRecognizerDelegate, LDStickerViewDelegate 
             }
         } else if (recognizer.state == UIGestureRecognizerState.changed){
             center = CGPoint(x: _beginningCenter.x+(_touchLocation.x-_beginningPoint.x), y: _beginningCenter.y+(_touchLocation.y-_beginningPoint.y))
+            print(_touchLocation.y)
+            print("Touch locationY")
+           // let dictionary = ["TouchlocationY":_touchLocation.y]
+            let dictionary:[String: CGFloat] = ["Key": _touchLocation.y]
+
+             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "StickerImageMoveNotification"), object: dictionary)
             if responds(to: #selector(LDStickerViewDelegate.stickerViewDidChangeEditing(_:))){
                 _delegate?.stickerViewDidChangeEditing!(self)
             }

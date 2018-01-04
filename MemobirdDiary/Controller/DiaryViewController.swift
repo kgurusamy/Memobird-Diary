@@ -436,7 +436,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         let myAttribute = [ NSAttributedStringKey.font: selectedFont ]
         let myString = NSMutableAttributedString(string:textViewEditTextBox.text, attributes: myAttribute )
         selectedTextBoxButton.setAttributedTitle(myString, for: .normal)
-      
+      self.scrollView.contentSize = CGSize(width: self.scrollView.contentSize.width, height: self.scrollView.contentSize.height - 60 )
         textViewEditTextBox.resignFirstResponder()
         self.vwEditTextBox.isHidden = true
     }
@@ -489,6 +489,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         self.view.bringSubview(toFront: self.vwEditTextBox)
         self.vwEditTextBox.frame = CGRect(x:self.vwEditTextBox.frame.origin.x,y: self.view.frame.size.height - getkeyboardHeight - vwEditTextBox.frame.size.height+5, width : self.view.frame.size.width, height : self.vwEditTextBox.frame.size.height)
         //self.textViewEditTextBox.frame = CGRect(x:5.0,y:5.0,width:self.view.frame.size.width/0.75,height:self.vwEditTextBox.frame.size.height-5)
+        self.scrollView.contentSize = CGSize(width: self.scrollView.contentSize.width, height: self.scrollView.contentSize.height + 60 )
         print("vwEditTextBox frame : \(self.vwEditTextBox.frame)")
         self.vwEditTextBox.isHidden = false
     }
@@ -869,14 +870,45 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         }
     }
     
- 
-   
+ var gettouchLocationy:CGFloat = 0
+    @objc func StickerImageMoveNotification(notification: NSNotification) {
+        //Do something here
+        //print(notification.userInfo)
+
+//        if (notification.userInfo?["Key"] as? CGFloat) != nil
+//        {
+//            // do something with your image
+//          //  print(notification.userInfo?["Key"] ?? "hgj")
+//            print("notification.userInfo!")
+//        }
+       // print(notification.object ?? "")
+        if let dict = notification.object as? NSDictionary {
+            if let newgettouchLocationy = dict["Key"] as? CGFloat{
+                // do something with your image
+                gettouchLocationy = newgettouchLocationy
+                print("compare")
+                print(gettouchLocationy + calcHeight+40)
+                print(self.scrollView.contentSize.height)
+                if(gettouchLocationy+calcHeight+60 > self.scrollView.contentSize.height)
+                {
+                    self.scrollView.contentSize = CGSize(width: self.scrollView.contentSize.width, height: gettouchLocationy+calcHeight+180 )
+                    print("Increased Heoight")
+
+
+                }
+                
+
+            }
+        }
+
+        
+    }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.reduceScrollviewHeight), name: NSNotification.Name(rawValue: "reduceScrollviewHeightNotification"), object: nil)
          NotificationCenter.default.addObserver(self, selector: #selector(self.dismissKeyboardOnDeleteTextBox), name: NSNotification.Name(rawValue: "dismissKeybordOnDeleteTextBoxNotification"), object: nil)
-
+  NotificationCenter.default.addObserver(self, selector: #selector(self.StickerImageMoveNotification), name: NSNotification.Name(rawValue: "StickerImageMoveNotification"), object: nil)
 
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillDisappear), name: Notification.Name.UIKeyboardWillHide, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillAppear), name: Notification.Name.UIKeyboardWillShow, object: nil)
@@ -1036,10 +1068,32 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         //Insert code here
         //        print(self.scrollView.contentSize.height)
         //        print(scrollView.subviews[scrollView.subviews.count - 1].frame.origin.y+scrollView.subviews[scrollView.subviews.count - 1].frame.size.height+220)
+        print("scrollView.subviews")
+        print(scrollView.subviews)
+        var subviews = scrollView.subviews
+        var emptyArray = [CGFloat]()
+        // Return if there are no subviews
+        if subviews.count == 0 {
+            return
+        }
+        
+        for subview : AnyObject in subviews{
+            
+            // Do what you want to do with the subview
+            print(subview.frame.origin.y)
+            print("GETscrollView.subviews")
+            emptyArray.append(subview.frame.origin.y)
+            // List the subviews of subview
+        }
+        print(emptyArray)
+        print("GETemptyArray")
+        let numMax = emptyArray.reduce(CGFloat.leastNormalMagnitude, { max($0, $1) })
+        print(numMax)
+        print("GETMaximum Value")
+
         if(self.scrollView.contentSize.height < scrollView.subviews[scrollView.subviews.count - 1].frame.origin.y+scrollView.subviews[scrollView.subviews.count - 1].frame.size.height+220)
         {
-            self.scrollView.contentSize = CGSize(width: self.scrollView.contentSize.width, height: self.scrollView.contentSize.height - 200)
-           
+            self.scrollView.contentSize = CGSize(width: self.scrollView.contentSize.width, height: self.scrollView.contentSize.height )
             backgroundTextView.frame.size = CGSize(width:backgroundTextView.frame.size.width, height:self.scrollView.contentSize.height)
             scrollView.reloadInputViews()
         }else
@@ -1063,19 +1117,21 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
     {
         saveDataToCoredata(fromView: self.scrollView)
     }
-    
+    // MARKK
+    var calcWidth = CGFloat(0)
+    var calcHeight = CGFloat(0)
     func dragzoomroatateview(img : UIImage, imgName : String, type : Int, attributedString : NSAttributedString)
     {
-        self.scrollView.contentSize = CGSize(width: self.scrollView.contentSize.width, height: self.scrollView.contentSize.height + 200)
+        self.scrollView.contentSize = CGSize(width: self.scrollView.contentSize.width, height: self.scrollView.contentSize.height )
+        
         var offset = scrollView.contentOffset
-        offset.y = scrollView.contentSize.height + scrollView.contentInset.bottom - scrollView.bounds.size.height
-        scrollView.setContentOffset(offset, animated: true)
+       // offset.y = scrollView.contentSize.height + scrollView.contentInset.bottom - scrollView.bounds.size.height
+       // scrollView.setContentOffset(offset, animated: true)
         backgroundTextView.frame.size = CGSize(width:backgroundTextView.frame.size.width, height:self.scrollView.contentSize.height)
         //print("scrollview contentSize.height : \(scrollView.contentSize.height)")
 
         hideOtherViewSelection()
-        var calcWidth = CGFloat(0)
-        var calcHeight = CGFloat(0)
+        
         
         if(type == contentType.image.rawValue){
             if(img.size.width > self.view.frame.width){
@@ -1104,7 +1160,9 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
             calcWidth = CGFloat(200)
             calcHeight = CGFloat(120)
         }
-        stickerView = LDStickerView(frame: CGRect(x: 40, y: self.scrollView.contentSize.height - 400 , width: calcWidth, height: calcHeight))
+//self.scrollView.frame = CGRect(x: self.scrollView.contentOffset.x, y: self.scrollView.contentOffset.y, width: self.scrollView.frame.size.width , height: self.scrollView.frame.size.height)
+        stickerView = LDStickerView(frame: CGRect(x: (self.scrollView.contentSize.width-calcWidth)/2, y: self.scrollView.contentOffset.y+200, width: calcWidth, height: calcHeight))
+      //   stickerView = LDStickerView(frame: CGRect(x: (self.scrollView.contentSize.width-calcWidth)/2, y: (self.scrollView.contentSize.height-calcHeight)/2 - 20, width: calcWidth, height: calcHeight))
         stickerView.accessibilityIdentifier = "drag"
         let doubleTap = UITapGestureRecognizer(target: self, action: #selector(textBoxDoubleTapped))
         doubleTap.numberOfTapsRequired = 2
@@ -1495,17 +1553,16 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
     }
     func captureDiaryScreenAndSave() -> String? {
         hideOtherViewSelection()
-       UIGraphicsBeginImageContextWithOptions(scrollView.frame.size, false, scrollView.layer.contentsScale)
-
+      
+       //UIGraphicsBeginImageContextWithOptions(scrollView.frame.size, false, scrollView.layer.contentsScale)
+        UIGraphicsBeginImageContext(scrollView.contentSize)
+        let savedContentOffset = scrollView.contentOffset
         let savedFrame = scrollView.frame
-        
         scrollView.contentOffset = CGPoint.zero
-        scrollView.frame = CGRect(x: 0, y: 60, width: scrollView.frame.width, height: scrollView.contentSize.height)
+        scrollView.frame = CGRect(x: 0, y: 60, width: scrollView.contentSize.width, height: scrollView.contentSize.height)
         scrollView.layer.render(in: UIGraphicsGetCurrentContext()!)
         let image = UIGraphicsGetImageFromCurrentImageContext()
-        
         scrollView.frame = savedFrame
-        
         UIGraphicsEndImageContext()
 
         var imageName = Date().description
