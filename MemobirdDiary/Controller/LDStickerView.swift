@@ -54,11 +54,11 @@ class LDStickerView: UIView, UIGestureRecognizerDelegate, LDStickerViewDelegate 
             _closeView.transform = t.inverted()
             _resizeView.transform = t.inverted()
             _rotateView.transform = t.inverted()
-            //if ((_isShowingEditingHandles) != false){
-            //    _contentView.layer.borderWidth = 1/scale.width
-            //} else {
-                _contentView.layer.borderWidth = 1.0
-            //}
+            if ((_isShowingEditingHandles) != false){
+                _contentView.layer.borderWidth = 1/scale.width
+            } else {
+                _contentView.layer.borderWidth = 0.0
+            }
         }
     }
     
@@ -258,6 +258,9 @@ class LDStickerView: UIView, UIGestureRecognizerDelegate, LDStickerViewDelegate 
     @objc func singleTap(_ recognizer: UITapGestureRecognizer){
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reduceScrollviewHeightNotification"), object: nil)
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "dismissKeybordOnDeleteTextBoxNotification"), object: nil)
+        _touchLocation = recognizer.location(in: superview)
+        print(_touchLocation.y)
+        print("TOuch Location")
         if(self.accessibilityIdentifier == "drag")
         {
             let imageName = self.subviews[0].accessibilityIdentifier
