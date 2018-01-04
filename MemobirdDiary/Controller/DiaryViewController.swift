@@ -1089,7 +1089,66 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         //Insert code here
         //        print(self.scrollView.contentSize.height)
         //        print(scrollView.subviews[scrollView.subviews.count - 1].frame.origin.y+scrollView.subviews[scrollView.subviews.count - 1].frame.size.height+220)
-        print("scrollView.subviews")
+       
+        
+        //Do something here
+        //print(notification.userInfo)
+        
+        //        if (notification.userInfo?["Key"] as? CGFloat) != nil
+        //        {
+        //            // do something with your image
+        //          //  print(notification.userInfo?["Key"] ?? "hgj")
+        //            print("notification.userInfo!")
+        //        }
+        // print(notification.object ?? "")
+        if let dict = notification.object as? NSDictionary {
+            print("dictdictdictdict")
+            print(dict)
+            
+            if let newgettouchLocationy = dict["viewSize"] as? Int{
+                print("compare")
+                print(newgettouchLocationy)
+                var getcontentsizevalue = Int()
+                var differencescrolllastimage = Int()
+                var Reducedifferencescrolllastimage = Int()
+                
+                let scrollviewcontentIntvalue = Int(self.scrollView.contentSize.height)
+                getcontentsizevalue = scrollviewcontentIntvalue
+                //  var subTot = getcontentsizevalue - newgettouchLocationy
+                print("subTotff")
+                differencescrolllastimage = scrollviewcontentIntvalue - newgettouchLocationy
+                print(differencescrolllastimage)
+                
+                
+                if(differencescrolllastimage > 100)
+                {
+                    Reducedifferencescrolllastimage = differencescrolllastimage - 100
+                    let floatReducedifferencescrolllastimage = CGFloat(Reducedifferencescrolllastimage)
+                    print("floatReducedifferencescrolllastimage")
+                    print(floatReducedifferencescrolllastimage)
+                    self.scrollView.contentSize = CGSize(width: self.scrollView.contentSize.width, height: self.scrollView.contentSize.height - floatReducedifferencescrolllastimage)
+                }
+                // do something with your image
+                /*  gettouchLocationy = newgettouchLocationy
+                 print("compare")
+                 print(gettouchLocationy + calcHeight+40)
+                 print(self.scrollView.contentSize.height)
+                 if(gettouchLocationy+calcHeight+60 > self.scrollView.contentSize.height)
+                 {
+                 self.scrollView.contentSize = CGSize(width: self.scrollView.contentSize.width, height: gettouchLocationy+calcHeight+180 )
+                 print("Increased Heoight")
+                 
+                 
+                 }
+                 */
+                
+            }
+        }
+        
+        
+        
+        
+        /*print("scrollView.subviews")
         print(scrollView.subviews)
         var subviews = scrollView.subviews
         var emptyArray = [CGFloat]()
@@ -1120,7 +1179,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         }else
         {
         }
-        
+        */
     }
     
     @objc func scrolltouchhandlePan(_ gestureRecognizer: UIPanGestureRecognizer) {

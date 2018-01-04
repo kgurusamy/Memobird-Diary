@@ -256,18 +256,20 @@ class LDStickerView: UIView, UIGestureRecognizerDelegate, LDStickerViewDelegate 
     }
     
     @objc func singleTap(_ recognizer: UITapGestureRecognizer){
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reduceScrollviewHeightNotification"), object: nil)
+       
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "dismissKeybordOnDeleteTextBoxNotification"), object: nil)
         _touchLocation = recognizer.location(in: superview)
         print(_touchLocation.y)
         print("TOuch Location")
+        getTheLastViewPosition()
+
         if(self.accessibilityIdentifier == "drag")
         {
             let imageName = self.subviews[0].accessibilityIdentifier
             deleteFileWithImageName(imageName: (imageName)!, isDiary: false)
         }
         removeFromSuperview()
-        
+
         if responds(to: #selector(LDStickerViewDelegate.stickerViewDidClose(_:))){
             _delegate?.stickerViewDidClose!(self)
         }
@@ -297,10 +299,9 @@ class LDStickerView: UIView, UIGestureRecognizerDelegate, LDStickerViewDelegate 
             center = CGPoint(x: _beginningCenter.x+(_touchLocation.x-_beginningPoint.x), y: _beginningCenter.y+(_touchLocation.y-_beginningPoint.y))
             print(_touchLocation.y)
             print("Touch locationY")
-           // let dictionary = ["TouchlocationY":_touchLocation.y]
+            //let dictionary = ["TouchlocationY":_touchLocation.y]
             let dictionary:[String: CGFloat] = ["Key": _touchLocation.y]
-
-             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "StickerImageMoveNotification"), object: dictionary)
+          NotificationCenter.default.post(name: NSNotification.Name(rawValue: "StickerImageMoveNotification"), object: dictionary)
             if responds(to: #selector(LDStickerViewDelegate.stickerViewDidChangeEditing(_:))){
                 _delegate?.stickerViewDidChangeEditing!(self)
             }
@@ -309,7 +310,6 @@ class LDStickerView: UIView, UIGestureRecognizerDelegate, LDStickerViewDelegate 
             if responds(to: #selector(LDStickerViewDelegate.stickerViewDidEndEditing(_:))){
                 _prevPoint = _touchLocation
             }
-            //getTheLastViewPosition()
         }
         
         _prevPoint = _touchLocation;
@@ -453,6 +453,9 @@ class LDStickerView: UIView, UIGestureRecognizerDelegate, LDStickerViewDelegate 
             let sortedArray = array.sortedArray(using: [sizeDescriptor])
             print("sorted array:\(sortedArray)")
             print("bottom viewSize: ",sortedArray[0])
+            
+             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reduceScrollviewHeightNotification"), object: sortedArray[0])
+            
         }
     }
     /*
