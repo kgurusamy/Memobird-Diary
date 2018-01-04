@@ -281,7 +281,8 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
                 if(diaryEntries[selectedDiaryEntryIndex].diary_image != nil){
                     deleteFileWithImageName(imageName: diaryEntries[selectedDiaryEntryIndex].diary_image!, isDiary: true)
                 }
-                CoreDataStack.managedObjectContext.delete(diaryEntries[selectedDiaryEntryIndex])
+                
+                //CoreDataStack.managedObjectContext.delete(diaryEntries[selectedDiaryEntryIndex])
             }
             dataModelArr.removeAll()
             for dragView in fromView.subviews
@@ -314,6 +315,23 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
                 }
                 
             }
+            if(diaryEntries.count > 0 && selectedDiaryEntryIndex != -1){
+                let selectedDiaryEntry = diaryEntries[selectedDiaryEntryIndex]
+                selectedDiaryEntry.modified_time = Date()
+                selectedDiaryEntry.diary_image = captureDiaryScreenAndSave()
+                
+                selectedDiaryEntry.diary_data = dataModelArr as NSObject
+                selectedDiaryEntry.diary_text = backgroundTextView.attributedText
+                
+                if(self.scrollView.contentSize.height > self.scrollView.frame.size.height + 130)
+                {
+                    selectedDiaryEntry.diary_height = Float(self.scrollView.frame.size.height+200)
+                    
+                }else{
+                    selectedDiaryEntry.diary_height = Float(self.scrollView.frame.size.height)
+                }
+                diaryEntries[selectedDiaryEntryIndex] = selectedDiaryEntry
+            }else{
             if #available(iOS 10.0, *) {
                 let coreDataDiary = DiaryEntry(context: CoreDataStack.managedObjectContext)
                 coreDataDiary.modified_time = Date()
@@ -350,6 +368,8 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
                     coreDataDiary.diary_height = Float(self.scrollView.frame.size.height)
 
                 }
+                
+            }
             }
             CoreDataStack.saveContext()
         }
@@ -358,7 +378,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         self.present(alert, animated: true, completion: nil)
         
         // change to desired number of seconds (in this case 5 seconds)
-        let when = DispatchTime.now() + 3
+        let when = DispatchTime.now() + 2
         DispatchQueue.main.asyncAfter(deadline: when){
             // your code with delay
             alert.dismiss(animated: true, completion: nil)
@@ -444,6 +464,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
     func textViewDidChange(_ textView: UITextView) {
         if(textView == textViewEditTextBox){
           //selectedTextBoxButton.setAttributedTitle(textViewEditTextBox.attributedText, for: .normal)
+            selectedFont = selectedTextBoxButton.titleLabel?.font
             let myAttribute = [ NSAttributedStringKey.font: selectedFont ]
             let myString = NSMutableAttributedString(string:textViewEditTextBox.text, attributes: myAttribute )
             selectedTextBoxButton.setAttributedTitle(myString, for: .normal)
@@ -474,14 +495,14 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         }
         self.textViewEditTextBox.text = selectedTextBoxButton.titleLabel?.text
         self.textViewEditTextBox.autocorrectionType = .no
-
+        self.textViewEditTextBox.becomeFirstResponder()
         if(didDisplayedKeyboard == true){
             
             //getkeyboardHeight -= 90
             showEditTextBox()
             
         }
-        self.textViewEditTextBox.becomeFirstResponder()
+        
         
     }
 
@@ -987,12 +1008,12 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         //Do something here
         didDisplayedKeyboard = true
         // Scroll Up when user selects background textView
-        if(backgroundTextView.isFirstResponder == true){
-            var offset = scrollView.contentOffset
-            offset.y = 0
-            self.scrollView.setContentOffset(offset, animated: true)
-            
-        }
+//        if(backgroundTextView.isFirstResponder == true){
+//            var offset = scrollView.contentOffset
+//            offset.y = 0
+//            self.scrollView.setContentOffset(offset, animated: true)
+//            
+//        }
     }
     
     @objc func keyboardWillDisappear() {
@@ -1134,14 +1155,29 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         
         
         if(type == contentType.image.rawValue){
-            if(img.size.width > self.view.frame.width){
-                calcWidth = img.size.width/2
-                calcHeight = img.size.height/2
-            }
-            else{
-                calcWidth = img.size.width
-                calcHeight = img.size.height
-            }
+            let calcFrameWidth = self.view.frame.width-50
+            //if(img.size.width > (self.view.frame.width-50)){
+                if(img.size.width > (calcFrameWidth*4)){
+                    calcWidth = img.size.width/10
+                    calcHeight = img.size.height/10
+                }else if(img.size.width > (calcFrameWidth*3) && img.size.width < (calcFrameWidth*4)){
+                    calcWidth = img.size.width/7
+                    calcHeight = img.size.height/7
+                }else if(img.size.width > (calcFrameWidth*2) && img.size.width < (calcFrameWidth*3)){
+                    calcWidth = img.size.width/5
+                    calcHeight = img.size.height/5
+                }else if(img.size.width > calcFrameWidth && img.size.width < (calcFrameWidth*2)){
+                    calcWidth = img.size.width/2
+                    calcHeight = img.size.height/2
+                }else{
+                    calcWidth = img.size.width
+                    calcHeight = img.size.height
+                }
+//            }
+//            else{
+//                calcWidth = img.size.width
+//                calcHeight = img.size.height
+//            }
   
         }
         else if(type == contentType.imageAndText.rawValue){

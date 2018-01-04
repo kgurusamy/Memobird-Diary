@@ -467,8 +467,8 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
                  getpreviewimage = drawVieww?.snapshot
 
             }else{
-                getpreviewimage = self.filteredImageView?.snapshot
-                //getpreviewimage = self.filteredImageView?.inputImage
+                //getpreviewimage = self.filteredImageView?.snapshot
+                getpreviewimage = self.filteredImageView?.inputImage
             }
         }
         
@@ -497,11 +497,11 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
 
         }else{
             getpreviewimage = filteredImageView?.snapshot
-
         }
     
         let DiaryListVC = self.navigationController?.viewControllers[(self.navigationController?.viewControllers.count)!-2] as! DiaryViewController!
         DiaryListVC?.PreviewSelectedimage = getpreviewimage
+        print("image size width: \(getpreviewimage.size.width) height : \(getpreviewimage.size.height)")
         self.navigationController?.popToViewController(DiaryListVC!, animated: true)
        // self.navigationController?.pushViewController(DiaryListVC, animated: true)
         var imageName = Date().description

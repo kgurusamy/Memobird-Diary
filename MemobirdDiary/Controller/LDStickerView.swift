@@ -54,11 +54,11 @@ class LDStickerView: UIView, UIGestureRecognizerDelegate, LDStickerViewDelegate 
             _closeView.transform = t.inverted()
             _resizeView.transform = t.inverted()
             _rotateView.transform = t.inverted()
-            if ((_isShowingEditingHandles) != false){
-                _contentView.layer.borderWidth = 1/scale.width
-            } else {
-                _contentView.layer.borderWidth = 0.0
-            }
+            //if ((_isShowingEditingHandles) != false){
+            //    _contentView.layer.borderWidth = 1/scale.width
+            //} else {
+                _contentView.layer.borderWidth = 1.0
+            //}
         }
     }
     
@@ -306,6 +306,7 @@ class LDStickerView: UIView, UIGestureRecognizerDelegate, LDStickerViewDelegate 
             if responds(to: #selector(LDStickerViewDelegate.stickerViewDidEndEditing(_:))){
                 _prevPoint = _touchLocation
             }
+            getTheLastViewPosition()
         }
         
         _prevPoint = _touchLocation;
@@ -434,7 +435,25 @@ class LDStickerView: UIView, UIGestureRecognizerDelegate, LDStickerViewDelegate 
         return CGSize(width: sqrt(t.a * t.a + t.c * t.c), height: sqrt(t.b * t.b + t.d * t.d)) ;
     }
     
-    
+    func getTheLastViewPosition()
+    {
+        let array = NSMutableArray()
+        if((self.superview?.subviews.count)! > 0){
+            for view in (self.superview?.subviews)!
+        {
+            if(view.accessibilityIdentifier == "drag"){
+                let dict = NSDictionary()
+                dict.setValue(view.frame.origin.y+view.frame.size.height, forKey: "viewSize")
+                dict.setValue(view, forKey: "view")
+                //dict.(forKey: "viewSize")
+                array.add(dict)
+            }
+        }
+            let sizeDescriptor = NSSortDescriptor(key: "viewSize", ascending: false)
+            array.sortedArray(using: [sizeDescriptor])
+            print("bottom viewSize: ",array[0])
+        }
+    }
     /*
     // Only override drawRect: if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
