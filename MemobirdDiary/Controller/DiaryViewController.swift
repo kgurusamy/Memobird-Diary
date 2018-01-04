@@ -1155,13 +1155,19 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         
         
         if(type == contentType.image.rawValue){
-            let calcFrameWidth = self.view.frame.width-50
-                if(img.size.width > (calcFrameWidth*5)){
+            let calcFrameWidth = self.view.frame.width-20
+                if(img.size.width > (calcFrameWidth*7)){
+                    calcWidth = img.size.width/15
+                    calcHeight = img.size.height/15
+                }else if(img.size.width > (calcFrameWidth*6) && img.size.width < (calcFrameWidth*7)){
                     calcWidth = img.size.width/13
                     calcHeight = img.size.height/13
+                }else if(img.size.width > (calcFrameWidth*5) && img.size.width < (calcFrameWidth*6)){
+                    calcWidth = img.size.width/11
+                    calcHeight = img.size.height/11
                 }else if(img.size.width > (calcFrameWidth*4) && img.size.width < (calcFrameWidth*5)){
-                    calcWidth = img.size.width/10
-                    calcHeight = img.size.height/10
+                    calcWidth = img.size.width/9
+                    calcHeight = img.size.height/9
                 }else if(img.size.width > (calcFrameWidth*3) && img.size.width < (calcFrameWidth*4)){
                     calcWidth = img.size.width/7
                     calcHeight = img.size.height/7
