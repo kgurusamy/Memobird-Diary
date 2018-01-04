@@ -1156,8 +1156,10 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         
         if(type == contentType.image.rawValue){
             let calcFrameWidth = self.view.frame.width-50
-            //if(img.size.width > (self.view.frame.width-50)){
-                if(img.size.width > (calcFrameWidth*4)){
+                if(img.size.width > (calcFrameWidth*5)){
+                    calcWidth = img.size.width/13
+                    calcHeight = img.size.height/13
+                }else if(img.size.width > (calcFrameWidth*4) && img.size.width < (calcFrameWidth*5)){
                     calcWidth = img.size.width/10
                     calcHeight = img.size.height/10
                 }else if(img.size.width > (calcFrameWidth*3) && img.size.width < (calcFrameWidth*4)){
@@ -1167,18 +1169,15 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
                     calcWidth = img.size.width/5
                     calcHeight = img.size.height/5
                 }else if(img.size.width > calcFrameWidth && img.size.width < (calcFrameWidth*2)){
+                    calcWidth = img.size.width/3
+                    calcHeight = img.size.height/3
+                }else if((img.size.width > 300) && (img.size.width < calcFrameWidth)){
                     calcWidth = img.size.width/2
                     calcHeight = img.size.height/2
                 }else{
                     calcWidth = img.size.width
                     calcHeight = img.size.height
                 }
-//            }
-//            else{
-//                calcWidth = img.size.width
-//                calcHeight = img.size.height
-//            }
-  
         }
         else if(type == contentType.imageAndText.rawValue){
             //calcWidth = CGFloat(200)
@@ -1228,15 +1227,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
             stickerView.setContentView(btnImageWithText)
         }
         else{
-//            textLabel = UILabel()
-//            textLabel.attributedText = attributedString
-//            textLabel.numberOfLines = 0
-//            textLabel.frame = CGRect(x: 20 , y: 20, width: calcWidth-40, height: calcHeight-40)
-//            textLabel.accessibilityIdentifier = "dragText"
-//            textLabel.adjustsFontSizeToFitWidth = true
-//            textLabel.textAlignment = .center
-//            textLabel.sizeToFit()
-//            stickerView.setContentView(textLabel)
+
             btnPlainTextBox = UIButton(type:.custom)
             btnPlainTextBox.frame = CGRect(x: 20 , y: 20, width: calcWidth-40, height: calcHeight-40)
             btnPlainTextBox.titleLabel?.textColor = .black
@@ -1251,6 +1242,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
             stickerView.subviews[1].isHidden = false
             stickerView.subviews[2].isHidden = false
         }
+        stickerView.tag = randomNumber(range: 1000...3000)
         self.scrollView.addSubview(stickerView)
         self.scrollView.isScrollEnabled = false
     }
@@ -1706,4 +1698,9 @@ extension UIViewController {
     }
 }
 
+func randomNumber(range: ClosedRange<Int> = 1...6) -> Int {
+    let min = range.lowerBound
+    let max = range.upperBound
+    return Int(arc4random_uniform(UInt32(1 + max - min))) + min
+}
 
