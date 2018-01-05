@@ -851,7 +851,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
      //self.view.bringSubview(toFront: self.tabBarview)
         let btnLeftAlign = self.view.viewWithTag(textFormat.leftAlign.rawValue) as! UIButton
         btnLeftAlign.setBackgroundImage(UIImage(named:"ico_left_checked.png"), for: UIControlState.normal)
-        
+
         self.view.bringSubview(toFront: self.vwTextOptions)
         self.view.bringSubview(toFront: self.materialsBGview)
 
@@ -888,6 +888,8 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        UserDefaults.standard.set(nil, forKey: "SavescrollcontentHeightt")
+
         NotificationCenter.default.removeObserver(self)
         if(vwTextBoxOption.isHidden == false){
             vwTextBoxOption.isHidden = true
@@ -1076,25 +1078,18 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
             sumLastypositionandHeight = Lastimageyposition + LastimageHeight
             // do something with your image
             let scrollviewcontentIntvalue = Int(self.scrollView.contentSize.height)
-            print(sumLastypositionandHeight)
-            print(self.scrollView.contentSize.height)
             if(sumLastypositionandHeight+120 > scrollviewcontentIntvalue)
             {
                 
                 self.scrollView.contentSize = CGSize(width: self.scrollView.contentSize.width, height: self.scrollView.contentSize.height + 200)
                 print("Increased Heoight")
                 
-                
             }
-            
-            
         }
     }
     func CalculateReducescrollviewHeight(getdicdata: NSDictionary)
     {
         if let Lastimageyposition = getdicdata["viewSize"] as? Int{
-            print("compare")
-            print(Lastimageyposition)
             var getcontentsizevalue = Int()
             var differencescrolllastimage = Int()
             var Reducedifferencescrolllastimage = Int()
@@ -1103,29 +1098,45 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
             var sumLastypositionandHeight = Int()
             sumLastypositionandHeight = Lastimageyposition + LastimageHeight
             let scrollviewcontentIntvalue = Int(self.scrollView.contentSize.height)
+           
             getcontentsizevalue = scrollviewcontentIntvalue
-            print("subTotff")
             differencescrolllastimage = scrollviewcontentIntvalue - sumLastypositionandHeight
-            print(differencescrolllastimage)
+            let defaults = UserDefaults.standard
+            var floatReducedifferencescrolllastimage = CGFloat()
             if(differencescrolllastimage > 60)
             {
                 Reducedifferencescrolllastimage = differencescrolllastimage - 10
-                let floatReducedifferencescrolllastimage = CGFloat(Reducedifferencescrolllastimage)
-                print("floatReducedifferencescrolllastimage")
-                print(floatReducedifferencescrolllastimage)
+                floatReducedifferencescrolllastimage = CGFloat(Reducedifferencescrolllastimage)
                 self.scrollView.contentSize = CGSize(width: self.scrollView.contentSize.width, height: self.scrollView.contentSize.height - floatReducedifferencescrolllastimage)
-                
+
+                if (defaults.object(forKey: "SavescrollcontentHeightt") != nil)
+                {
+               
+                }else{
+                    defaults.set(floatReducedifferencescrolllastimage, forKey: "SavescrollcontentHeightt")
+                }
             }
-            var offset = scrollView.contentOffset
-            offset.y = scrollView.contentSize.height - scrollView.bounds.size.height + scrollView.contentInset.bottom + 120
-            scrollView.setContentOffset(offset, animated: false)
+            if (defaults.object(forKey: "SavescrollcontentHeightt") != nil)
+            {
+                var NEWscrollviewcontentIntvalue = Int()
+                NEWscrollviewcontentIntvalue = defaults.object(forKey: "SavescrollcontentHeightt") as! Int
+                if(NEWscrollviewcontentIntvalue == Int(floatReducedifferencescrolllastimage))
+                {
+
+                }else{
+                    defaults.set(floatReducedifferencescrolllastimage, forKey: "SavescrollcontentHeightt")
+                    var offset = scrollView.contentOffset
+                    offset.y = scrollView.contentSize.height - scrollView.bounds.size.height + scrollView.contentInset.bottom + 120
+                    scrollView.setContentOffset(offset, animated: false)
+                }
+
+            }
+           
         }
     }
     // MARK:- ScrollView methods
     @objc func reduceScrollviewHeight(notification: NSNotification) {
         if let dict = notification.object as? NSDictionary {
-            print("dictdictdictdict")
-            print(dict)
             CalculateReducescrollviewHeight(getdicdata: dict)
         }
     }

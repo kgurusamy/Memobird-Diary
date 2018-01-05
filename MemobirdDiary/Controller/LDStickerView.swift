@@ -286,7 +286,7 @@ class LDStickerView: UIView, UIGestureRecognizerDelegate, LDStickerViewDelegate 
         _touchLocation = recognizer.location(in: superview)
         print(_touchLocation.y)
         print("TOuch Location")
-        getTheLastViewPosition()
+        getTheLastViewPosition(selectedYposition: _touchLocation.y)
 
         if(self.accessibilityIdentifier == "drag")
         {
@@ -335,7 +335,9 @@ class LDStickerView: UIView, UIGestureRecognizerDelegate, LDStickerViewDelegate 
             if responds(to: #selector(LDStickerViewDelegate.stickerViewDidEndEditing(_:))){
                 _prevPoint = _touchLocation
             }
-            getTheLastViewPosition()
+            _touchLocation = recognizer.location(in: superview)
+            print(_touchLocation.y)
+            getTheLastViewPosition(selectedYposition: _touchLocation.y)
 
         }
         
@@ -465,14 +467,14 @@ class LDStickerView: UIView, UIGestureRecognizerDelegate, LDStickerViewDelegate 
         return CGSize(width: sqrt(t.a * t.a + t.c * t.c), height: sqrt(t.b * t.b + t.d * t.d)) ;
     }
     
-    func getTheLastViewPosition()
+    func getTheLastViewPosition(selectedYposition: CGFloat)
     {
         let array = NSMutableArray()
         if((self.superview?.subviews.count)! > 0){
             for view in (self.superview?.subviews)!
             {
                 if(view.accessibilityIdentifier == "drag"){
-                    let dict = ["tag" : view.tag, "viewSize" :  Int(view.frame.origin.y),"viewHeight" :  Int(view.frame.size.height)]
+                    let dict = ["tag" : view.tag, "viewSize" :  Int(view.frame.origin.y),"viewHeight" :  Int(view.frame.size.height),"LastYposition" :  Int(selectedYposition)]
                     array.add(dict)
                 }
             }
