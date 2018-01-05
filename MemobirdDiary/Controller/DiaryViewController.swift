@@ -644,6 +644,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
     func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView)
     {
         self.scrollView.isScrollEnabled = true
+        self.dismissKeyboard()
         hideOtherViewSelection()
     }
     
@@ -1064,9 +1065,9 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         if let Lastimageyposition = getdicdata["viewSize"] as? Int{
             print("compare")
             print(Lastimageyposition)
-            var getcontentsizevalue = Int()
-            var differencescrolllastimage = Int()
-            var Reducedifferencescrolllastimage = Int()
+//            var getcontentsizevalue = Int()
+//            var differencescrolllastimage = Int()
+//            var Reducedifferencescrolllastimage = Int()
             var LastimageHeight = Int()
             LastimageHeight = (getdicdata["viewHeight"] as? Int)!
             var sumLastypositionandHeight = Int()
@@ -1131,8 +1132,10 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         if gestureRecognizer.state == .began
         {
             self.scrollView.isScrollEnabled = true
-            hideOtherViewSelection()
-             self.backgroundTextView.resignFirstResponder()
+            //hideOtherViewSelection()
+            //self.dismissKeyboard()
+             //self.backgroundTextView.resignFirstResponder()
+             //self.textViewEditTextBox.resignFirstResponder()
             //stickerView.hideEditingHandles()
         }
     }
@@ -1180,15 +1183,15 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
                     calcHeight = img.size.height/5
                 }else if(img.size.width > calcFrameWidth && img.size.width < (calcFrameWidth*2)){
                     if(img.size.height < 80 && img.size.height > 40){
-                        calcWidth = img.size.width/3
+                        calcWidth = img.size.width/2.5
                         calcHeight = img.size.height
                     }else if(img.size.height < 40){
-                        calcWidth = img.size.width/3
+                        calcWidth = img.size.width/2.5
                         calcHeight = 50
                     }
                     else{
-                        calcWidth = img.size.width/3
-                        calcHeight = img.size.height/3
+                        calcWidth = img.size.width/2.5
+                        calcHeight = img.size.height/2.5
                     }
                 }else if((img.size.width > 300) && (img.size.width < calcFrameWidth)){
                     calcWidth = img.size.width/2
@@ -1225,7 +1228,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
             picimageView.image = img
             picimageView.frame = CGRect(x: 20 , y: 20, width: calcWidth-40, height: calcWidth-40)
             picimageView.accessibilityIdentifier = imgName
-            picimageView.contentMode = UIViewContentMode.scaleAspectFit
+            //picimageView.contentMode = UIViewContentMode.scaleAspectFit
             stickerView.setContentView(picimageView)
         }
         else if(type == contentType.imageAndText.rawValue){
