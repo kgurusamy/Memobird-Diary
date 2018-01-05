@@ -849,6 +849,8 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         self.view.bringSubview(toFront: editorBGview)
         materialBGview.frame = CGRect(x: 0, y: 1000, width: self.materialBGview.frame.width, height: self.materialBGview.frame.height)
      //self.view.bringSubview(toFront: self.tabBarview)
+        let btnLeftAlign = self.view.viewWithTag(textFormat.leftAlign.rawValue) as! UIButton
+        btnLeftAlign.setBackgroundImage(UIImage(named:"ico_left_checked.png"), for: UIControlState.normal)
         
         self.view.bringSubview(toFront: self.vwTextOptions)
         self.view.bringSubview(toFront: self.materialsBGview)
