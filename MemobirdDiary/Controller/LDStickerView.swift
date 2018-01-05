@@ -54,10 +54,32 @@ class LDStickerView: UIView, UIGestureRecognizerDelegate, LDStickerViewDelegate 
             _closeView.transform = t.inverted()
             _resizeView.transform = t.inverted()
             _rotateView.transform = t.inverted()
-            if ((_isShowingEditingHandles) != false){
-                _contentView.layer.borderWidth = 1/scale.width
-            } else {
-                _contentView.layer.borderWidth = 0.0
+            
+//            if ((_isShowingEditingHandles) != false){
+//                _contentView.layer.borderWidth = 1/scale.width
+//            } else {
+//                _contentView.layer.borderWidth = 0.0
+//            }
+            
+            if((self.superview?.subviews.count)! > 0){
+                for view in (self.superview?.subviews)!{
+                    if(view.accessibilityIdentifier == "drag"){
+                        if(view != lastTouchedView){
+                            if(view.subviews.count == 3){
+                                view.subviews[1].isHidden = true
+                                view.subviews[2].isHidden = true
+                                view.subviews[0].layer.borderWidth = 0.0
+                            }
+                        }else if(view == lastTouchedView){
+                            if(view.subviews.count == 3){
+                                view.subviews[1].isHidden = false
+                                view.subviews[2].isHidden = false
+                                view.subviews[0].layer.borderColor = UIColor.gray.cgColor
+                                view.subviews[0].layer.borderWidth = 1.0
+                            }
+                        }
+                    }
+                }
             }
         }
     }
@@ -141,15 +163,18 @@ class LDStickerView: UIView, UIGestureRecognizerDelegate, LDStickerViewDelegate 
 //        showEditingHandles()
 //        superview?.bringSubview(toFront: self)
        
-        if ((_isShowingEditingHandles) != false){
-            hideEditingHandles()
-            self.superview?.endEditing(true)
-            superview?.bringSubview(toFront: self)
-            let scrollView = self.superview as! UIScrollView
-            scrollView.isScrollEnabled = false
-        } else {
-            showEditingHandles()
-        }
+        self.superview?.endEditing(true)
+        superview?.bringSubview(toFront: self)
+        refresh()
+//        if ((_isShowingEditingHandles) != false){
+//            hideEditingHandles()
+//            self.superview?.endEditing(true)
+//            superview?.bringSubview(toFront: self)
+//            let scrollView = self.superview as! UIScrollView
+//            scrollView.isScrollEnabled = false
+//        } else {
+//            showEditingHandles()
+//        }
     }
     
     func hideOtherViewSelection()
@@ -250,8 +275,8 @@ class LDStickerView: UIView, UIGestureRecognizerDelegate, LDStickerViewDelegate 
         _contentView = contentView
         _contentView.frame = self.bounds.insetBy(dx: _globalInset, dy: _globalInset);
         _contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        _contentView.layer.borderColor = UIColor.gray.cgColor
-        _contentView.layer.borderWidth = 1.0;
+        //_contentView.layer.borderColor = UIColor.gray.cgColor
+        //_contentView.layer.borderWidth = 1.0;
         insertSubview(_contentView, at: 0)
     }
     
@@ -279,7 +304,7 @@ class LDStickerView: UIView, UIGestureRecognizerDelegate, LDStickerViewDelegate 
 
         let scrollView = self.superview as! UIScrollView
         //if lastTouchedView != nil{
-        if(scrollView.isScrollEnabled == false){
+        //if(scrollView.isScrollEnabled == false){
         if(recognizer.state == UIGestureRecognizerState.began){
            
             _beginningPoint = _touchLocation
@@ -313,7 +338,7 @@ class LDStickerView: UIView, UIGestureRecognizerDelegate, LDStickerViewDelegate 
         }
         
         _prevPoint = _touchLocation;
-        }
+        //}
     }
     
     @objc func resizeTranslate(_ recognizer: UIPanGestureRecognizer){

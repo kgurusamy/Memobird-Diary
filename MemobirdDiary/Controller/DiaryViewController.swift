@@ -793,8 +793,8 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         {
             let imageName = getImageNameFromDate()
             let fullImagePath = imagesDirectoryPath + "/\(imageName)"
-            let getimageName : UIImage = UIImage(named:materialImagesArray[indexPath.row])!
-            let myImage = self.fixOrientation(image: getimageName)
+            let getimage : UIImage = UIImage(named:materialImagesArray[indexPath.row])!
+            let myImage = self.fixOrientation(image: getimage)
             
             dragzoomroatateview(img:myImage, imgName: imageName, type: contentType.image.rawValue, attributedString: NSAttributedString(string:""))
             let data = UIImagePNGRepresentation(myImage)
@@ -813,8 +813,8 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
             else{
                 let imageName = getImageNameFromDate()
                 let fullImagePath = imagesDirectoryPath + "/\(imageName)"
-                let getimageName : UIImage = UIImage(named:textBoxImagesArray[indexPath.row])!
-                let myImage = self.fixOrientation(image: getimageName)
+                let getimage : UIImage = UIImage(named:textBoxImagesArray[indexPath.row])!
+                let myImage = self.fixOrientation(image: getimage)
             
                 dragzoomroatateview(img:myImage, imgName: imageName, type: contentType.imageAndText.rawValue, attributedString: NSAttributedString(string:"Double Tap to edit"))
                 let data = UIImagePNGRepresentation(myImage)
@@ -1234,8 +1234,17 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
                     calcWidth = img.size.width/5
                     calcHeight = img.size.height/5
                 }else if(img.size.width > calcFrameWidth && img.size.width < (calcFrameWidth*2)){
-                    calcWidth = img.size.width/3
-                    calcHeight = img.size.height/3
+                    if(img.size.height < 80 && img.size.height > 40){
+                        calcWidth = img.size.width/3
+                        calcHeight = img.size.height
+                    }else if(img.size.height < 40){
+                        calcWidth = img.size.width/3
+                        calcHeight = 50
+                    }
+                    else{
+                        calcWidth = img.size.width/3
+                        calcHeight = img.size.height/3
+                    }
                 }else if((img.size.width > 300) && (img.size.width < calcFrameWidth)){
                     calcWidth = img.size.width/2
                     calcHeight = img.size.height/2
@@ -1269,7 +1278,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         if(type == contentType.image.rawValue){
             picimageView = UIImageView()
             picimageView.image = img
-            picimageView.frame = CGRect(x: 20 , y: 20, width: stickerView.frame.width-40, height: stickerView.frame.height-40)
+            picimageView.frame = CGRect(x: 20 , y: 20, width: calcWidth-40, height: calcWidth-40)
             picimageView.accessibilityIdentifier = imgName
             picimageView.contentMode = UIViewContentMode.scaleAspectFit
             stickerView.setContentView(picimageView)
@@ -1548,6 +1557,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
                 if(view.subviews.count == 3){
                     view.subviews[1].isHidden = true
                     view.subviews[2].isHidden = true
+                    view.subviews[0].layer.borderWidth = 0.0
                 }
             }
         }
