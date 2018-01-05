@@ -510,7 +510,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         self.view.bringSubview(toFront: self.vwEditTextBox)
         self.vwEditTextBox.frame = CGRect(x:self.vwEditTextBox.frame.origin.x,y: self.view.frame.size.height - getkeyboardHeight - vwEditTextBox.frame.size.height+5, width : self.view.frame.size.width, height : self.vwEditTextBox.frame.size.height)
         //self.textViewEditTextBox.frame = CGRect(x:5.0,y:5.0,width:self.view.frame.size.width/0.75,height:self.vwEditTextBox.frame.size.height-5)
-        self.scrollView.contentSize = CGSize(width: self.scrollView.contentSize.width, height: self.scrollView.contentSize.height + 60 )
+        self.scrollView.contentSize = CGSize(width: self.scrollView.contentSize.width, height: self.scrollView.contentSize.height + 100 )
         print("vwEditTextBox frame : \(self.vwEditTextBox.frame)")
         self.vwEditTextBox.isHidden = false
     }
@@ -893,36 +893,11 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
     
  var gettouchLocationy:CGFloat = 0
     @objc func StickerImageMoveNotification(notification: NSNotification) {
-        //Do something here
-        //print(notification.userInfo)
-
-//        if (notification.userInfo?["Key"] as? CGFloat) != nil
-//        {
-//            // do something with your image
-//          //  print(notification.userInfo?["Key"] ?? "hgj")
-//            print("notification.userInfo!")
-//        }
-       // print(notification.object ?? "")
         if let dict = notification.object as? NSDictionary {
-            if let newgettouchLocationy = dict["Key"] as? CGFloat{
-                // do something with your image
-                gettouchLocationy = newgettouchLocationy
-                print("compare")
-                print(gettouchLocationy + calcHeight+40)
-                print(self.scrollView.contentSize.height)
-                if(gettouchLocationy+calcHeight+60 > self.scrollView.contentSize.height)
-                {
-                    self.scrollView.contentSize = CGSize(width: self.scrollView.contentSize.width, height: gettouchLocationy+calcHeight+180 )
-                    print("Increased Heoight")
-
-
-                }
-                
-
-            }
+            print("dictdictdictdict")
+            print(dict)
+            CalculateIncreasescrollviewHeight(getdicdata: dict)
         }
-
-        
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -1085,101 +1060,71 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
     }
     
     // MARK:- ScrollView methods
+    func CalculateIncreasescrollviewHeight(getdicdata: NSDictionary){
+        if let Lastimageyposition = getdicdata["viewSize"] as? Int{
+            print("compare")
+            print(Lastimageyposition)
+            var getcontentsizevalue = Int()
+            var differencescrolllastimage = Int()
+            var Reducedifferencescrolllastimage = Int()
+            var LastimageHeight = Int()
+            LastimageHeight = (getdicdata["viewHeight"] as? Int)!
+            var sumLastypositionandHeight = Int()
+            sumLastypositionandHeight = Lastimageyposition + LastimageHeight
+            // do something with your image
+            let scrollviewcontentIntvalue = Int(self.scrollView.contentSize.height)
+            print(sumLastypositionandHeight)
+            print(self.scrollView.contentSize.height)
+            if(sumLastypositionandHeight+120 > scrollviewcontentIntvalue)
+            {
+                
+                self.scrollView.contentSize = CGSize(width: self.scrollView.contentSize.width, height: self.scrollView.contentSize.height + 200)
+                print("Increased Heoight")
+                
+                
+            }
+            
+            
+        }
+    }
+    func CalculateReducescrollviewHeight(getdicdata: NSDictionary)
+    {
+        if let Lastimageyposition = getdicdata["viewSize"] as? Int{
+            print("compare")
+            print(Lastimageyposition)
+            var getcontentsizevalue = Int()
+            var differencescrolllastimage = Int()
+            var Reducedifferencescrolllastimage = Int()
+            var LastimageHeight = Int()
+            LastimageHeight = (getdicdata["viewHeight"] as? Int)!
+            var sumLastypositionandHeight = Int()
+            sumLastypositionandHeight = Lastimageyposition + LastimageHeight
+            let scrollviewcontentIntvalue = Int(self.scrollView.contentSize.height)
+            getcontentsizevalue = scrollviewcontentIntvalue
+            print("subTotff")
+            differencescrolllastimage = scrollviewcontentIntvalue - sumLastypositionandHeight
+            print(differencescrolllastimage)
+            if(differencescrolllastimage > 60)
+            {
+                Reducedifferencescrolllastimage = differencescrolllastimage - 10
+                let floatReducedifferencescrolllastimage = CGFloat(Reducedifferencescrolllastimage)
+                print("floatReducedifferencescrolllastimage")
+                print(floatReducedifferencescrolllastimage)
+                self.scrollView.contentSize = CGSize(width: self.scrollView.contentSize.width, height: self.scrollView.contentSize.height - floatReducedifferencescrolllastimage)
+                
+            }
+            var offset = scrollView.contentOffset
+            offset.y = scrollView.contentSize.height - scrollView.bounds.size.height + scrollView.contentInset.bottom + 120
+            scrollView.setContentOffset(offset, animated: false)
+        }
+    }
+    // MARK:- ScrollView methods
     @objc func reduceScrollviewHeight(notification: NSNotification) {
-        //Insert code here
-        //        print(self.scrollView.contentSize.height)
-        //        print(scrollView.subviews[scrollView.subviews.count - 1].frame.origin.y+scrollView.subviews[scrollView.subviews.count - 1].frame.size.height+220)
-       
-        
-        //Do something here
-        //print(notification.userInfo)
-        
-        //        if (notification.userInfo?["Key"] as? CGFloat) != nil
-        //        {
-        //            // do something with your image
-        //          //  print(notification.userInfo?["Key"] ?? "hgj")
-        //            print("notification.userInfo!")
-        //        }
-        // print(notification.object ?? "")
         if let dict = notification.object as? NSDictionary {
             print("dictdictdictdict")
             print(dict)
-            
-            if let newgettouchLocationy = dict["viewSize"] as? Int{
-                print("compare")
-                print(newgettouchLocationy)
-                var getcontentsizevalue = Int()
-                var differencescrolllastimage = Int()
-                var Reducedifferencescrolllastimage = Int()
-                
-                let scrollviewcontentIntvalue = Int(self.scrollView.contentSize.height)
-                getcontentsizevalue = scrollviewcontentIntvalue
-                //  var subTot = getcontentsizevalue - newgettouchLocationy
-                print("subTotff")
-                differencescrolllastimage = scrollviewcontentIntvalue - newgettouchLocationy
-                print(differencescrolllastimage)
-                
-                
-                if(differencescrolllastimage > 100)
-                {
-                    Reducedifferencescrolllastimage = differencescrolllastimage - 100
-                    let floatReducedifferencescrolllastimage = CGFloat(Reducedifferencescrolllastimage)
-                    print("floatReducedifferencescrolllastimage")
-                    print(floatReducedifferencescrolllastimage)
-                    self.scrollView.contentSize = CGSize(width: self.scrollView.contentSize.width, height: self.scrollView.contentSize.height - floatReducedifferencescrolllastimage)
-                }
-                // do something with your image
-                /*  gettouchLocationy = newgettouchLocationy
-                 print("compare")
-                 print(gettouchLocationy + calcHeight+40)
-                 print(self.scrollView.contentSize.height)
-                 if(gettouchLocationy+calcHeight+60 > self.scrollView.contentSize.height)
-                 {
-                 self.scrollView.contentSize = CGSize(width: self.scrollView.contentSize.width, height: gettouchLocationy+calcHeight+180 )
-                 print("Increased Heoight")
-                 
-                 
-                 }
-                 */
-                
-            }
+            CalculateReducescrollviewHeight(getdicdata: dict)
         }
-        
-        
-        
-        
-        /*print("scrollView.subviews")
-        print(scrollView.subviews)
-        var subviews = scrollView.subviews
-        var emptyArray = [CGFloat]()
-        // Return if there are no subviews
-        if subviews.count == 0 {
-            return
-        }
-        
-        for subview : AnyObject in subviews{
-            
-            // Do what you want to do with the subview
-            print(subview.frame.origin.y)
-            print("GETscrollView.subviews")
-            emptyArray.append(subview.frame.origin.y)
-            // List the subviews of subview
-        }
-        print(emptyArray)
-        print("GETemptyArray")
-        let numMax = emptyArray.reduce(CGFloat.leastNormalMagnitude, { max($0, $1) })
-        print(numMax)
-        print("GETMaximum Value")
-
-        if(self.scrollView.contentSize.height < scrollView.subviews[scrollView.subviews.count - 1].frame.origin.y+scrollView.subviews[scrollView.subviews.count - 1].frame.size.height+220)
-        {
-            self.scrollView.contentSize = CGSize(width: self.scrollView.contentSize.width, height: self.scrollView.contentSize.height )
-            backgroundTextView.frame.size = CGSize(width:backgroundTextView.frame.size.width, height:self.scrollView.contentSize.height)
-            scrollView.reloadInputViews()
-        }else
-        {
-        }
-        */
     }
     
     @objc func scrolltouchhandlePan(_ gestureRecognizer: UIPanGestureRecognizer) {

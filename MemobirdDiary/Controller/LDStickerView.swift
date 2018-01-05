@@ -335,6 +335,8 @@ class LDStickerView: UIView, UIGestureRecognizerDelegate, LDStickerViewDelegate 
             if responds(to: #selector(LDStickerViewDelegate.stickerViewDidEndEditing(_:))){
                 _prevPoint = _touchLocation
             }
+            getTheLastViewPosition()
+
         }
         
         _prevPoint = _touchLocation;
@@ -468,19 +470,19 @@ class LDStickerView: UIView, UIGestureRecognizerDelegate, LDStickerViewDelegate 
         let array = NSMutableArray()
         if((self.superview?.subviews.count)! > 0){
             for view in (self.superview?.subviews)!
-        {
-            if(view.accessibilityIdentifier == "drag"){
-                let dict = ["tag" : view.tag, "viewSize" :  Int(view.frame.origin.y)]
-                array.add(dict)
+            {
+                if(view.accessibilityIdentifier == "drag"){
+                    let dict = ["tag" : view.tag, "viewSize" :  Int(view.frame.origin.y),"viewHeight" :  Int(view.frame.size.height)]
+                    array.add(dict)
+                }
             }
-        }
             let sizeDescriptor = NSSortDescriptor(key: "viewSize", ascending: false)
             let sortedArray = array.sortedArray(using: [sizeDescriptor])
             print("sorted array:\(sortedArray)")
             print("bottom viewSize: ",sortedArray[0])
             
-             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reduceScrollviewHeightNotification"), object: sortedArray[0])
-            
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reduceScrollviewHeightNotification"), object: sortedArray[0])
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "StickerImageMoveNotification"), object: sortedArray[0])
         }
     }
     /*
