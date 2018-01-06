@@ -37,7 +37,7 @@ class HistoryViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return CGFloat(diaryEntries[indexPath.row].diary_height/1.65)
+        return CGFloat(diaryEntries[indexPath.row].diary_height/2)
         //return 300
     }
     
@@ -65,7 +65,7 @@ class HistoryViewController: UIViewController, UITableViewDelegate, UITableViewD
         let data = FileManager.default.contents(atPath: diaryImagesDirectoryPath + "/\(diaryEntries[indexPath.row].diary_image ?? "")")
         if(data != nil){
             myImageView.image = UIImage(data: data!)
-            myImageView.frame = CGRect(x : 30, y: 15, width : CGFloat((myImageView.image?.size.width)!/2), height:CGFloat(diaryEntries[indexPath.row].diary_height/2))
+            myImageView.frame = CGRect(x : 30, y: 15, width : CGFloat((myImageView.image?.size.width)!/2), height:CGFloat((myImageView.image?.size.height)!/2))
             myImageView.center = cell.contentView.center
             myImageView.layer.borderWidth = 1
            

@@ -315,74 +315,68 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
                 }
                 
             }
+            let maxHeight = self.getMaximumUsedHeightOfDiaryView() + 10
             if(diaryEntries.count > 0 && selectedDiaryEntryIndex != -1){
                 let selectedDiaryEntry = diaryEntries[selectedDiaryEntryIndex]
                 selectedDiaryEntry.modified_time = Date()
-                selectedDiaryEntry.diary_image = captureDiaryScreenAndSave()
+                
+                selectedDiaryEntry.diary_image = captureDiaryScreenAndSave(maxHeight : maxHeight)
                 
                 selectedDiaryEntry.diary_data = dataModelArr as NSObject
                 selectedDiaryEntry.diary_text = backgroundTextView.attributedText
-                
-                if(self.scrollView.contentSize.height > self.scrollView.frame.size.height + 130)
-                {
-                    selectedDiaryEntry.diary_height = Float(self.scrollView.frame.size.height+200)
-                    
-                }else{
-                    selectedDiaryEntry.diary_height = Float(self.scrollView.frame.size.height)
-                }
+                selectedDiaryEntry.diary_height = maxHeight
+//                if(self.scrollView.contentSize.height > self.scrollView.frame.size.height + 130)
+//                {
+//                    selectedDiaryEntry.diary_height = Float(self.scrollView.frame.size.height+200)
+//
+//                }else{
+//                    selectedDiaryEntry.diary_height = Float(self.scrollView.frame.size.height)
+//                }
                 diaryEntries[selectedDiaryEntryIndex] = selectedDiaryEntry
             }else{
             if #available(iOS 10.0, *) {
                 let coreDataDiary = DiaryEntry(context: CoreDataStack.managedObjectContext)
                 coreDataDiary.modified_time = Date()
-                coreDataDiary.diary_image = captureDiaryScreenAndSave()
+                coreDataDiary.diary_image = captureDiaryScreenAndSave(maxHeight : maxHeight)
                 
                 coreDataDiary.diary_data = dataModelArr as NSObject
                 coreDataDiary.diary_text = backgroundTextView.attributedText
               
-                print(self.scrollView.contentSize.height)
-                print(self.scrollView.frame.size.height)
+                coreDataDiary.diary_height = maxHeight
 
-                if(self.scrollView.contentSize.height > self.scrollView.frame.size.height + 130)
-                {
-                    coreDataDiary.diary_height = Float(self.scrollView.frame.size.height+200)
-                    
-                }else{
-                    coreDataDiary.diary_height = Float(self.scrollView.frame.size.height)
-                    
-                }
+//                if(self.scrollView.contentSize.height > self.scrollView.frame.size.height + 130)
+//                {
+//                    coreDataDiary.diary_height = Float(self.scrollView.frame.size.height+200)
+//
+//                }else{
+//                    coreDataDiary.diary_height = Float(self.scrollView.frame.size.height)
+//
+//                }
                 
             } else {
                 // Fallback on earlier versions
                 let entityDesc = NSEntityDescription.entity(forEntityName: "DiaryEntry", in: CoreDataStack.managedObjectContext)
                 let coreDataDiary = DiaryEntry(entity: entityDesc!, insertInto: CoreDataStack.managedObjectContext)
-                coreDataDiary.diary_image = captureDiaryScreenAndSave()
+                coreDataDiary.diary_image = captureDiaryScreenAndSave(maxHeight: maxHeight)
                 coreDataDiary.diary_text = backgroundTextView.attributedText
                 coreDataDiary.modified_time = Date()
                 coreDataDiary.diary_data = dataModelArr as NSObject
-                if(self.scrollView.contentSize.height > self.scrollView.frame.size.height+130)
-                {
-                    coreDataDiary.diary_height = Float(self.scrollView.frame.size.height+200)
-
-                }else{
-                    coreDataDiary.diary_height = Float(self.scrollView.frame.size.height)
-
-                }
+                coreDataDiary.diary_height = maxHeight
+//                if(self.scrollView.contentSize.height > self.scrollView.frame.size.height+130)
+//                {
+//                    coreDataDiary.diary_height = Float(self.scrollView.frame.size.height+200)
+//
+//                }else{
+//                    coreDataDiary.diary_height = Float(self.scrollView.frame.size.height)
+//
+//                }
                 
             }
             }
             CoreDataStack.saveContext()
         }
         // the alert view
-        let alert = UIAlertController(title: "", message: "Saved successfully!", preferredStyle: .alert)
-        self.present(alert, animated: true, completion: nil)
-        
-        // change to desired number of seconds (in this case 5 seconds)
-        let when = DispatchTime.now() + 2
-        DispatchQueue.main.asyncAfter(deadline: when){
-            // your code with delay
-            alert.dismiss(animated: true, completion: nil)
-        }
+        self.showAlert(alertMessage: "Saved successfully!")
     }
    
     
@@ -1009,16 +1003,12 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
             getkeyboardHeight = keyboardSize.height
             
-            if(/*self.vwTextBoxOption.isHidden == false &&*/self.textViewEditTextBox.isFirstResponder == true){
-                //vwEditTextBox.isHidden = false
+            if(self.textViewEditTextBox.isFirstResponder == true){
                 
                 if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
                     keyboardHeight = keyboardSize.height
-                    
+                
                     showEditTextBox()
-                    //self.vwEditTextBox.frame = CGRect(x:self.vwEditTextBox.frame.origin.x,y: self.view.frame.size.height - keyboardSize.height - vwEditTextBox.frame.size.height+5, width : self.view.frame.size.width, height : self.vwEditTextBox.frame.size.height)
-                    //self.textViewEditTextBox.backgroundColor = .lightGray
-                    //self.vwEditTextBox.isHidden = false
                 }
                 
             }else{
@@ -1069,9 +1059,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         if let Lastimageyposition = getdicdata["viewSize"] as? Int{
             print("compare")
             print(Lastimageyposition)
-//            var getcontentsizevalue = Int()
-//            var differencescrolllastimage = Int()
-//            var Reducedifferencescrolllastimage = Int()
+
             var LastimageHeight = Int()
             LastimageHeight = (getdicdata["viewHeight"] as? Int)!
             var sumLastypositionandHeight = Int()
@@ -1090,7 +1078,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
     func CalculateReducescrollviewHeight(getdicdata: NSDictionary)
     {
         if let Lastimageyposition = getdicdata["viewSize"] as? Int{
-            var getcontentsizevalue = Int()
+           
             var differencescrolllastimage = Int()
             var Reducedifferencescrolllastimage = Int()
             var LastimageHeight = Int()
@@ -1098,9 +1086,9 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
             var sumLastypositionandHeight = Int()
             sumLastypositionandHeight = Lastimageyposition + LastimageHeight
             let scrollviewcontentIntvalue = Int(self.scrollView.contentSize.height)
-           
-            getcontentsizevalue = scrollviewcontentIntvalue
+        
             differencescrolllastimage = scrollviewcontentIntvalue - sumLastypositionandHeight
+            
             let defaults = UserDefaults.standard
             var floatReducedifferencescrolllastimage = CGFloat()
             if(differencescrolllastimage > 60)
@@ -1111,7 +1099,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
 
                 if (defaults.object(forKey: "SavescrollcontentHeightt") != nil)
                 {
-               
+                    
                 }else{
                     defaults.set(floatReducedifferencescrolllastimage, forKey: "SavescrollcontentHeightt")
                 }
@@ -1129,9 +1117,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
                     offset.y = scrollView.contentSize.height - scrollView.bounds.size.height + scrollView.contentInset.bottom + 120
                     scrollView.setContentOffset(offset, animated: false)
                 }
-
             }
-           
         }
     }
     // MARK:- ScrollView methods
@@ -1145,34 +1131,29 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         if gestureRecognizer.state == .began
         {
             self.scrollView.isScrollEnabled = true
-            //hideOtherViewSelection()
-            //self.dismissKeyboard()
-             //self.backgroundTextView.resignFirstResponder()
-             //self.textViewEditTextBox.resignFirstResponder()
-            //stickerView.hideEditingHandles()
         }
     }
 
     // MARK:- Custom methods
     @IBAction func savebtn(_ sender: Any)
     {
-        saveDataToCoredata(fromView: self.scrollView)
+        if(self.scrollView.subviews.count > 3){
+            saveDataToCoredata(fromView: self.scrollView)
+        }else{
+            self.showAlert(alertMessage: "Nothing to Save!")
+        }
+        
     }
-    // MARKK
+    // MARK
     var calcWidth = CGFloat(0)
     var calcHeight = CGFloat(0)
     func dragzoomroatateview(img : UIImage, imgName : String, type : Int, attributedString : NSAttributedString)
     {
         self.scrollView.contentSize = CGSize(width: self.scrollView.contentSize.width, height: self.scrollView.contentSize.height )
         
-        var offset = scrollView.contentOffset
-       // offset.y = scrollView.contentSize.height + scrollView.contentInset.bottom - scrollView.bounds.size.height
-       // scrollView.setContentOffset(offset, animated: true)
         backgroundTextView.frame.size = CGSize(width:backgroundTextView.frame.size.width, height:self.scrollView.contentSize.height)
-        //print("scrollview contentSize.height : \(scrollView.contentSize.height)")
-
-        hideOtherViewSelection()
         
+        hideOtherViewSelection()
         
         if(type == contentType.image.rawValue){
             let calcFrameWidth = self.view.frame.width-20
@@ -1230,9 +1211,9 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
             calcWidth = CGFloat(200)
             calcHeight = CGFloat(120)
         }
-//self.scrollView.frame = CGRect(x: self.scrollView.contentOffset.x, y: self.scrollView.contentOffset.y, width: self.scrollView.frame.size.width , height: self.scrollView.frame.size.height)
+
         stickerView = LDStickerView(frame: CGRect(x: (self.scrollView.contentSize.width-calcWidth)/2, y: self.scrollView.contentOffset.y+200, width: calcWidth, height: calcHeight))
-      //   stickerView = LDStickerView(frame: CGRect(x: (self.scrollView.contentSize.width-calcWidth)/2, y: (self.scrollView.contentSize.height-calcHeight)/2 - 20, width: calcWidth, height: calcHeight))
+     
         stickerView.accessibilityIdentifier = "drag"
         let doubleTap = UITapGestureRecognizer(target: self, action: #selector(textBoxDoubleTapped))
         doubleTap.numberOfTapsRequired = 2
@@ -1431,12 +1412,8 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         didFinishPickingMediaWithInfo info: [String : Any])
     {
         
-        //var imageName = Date().description
-        //imageName = imageName.replacingOccurrences(of: " ", with: "") + ".png"
-        //imageName = imageName.replacingOccurrences(of: ":", with: "")
-        //let fullImagePath = imagesDirectoryPath + "/\(imageName)"
         let myImage = self.fixOrientation(image: (info[UIImagePickerControllerOriginalImage] as? UIImage)!)
-        let image = info[UIImagePickerControllerOriginalImage] as! UIImage
+        
         self.dismiss(animated: true, completion: nil)
         for descriptor in filterDescriptors {
             filters.append(CIFilter(name: descriptor.filterName)!)
@@ -1489,6 +1466,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         }
     }
     
+    
     func createDiaryImagesFolder()
     {
         let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
@@ -1510,6 +1488,26 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         }
     }
     
+    func getMaximumUsedHeightOfDiaryView() -> Float {
+            let array = NSMutableArray()
+            var maxHeight : Float = 0.0
+            if((self.scrollView?.subviews.count)! > 0){
+                for view in (self.scrollView?.subviews)!
+                {
+                    if(view.accessibilityIdentifier == "drag"){
+                        let dict : NSDictionary = ["tag" : view.tag, "viewSize" :  Int(view.frame.origin.y+view.frame.size.height)]
+                        array.add(dict)
+                    }
+                }
+                let sizeDescriptor = NSSortDescriptor(key: "viewSize", ascending: false)
+                let sortedArray = array.sortedArray(using: [sizeDescriptor])
+               
+                let dict = sortedArray[0] as! NSDictionary
+                maxHeight = Float(dict.value(forKey: "viewSize") as? Int ?? 0)
+            }
+        return maxHeight
+    }
+    
     func hideOtherViewSelection()
     {
         for view in self.scrollView.subviews
@@ -1524,7 +1522,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         }
     }
     
-    func getImageOfScrollView() -> String?{
+    /*func getImageOfScrollView() -> String?{
         UIGraphicsBeginImageContextWithOptions(scrollView.frame.size, false, scrollView.layer.contentsScale)
         
         let savedFrame = scrollView.frame
@@ -1547,7 +1545,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
             print("DiaryImage saved successfully in local")
         }
         return imageName
-    }
+    }*/
     
     
     func fixOrientation(image: UIImage) -> UIImage {
@@ -1615,15 +1613,17 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         
         return img
     }
-    func captureDiaryScreenAndSave() -> String? {
+    func captureDiaryScreenAndSave(maxHeight : Float) -> String? {
         hideOtherViewSelection()
       
        //UIGraphicsBeginImageContextWithOptions(scrollView.frame.size, false, scrollView.layer.contentsScale)
         UIGraphicsBeginImageContext(scrollView.contentSize)
-        let savedContentOffset = scrollView.contentOffset
+        
         let savedFrame = scrollView.frame
         scrollView.contentOffset = CGPoint.zero
-        scrollView.frame = CGRect(x: 0, y: 60, width: scrollView.contentSize.width, height: scrollView.contentSize.height)
+       
+        print("Max height : \(maxHeight)")
+        scrollView.frame = CGRect(x: 0, y: 5, width: scrollView.contentSize.width, height: CGFloat(maxHeight+10) /*scrollView.contentSize.height*/)
         scrollView.layer.render(in: UIGraphicsGetCurrentContext()!)
         let image = UIGraphicsGetImageFromCurrentImageContext()
         scrollView.frame = savedFrame
@@ -1640,6 +1640,18 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
             print("DiaryImage saved successfully in local")
         }
         return imageName
+    }
+    
+    func showAlert(alertMessage:String){
+        let alert = UIAlertController(title: "", message: alertMessage, preferredStyle: .alert)
+        self.present(alert, animated: true, completion: nil)
+        
+        // change to desired number of seconds (in this case 5 seconds)
+        let when = DispatchTime.now() + 2
+        DispatchQueue.main.asyncAfter(deadline: when){
+            // your code with delay
+            alert.dismiss(animated: true, completion: nil)
+        }
     }
 }
 // Get ImageName from date
