@@ -969,7 +969,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         super.viewDidLayoutSubviews()
         
         //  scrollView.frame = CGRect(x: 10, y: 70, width: self.view.frame.size.width-20, height: self.view.frame.size.height-180)
-        scrollView.frame = CGRect(x: 10, y: 70, width: self.view.frame.size.width-20, height: self.view.frame.size.height)
+        scrollView.frame = CGRect(x: 10, y: 70, width: self.view.frame.size.width-20, height: self.view.frame.size.height-140)
     }
     
     override func didReceiveMemoryWarning() {
@@ -1066,7 +1066,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
             sumLastypositionandHeight = Lastimageyposition + LastimageHeight
             // do something with your image
             let scrollviewcontentIntvalue = Int(self.scrollView.contentSize.height)
-            if(sumLastypositionandHeight+120 > scrollviewcontentIntvalue)
+            if(sumLastypositionandHeight+20 > scrollviewcontentIntvalue)
             {
                 
                 self.scrollView.contentSize = CGSize(width: self.scrollView.contentSize.width, height: self.scrollView.contentSize.height + 200)
@@ -1114,7 +1114,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
                 }else{
                     defaults.set(floatReducedifferencescrolllastimage, forKey: "SavescrollcontentHeightt")
                     var offset = scrollView.contentOffset
-                    offset.y = scrollView.contentSize.height - scrollView.bounds.size.height + scrollView.contentInset.bottom + 120
+                    offset.y = scrollView.contentSize.height - scrollView.bounds.size.height + scrollView.contentInset.bottom + 10
                     scrollView.setContentOffset(offset, animated: false)
                 }
             }
