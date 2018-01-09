@@ -63,10 +63,11 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
    
     var fontArray = UIFont.familyNames
     let columnsInFirstPage = 5
-    var selectedCollectionItemIndex : Int = -1
-    var selectedFontName : String = UIFont.familyNames[0]
+
+    var selectedFontCollectionIndexPath : IndexPath = IndexPath(item: 2, section: 0)
+    var selectedFontName : String = UIFont.familyNames[2]
     var sliderFontSizeValue : Float = 0.0
-    let collectionViewRows = 2
+    //let collectionViewRows = 2
     
     var PreviewSelectedimage: UIImage?
     
@@ -107,7 +108,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
     @IBOutlet weak var morebtnoutlet: UIButton!
     @IBOutlet weak var PredefineImagesBtn: UIButton!
     // calculate number of columns needed to display all items
-    var columns: Int { return fontArray.count<=columnsInFirstPage ? fontArray.count : fontArray.count > collectionViewRows*columnsInFirstPage ? (fontArray.count-1)/collectionViewRows + 1 : columnsInFirstPage }
+   
     
     
     @IBAction func materialSavebtn(_ sender: Any)
@@ -667,7 +668,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
     // MARK:- CollectionView delegate methods
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if(collectionView == fontCollectionView){
-        return columns*collectionViewRows
+            return fontArray.count
         }
         if(collectionView == textBoxCollectionView){
             return textBoxImagesArray.count
@@ -675,49 +676,36 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         if(collectionView == materialcollectionView){
             return materialImagesArray.count
         }
-        //else{
         return 0
-        //}
-        //return 50
+      
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if(collectionView == fontCollectionView){
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
-        
-        //cell.backgroundColor = UIColor.green
+         
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FontCell", for: indexPath) as! FontCollectionViewCell
+
         cell.layer.cornerRadius = 20
         cell.layer.masksToBounds = true
         cell.layer.borderWidth = 2.0
         cell.layer.borderColor = UIColor.gray.cgColor
-        let labelFont = UILabel()
-        labelFont.text = "Aa"
         
-        labelFont.textAlignment = .center
-        labelFont.tag = indexPath.row
-        labelFont.frame.size = CGSize(width:50, height:50)
-        labelFont.center = CGPoint(x:cell.contentView.center.x+5,y:cell.contentView.center.y+5)
+        cell.fontLabel.text = "Aa"
+        
+        cell.fontLabel.textAlignment = .center
+        cell.fontLabel.tag = indexPath.row
         
         cell.backgroundColor = UIColor.white
-        labelFont.textColor = UIColor.black
+        cell.fontLabel.textColor = UIColor.black
         
-        if(cell.contentView.subviews.count==0){
-            labelFont.font = UIFont(name: fontArray[indexPath.row], size: 25.0)
-            cell.contentView.addSubview(labelFont)
+        cell.fontLabel.font = UIFont(name: fontArray[indexPath.row], size: 25.0)
+       
+        if selectedFontCollectionIndexPath != nil && indexPath == selectedFontCollectionIndexPath {
+            cell.backgroundColor = UIColor.gray
+        }else{
+            cell.backgroundColor = UIColor.white
         }
-        else{
-            let labelFontCheck = cell.contentView.subviews[0] as! UILabel
-            if(selectedCollectionItemIndex == indexPath.row){
-                cell.backgroundColor = UIColor.gray
-                labelFontCheck.textColor = UIColor.white
-                labelFontCheck.font = UIFont(name: fontArray[indexPath.row], size: 20.0)
-            }
-            else{
-                labelFontCheck.font = UIFont(name: fontArray[indexPath.row], size: 20.0)
-                cell.backgroundColor = UIColor.white
-                labelFontCheck.textColor = UIColor.black
-            }
-        }
+        
           return cell
         }
         if(collectionView == textBoxCollectionView)
@@ -747,15 +735,13 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellMaterial", for: indexPath)
             
-            //if(cell.contentView.subviews.count==0){
                 cell.contentView.subviews.forEach { $0.removeFromSuperview() }
                 let imgMaterialItem = UIImageView()
                 imgMaterialItem.image = UIImage(named: materialImagesArray[indexPath.row])
                 imgMaterialItem.contentMode = .scaleAspectFit
                 imgMaterialItem.frame = CGRect(x:0, y:0,width :80, height:80)
                 cell.contentView.addSubview(imgMaterialItem)
-            
-            //}
+         
             return cell
         }
         return UICollectionViewCell()
@@ -766,9 +752,19 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         if(collectionView == fontCollectionView){
         let btnBold = self.view.viewWithTag(textFormat.bold.rawValue) as! UIButton
         let btnItalic = self.view.viewWithTag(textFormat.italic.rawValue) as! UIButton
-        selectedCollectionItemIndex = indexPath.row
+        selectedFontCollectionIndexPath = indexPath
+            for var visibleIndexPath in collectionView.indexPathsForVisibleItems
+            {
+                var cell = collectionView.cellForItem(at: visibleIndexPath)
+                if(visibleIndexPath == selectedFontCollectionIndexPath){
+                    cell?.layer.backgroundColor = UIColor.gray.cgColor
+                }else{
+                    cell?.layer.backgroundColor = UIColor.white.cgColor
+                }
+            }
         selectedFontName = fontArray[indexPath.row]
         backgroundTextView.font = UIFont(name: selectedFontName, size: CGFloat(16.0+sliderFontSize.value))
+            
         if(btnBold.isSelected)
         {
             backgroundTextView.font = backgroundTextView.font?.bold()
@@ -781,8 +777,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         {
             backgroundTextView.font = backgroundTextView.font?.bold().italic()
         }
-            
-        collectionView.reloadData()
+        
         }
         if(collectionView == materialcollectionView)
         {
@@ -832,17 +827,16 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         self.scrollView.backgroundColor = UIColor.white
         self.view.addSubview(scrollView)
         addBackgroundTextView()
-        //self.backgroundTextView.becomeFirstResponder()
         
         let gestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(scrolltouchhandlePan))
         self.view.addGestureRecognizer(gestureRecognizer)
-        //tabBarview.delegate = self
+        
         imagePicker.delegate = self
         createImagesFolder()
         createDiaryImagesFolder()
         self.view.bringSubview(toFront: editorBGview)
         materialBGview.frame = CGRect(x: 0, y: 1000, width: self.materialBGview.frame.width, height: self.materialBGview.frame.height)
-     //self.view.bringSubview(toFront: self.tabBarview)
+    
         let btnLeftAlign = self.view.viewWithTag(textFormat.leftAlign.rawValue) as! UIButton
         btnLeftAlign.setBackgroundImage(UIImage(named:"ico_left_checked.png"), for: UIControlState.normal)
 
@@ -850,8 +844,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         self.view.bringSubview(toFront: self.materialsBGview)
 
         self.materialsBGview.isHidden = true
-        ////////////////////////Image view
-        
+    
         textViewEditTextBox.delegate = self
 
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: .UIKeyboardWillShow, object: nil)
@@ -859,7 +852,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         addDoneButtonOnKeyboard()
         
         self.hideKeyboardWhenTappedAround()
-        ///////////////////////
+       
     }
     
 
@@ -902,7 +895,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.reduceScrollviewHeight), name: NSNotification.Name(rawValue: "reduceScrollviewHeightNotification"), object: nil)
          NotificationCenter.default.addObserver(self, selector: #selector(self.dismissKeyboardOnDeleteTextBox), name: NSNotification.Name(rawValue: "dismissKeybordOnDeleteTextBoxNotification"), object: nil)
-  NotificationCenter.default.addObserver(self, selector: #selector(self.StickerImageMoveNotification), name: NSNotification.Name(rawValue: "StickerImageMoveNotification"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.StickerImageMoveNotification), name: NSNotification.Name(rawValue: "StickerImageMoveNotification"), object: nil)
 
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillDisappear), name: Notification.Name.UIKeyboardWillHide, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillAppear), name: Notification.Name.UIKeyboardWillShow, object: nil)
@@ -932,14 +925,16 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         }
         // Collection view UI changes
         let fontCollectionlayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        fontCollectionlayout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
-        fontCollectionlayout.itemSize = CGSize(width: 50, height: 50)
+        //fontCollectionlayout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+        fontCollectionlayout.itemSize = CGSize(width: 55, height: 55)
         fontCollectionlayout.scrollDirection = .horizontal
-        fontCollectionView.frame = CGRect(x:0,y:0,width:self.view.frame.width,height:120)
+        fontCollectionView.frame = CGRect(x:0,y:10,width:self.view.frame.width-10,height:130)
         fontCollectionView.collectionViewLayout = fontCollectionlayout
         fontCollectionView.dataSource = self
         fontCollectionView.delegate = self
         fontCollectionView.backgroundColor = UIColor.white
+        
+       fontCollectionView.selectItem(at: selectedFontCollectionIndexPath, animated: false, scrollPosition: .left)
         
         let textBoxCollectionLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         textBoxCollectionLayout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
@@ -960,14 +955,13 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         materialcollectionView.dataSource = self
         materialcollectionView.delegate = self
         materialcollectionView.backgroundColor = UIColor.white
-        //self.vwOverlay.isHidden = true
+       
         
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
-        //  scrollView.frame = CGRect(x: 10, y: 70, width: self.view.frame.size.width-20, height: self.view.frame.size.height-180)
+
         scrollView.frame = CGRect(x: 10, y: 70, width: self.view.frame.size.width-20, height: self.view.frame.size.height-140)
     }
     
@@ -1043,7 +1037,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         self.backgroundTextView.backgroundColor = UIColor.clear
         self.backgroundTextView.font = .systemFont(ofSize: 18)
         self.backgroundTextView.frame = CGRect(x:0,y:0,width:self.view.frame.width-30, height:self.scrollView.contentSize.height)
-    
+        self.backgroundTextView.font = UIFont(name : selectedFontName, size:17)
         self.scrollView.addSubview(backgroundTextView)
     }
     
@@ -1096,9 +1090,9 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
                 self.scrollView.contentSize = CGSize(width: self.scrollView.contentSize.width, height: self.scrollView.contentSize.height - floatReducedifferencescrolllastimage)
 
             }
-            print(self.scrollView.contentSize.height)
-            print(sumLastypositionandHeight)
-            print("sumLastypositionandHeight")
+//            print(self.scrollView.contentSize.height)
+//            print(sumLastypositionandHeight)
+//            print("sumLastypositionandHeight")
 
             var offset = scrollView.contentOffset
             offset.y = scrollView.contentSize.height - scrollView.bounds.size.height + scrollView.contentInset.bottom + 10
@@ -1506,31 +1500,6 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
             }
         }
     }
-    
-    /*func getImageOfScrollView() -> String?{
-        UIGraphicsBeginImageContextWithOptions(scrollView.frame.size, false, scrollView.layer.contentsScale)
-        
-        let savedFrame = scrollView.frame
-        
-        scrollView.contentOffset = CGPoint.zero
-        scrollView.frame = CGRect(x: 0, y: 60, width: scrollView.frame.width, height: scrollView.contentSize.height)
-        scrollView.layer.render(in: UIGraphicsGetCurrentContext()!)
-        let image = UIGraphicsGetImageFromCurrentImageContext()
-        scrollView.frame = savedFrame
-        UIGraphicsEndImageContext()
-        ///////
-        var imageName = Date().description
-        imageName = imageName.replacingOccurrences(of: " ", with: "") + ".png"
-        imageName = imageName.replacingOccurrences(of: ":", with: "")
-        let fullImagePath = diaryImagesDirectoryPath + "/\(imageName)"
-        
-        let data = UIImagePNGRepresentation((image)!)
-        let success = FileManager.default.createFile(atPath: fullImagePath, contents: data, attributes: nil)
-        if(success){
-            print("DiaryImage saved successfully in local")
-        }
-        return imageName
-    }*/
     
     
     func fixOrientation(image: UIImage) -> UIImage {

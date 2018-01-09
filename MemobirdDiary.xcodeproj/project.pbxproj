@@ -113,6 +113,7 @@
 		AEEE4F361FEA837700231315 /* im34.png in Resources */ = {isa = PBXBuildFile; fileRef = AEEE4F021FEA837700231315 /* im34.png */; };
 		AEEE4F371FEA837700231315 /* im40.png in Resources */ = {isa = PBXBuildFile; fileRef = AEEE4F031FEA837700231315 /* im40.png */; };
 		C0D75A34ED8DDAA0022F79C3 /* Pods_MemobirdDiaryUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48ECE9D0D469D3669ED63426 /* Pods_MemobirdDiaryUITests.framework */; };
+		EA092B742004A58700FC0876 /* FontCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA092B732004A58700FC0876 /* FontCollectionViewCell.swift */; };
 		EABD620D1FF48C1900B6A5AF /* ico_dot_02.png in Resources */ = {isa = PBXBuildFile; fileRef = EABD62081FF48C1400B6A5AF /* ico_dot_02.png */; };
 		EABD620E1FF48C1900B6A5AF /* ico_dot_03.png in Resources */ = {isa = PBXBuildFile; fileRef = EABD62091FF48C1600B6A5AF /* ico_dot_03.png */; };
 		EABD620F1FF48C1900B6A5AF /* ico_dot_04.png in Resources */ = {isa = PBXBuildFile; fileRef = EABD620A1FF48C1700B6A5AF /* ico_dot_04.png */; };
@@ -309,6 +310,7 @@
 		AEFFB7931FBD9347007D3221 /* diaryiconsmal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = diaryiconsmal.png; sourceTree = "<group>"; };
 		C18B265EF384B840DA18DF39 /* Pods-MemobirdDiaryUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MemobirdDiaryUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MemobirdDiaryUITests/Pods-MemobirdDiaryUITests.release.xcconfig"; sourceTree = "<group>"; };
 		E095E3DE873C03ED46E5B49E /* Pods-MemobirdDiary.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MemobirdDiary.release.xcconfig"; path = "Pods/Target Support Files/Pods-MemobirdDiary/Pods-MemobirdDiary.release.xcconfig"; sourceTree = "<group>"; };
+		EA092B732004A58700FC0876 /* FontCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontCollectionViewCell.swift; sourceTree = "<group>"; };
 		EABD62081FF48C1400B6A5AF /* ico_dot_02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ico_dot_02.png; sourceTree = "<group>"; };
 		EABD62091FF48C1600B6A5AF /* ico_dot_03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ico_dot_03.png; sourceTree = "<group>"; };
 		EABD620A1FF48C1700B6A5AF /* ico_dot_04.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ico_dot_04.png; sourceTree = "<group>"; };
@@ -390,6 +392,7 @@
 				AE8E67151FB18D4100452792 /* ExportFiltersViewController.swift */,
 				AEEC542B1F78DB6700050B06 /* HistoryViewController.swift */,
 				AEB6777F1FC2B0C200C82500 /* PreviewListViewController.swift */,
+				EA092B732004A58700FC0876 /* FontCollectionViewCell.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1046,6 +1049,7 @@
 			files = (
 				AE986D331FB07BC000FCEDF7 /* ParameterAdjustmentView.swift in Sources */,
 				33084A191FE1021D009672BC /* LDStickerView.swift in Sources */,
+				EA092B742004A58700FC0876 /* FontCollectionViewCell.swift in Sources */,
 				AE986D101FB068F600FCEDF7 /* Foundation Extensions.swift in Sources */,
 				AE986D301FB07BC000FCEDF7 /* LabeledSliderView.swift in Sources */,
 				33C8DA431F7B6793005E4211 /* CoreDataStack.swift in Sources */,

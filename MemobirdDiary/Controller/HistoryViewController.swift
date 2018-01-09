@@ -37,7 +37,7 @@ class HistoryViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return CGFloat(diaryEntries[indexPath.row].diary_height/2)
+        return CGFloat(diaryEntries[indexPath.row].diary_height/2)+20
         //return 300
     }
     
@@ -54,7 +54,7 @@ class HistoryViewController: UIViewController, UITableViewDelegate, UITableViewD
        
         let myImageView : UIImageView! = cell.contentView.viewWithTag(imageViewDefaultTag) as! UIImageView!
        
-        myImageView.contentMode = UIViewContentMode.scaleAspectFit
+        myImageView.contentMode = UIViewContentMode.scaleToFill
        // myImageView.backgroundColor = UIColor.red
 
         let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
@@ -65,8 +65,9 @@ class HistoryViewController: UIViewController, UITableViewDelegate, UITableViewD
         let data = FileManager.default.contents(atPath: diaryImagesDirectoryPath + "/\(diaryEntries[indexPath.row].diary_image ?? "")")
         if(data != nil){
             myImageView.image = UIImage(data: data!)
-            myImageView.frame = CGRect(x : 30, y: 15, width : CGFloat((myImageView.image?.size.width)!/2), height:CGFloat((myImageView.image?.size.height)!/2))
-            myImageView.center = cell.contentView.center
+            let calcX = (cell.contentView.frame.width-(myImageView.image?.size.width)!/2.0)-(cell.contentView.frame.width)/4
+            myImageView.frame = CGRect(x : calcX, y: 20, width : CGFloat((myImageView.image?.size.width)!/2), height:CGFloat((myImageView.image?.size.height)!/2))
+            //myImageView.center = cell.contentView.center
             myImageView.layer.borderWidth = 1
            
             myImageView.layer.borderColor = UIColor.init(red:222/255.0, green:225/255.0, blue:227/255.0, alpha: 1.0).cgColor
