@@ -149,6 +149,8 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
         for descriptor in filterDescriptors {
             filters.append(CIFilter(name: descriptor.filterName)!)
         }
+             drawVieww.isHidden = false
+            drawWithoutVieww.isHidden = true
         self.photoFilterCollectionView.delegate = self
         self.photoFilterCollectionView.dataSource = self
         let flowLayout = UICollectionViewFlowLayout()
@@ -157,13 +159,14 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
         flowLayout.minimumInteritemSpacing = 0.0
         self.photoFilterCollectionView.collectionViewLayout = flowLayout
         filteredImageView.inputImage = getnewImage
-        filteredImageView.contentMode = .scaleAspectFill
+        filteredImageView.contentMode = .scaleAspectFit
         filteredImageView.backgroundColor = UIColor.clear
         filteredImageView.filter = filters[0]
         colorControl.input(filteredImageView.inputImage!)
              drawVieww.setColor(nil)
         }else{
             filteredImageView.isHidden = true
+            drawVieww.isHidden = true
             undobtnoutlet.isHidden = true
             let color = UIColor.black
             drawWithoutVieww.setColor(color)
@@ -200,6 +203,7 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
     @IBAction func eraserbtn(_ sender: Any)
     {
         drawVieww.setColor(nil)
+        drawWithoutVieww.setColor(nil)
         imgEraserIcon.backgroundColor = UIColor.lightGray
         imgPencilIcon.backgroundColor = UIColor.clear
     }
@@ -222,7 +226,7 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoFilterCell", for: indexPath) as! PhotoFilterCollectionViewCell
-        cell.filteredImageView.contentMode = .scaleAspectFill
+        cell.filteredImageView.contentMode = .scaleAspectFit
         cell.backgroundColor = UIColor.clear
         cell.filteredImageView.inputImage = UIImage(named: "duckling.jpg")
         cell.filteredImageView.filter = filters[indexPath.item]
@@ -285,7 +289,7 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
         flowLayout.minimumInteritemSpacing = 0.0
         self.photoFilterCollectionView.collectionViewLayout = flowLayout
         filteredImageView.inputImage = getnewImage
-        filteredImageView.contentMode = .scaleAspectFill
+        filteredImageView.contentMode = .scaleAspectFit
         filteredImageView.filter = filters[0]
         colorControl.input(filteredImageView.inputImage!)
     }
@@ -333,9 +337,12 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
                 //tabBarView.delegate = nil
                 drawbgview.isHidden = false
                 drawVieww.delegate = self
+                drawWithoutVieww.delegate = self
                 let color = UIColor.black
                 drawVieww.setColor(color)
+                drawWithoutVieww.setColor(color)
                 drawVieww.setWidth(ExportFiltersViewController.deltaWidth)
+                drawWithoutVieww.setWidth(ExportFiltersViewController.deltaWidth)
                 drawcheckbool = true
 
             }
@@ -378,6 +385,7 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
     // MARK: - Actions
     @IBAction func stroke1btn(_ sender: Any) {
        drawVieww.setWidth(CGFloat(2.0))
+       drawWithoutVieww.setWidth(CGFloat(2.0))
         strokesbgview.isHidden = true
         imgStrokeIcon.image = UIImage(named: "ico_dot_01.png")
         drawcheckbool = true
@@ -385,6 +393,8 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
     }
     @IBAction func stroke2btn(_ sender: Any) {
         drawVieww.setWidth(CGFloat(6.0))
+        drawWithoutVieww.setWidth(CGFloat(6.0))
+
         strokesbgview.isHidden = true
         imgStrokeIcon.image = UIImage(named: "ico_dot_02.png")
         drawcheckbool = true
@@ -392,6 +402,8 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
     }
     @IBAction func stroke3btn(_ sender: Any) {
        drawVieww.setWidth(CGFloat(8.0))
+        drawWithoutVieww.setWidth(CGFloat(8.0))
+
         strokesbgview.isHidden = true
         imgStrokeIcon.image = UIImage(named: "ico_dot_03.png")
         drawcheckbool = true
@@ -419,6 +431,7 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
     
     @IBAction func stroke4btn(_ sender: Any) {
         drawVieww.setWidth(CGFloat(12.0))
+        drawWithoutVieww.setWidth(CGFloat(12.0))
         strokesbgview.isHidden = true
         imgStrokeIcon.image = UIImage(named: "ico_dot_04.png")
         drawcheckbool = true
@@ -427,6 +440,7 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
     }
     @IBAction func stroke5btn(_ sender: Any) {
         drawVieww.setWidth(CGFloat(14.0))
+        drawWithoutVieww.setWidth(CGFloat(14.0))
         strokesbgview.isHidden = true
         imgStrokeIcon.image = UIImage(named: "ico_dot_05.png")
         drawcheckbool = true
@@ -462,12 +476,25 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
         var getpreviewimage: UIImage!
         if(getnewImage == nil)
         {
+            if(drawVieww.isHidden == true)
+            {
+                getpreviewimage = drawWithoutVieww?.snapshot
+
+            }else
+            {
             getpreviewimage = drawVieww?.snapshot
+            }
             
         }else{
             if(drawcheckbool == true){
-                 getpreviewimage = drawVieww?.snapshot
-
+                if(drawVieww.isHidden == true)
+                {
+                    getpreviewimage = drawWithoutVieww?.snapshot
+                    
+                }else
+                {
+                    getpreviewimage = drawVieww?.snapshot
+                }
             }else{
                 //getpreviewimage = self.filteredImageView?.snapshot
                 getpreviewimage = self.filteredImageView?.inputImage

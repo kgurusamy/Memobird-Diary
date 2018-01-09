@@ -642,7 +642,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         self.dismissKeyboard()
         hideOtherViewSelection()
     }
-    
+  
     @IBAction func sliderValueChanged(sender: UISlider) {
         sliderFontSizeValue = sender.value
         let btnBold = self.view.viewWithTag(textFormat.bold.rawValue) as! UIButton
@@ -823,7 +823,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
 
         self.scrollView = UIScrollView()
         self.scrollView.delegate = self
-        self.scrollView.contentSize = CGSize(width:self.view.frame.width-30, height: self.view.frame.size.height)
+        self.scrollView.contentSize = CGSize(width:self.view.frame.width-30, height: self.view.frame.size.height-140)
         self.scrollView.backgroundColor = UIColor.white
         self.view.addSubview(scrollView)
         addBackgroundTextView()
@@ -885,8 +885,6 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
  var gettouchLocationy:CGFloat = 0
     @objc func StickerImageMoveNotification(notification: NSNotification) {
         if let dict = notification.object as? NSDictionary {
-            print("dictdictdictdict")
-            print(dict)
             CalculateIncreasescrollviewHeight(getdicdata: dict)
         }
     }
@@ -1110,6 +1108,9 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         if gestureRecognizer.state == .began
         {
             self.scrollView.isScrollEnabled = true
+//            print(self.scrollView.subviews.count)
+//            print(self.scrollView.subviews)
+            print("scrolltouchhandlePan")
         }
     }
 

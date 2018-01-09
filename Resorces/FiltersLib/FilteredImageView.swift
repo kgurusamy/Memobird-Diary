@@ -48,7 +48,6 @@ class FilteredImageView: GLKView, ParameterAdjustmentDelegate {
             filter.setValue(inputCIImage, forKey: kCIInputImageKey)
             if let outputImage = filter.outputImage {
                 clearBackground()
-
                 let inputBounds = inputCIImage?.extent
                 let drawableBounds = CGRect(x: 0, y: 0, width: self.drawableWidth, height: self.drawableHeight)
                 let targetBounds = imageBoundsForContentMode(fromRect: inputBounds!, toRect: drawableBounds)
@@ -77,12 +76,11 @@ class FilteredImageView: GLKView, ParameterAdjustmentDelegate {
         let toAspectRatio = toRect.size.width / toRect.size.height;
 
         var fitRect = toRect
-
         if (fromAspectRatio > toAspectRatio) {
-            fitRect.size.height = toRect.size.width / fromAspectRatio;
+            fitRect.size.height = toRect.size.width * fromAspectRatio;
             fitRect.origin.y += (toRect.size.height - fitRect.size.height) * 0.5;
         } else {
-            fitRect.size.width = toRect.size.height  * fromAspectRatio;
+            fitRect.size.width = toRect.size.height  * 0.9;
             fitRect.origin.x += (toRect.size.width - fitRect.size.width) * 0.5;
         }
         return fitRect
@@ -93,7 +91,6 @@ class FilteredImageView: GLKView, ParameterAdjustmentDelegate {
         let toAspectRatio = toRect.size.width / toRect.size.height;
 
         var fitRect = toRect
-
         if (fromAspectRatio > toAspectRatio) {
             fitRect.size.width = toRect.size.height  * fromAspectRatio;
             fitRect.origin.x += (toRect.size.width - fitRect.size.width) * 0.5;
