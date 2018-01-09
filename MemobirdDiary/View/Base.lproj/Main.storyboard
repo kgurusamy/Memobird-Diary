@@ -7,6 +7,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -1217,19 +1218,25 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Zu-qC-oJw" customClass="TouchDrawView" customModule="TouchDraw">
+                                <rect key="frame" x="0.0" y="56" width="320" height="462"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GJX-OB-3ii" customClass="TouchDrawView" customModule="TouchDraw">
-                                <rect key="frame" x="0.0" y="26" width="320" height="542"/>
+                                <rect key="frame" x="32" y="56" width="257" height="246"/>
                                 <subviews>
-                                    <glkView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WTo-BN-xBj" customClass="FilteredImageView" customModule="MemobirdDiary" customModuleProvider="target">
-                                        <rect key="frame" x="32" y="56" width="257" height="246"/>
+                                    <glkView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="WTo-BN-xBj" customClass="FilteredImageView" customModule="MemobirdDiary" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="257" height="246"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="246" id="OiA-69-Kb0"/>
-                                            <constraint firstAttribute="width" constant="257" id="Ug8-K6-fUH"/>
-                                        </constraints>
                                     </glkView>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="WTo-BN-xBj" secondAttribute="trailing" id="C7l-Fc-MjL"/>
+                                    <constraint firstAttribute="bottom" secondItem="WTo-BN-xBj" secondAttribute="bottom" id="IDl-iM-Nlc"/>
+                                    <constraint firstItem="WTo-BN-xBj" firstAttribute="top" secondItem="GJX-OB-3ii" secondAttribute="top" id="dW9-Nj-eXV"/>
+                                    <constraint firstItem="WTo-BN-xBj" firstAttribute="leading" secondItem="GJX-OB-3ii" secondAttribute="leading" id="lpz-Fr-QAh"/>
+                                </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ur0-eC-sh2">
                                 <rect key="frame" x="0.0" y="341" width="320" height="174"/>
@@ -1294,15 +1301,20 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="66" height="74"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TmB-Cs-fwG">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TmB-Cs-fwG">
                                                             <rect key="frame" x="4" y="14" width="52" height="31"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
                                                 </view>
+                                                <constraints>
+                                                    <constraint firstItem="TmB-Cs-fwG" firstAttribute="leading" secondItem="J1J-Vj-kua" secondAttribute="leadingMargin" constant="-12" id="UAd-hE-JzG"/>
+                                                    <constraint firstItem="TmB-Cs-fwG" firstAttribute="top" secondItem="J1J-Vj-kua" secondAttribute="topMargin" constant="-6" id="VYF-Sb-9yd"/>
+                                                    <constraint firstAttribute="trailingMargin" secondItem="TmB-Cs-fwG" secondAttribute="trailing" constant="-6" id="XPj-Yn-6nH"/>
+                                                    <constraint firstAttribute="bottomMargin" secondItem="TmB-Cs-fwG" secondAttribute="bottom" constant="29" id="ecA-j5-8hO"/>
+                                                </constraints>
                                             </collectionViewCell>
                                         </cells>
                                     </collectionView>
@@ -1591,23 +1603,27 @@
                         <constraints>
                             <constraint firstItem="bOh-0B-1VV" firstAttribute="top" secondItem="Ur0-eC-sh2" secondAttribute="bottom" constant="4" id="43s-Tw-DXu"/>
                             <constraint firstItem="bOh-0B-1VV" firstAttribute="top" secondItem="GdR-qo-D9K" secondAttribute="bottom" id="4dJ-lQ-UPj"/>
-                            <constraint firstItem="GJX-OB-3ii" firstAttribute="top" secondItem="ng2-p2-blo" secondAttribute="top" constant="26" id="6Ae-30-chm"/>
+                            <constraint firstItem="GJX-OB-3ii" firstAttribute="top" secondItem="ng2-p2-blo" secondAttribute="top" constant="56" id="6Ae-30-chm"/>
                             <constraint firstItem="7QI-lD-CsU" firstAttribute="trailing" secondItem="Yzr-3X-ivo" secondAttribute="trailing" constant="25" id="6wR-m0-q9i"/>
                             <constraint firstItem="Ur0-eC-sh2" firstAttribute="leading" secondItem="7QI-lD-CsU" secondAttribute="leading" id="8cn-cw-K56"/>
                             <constraint firstItem="bOh-0B-1VV" firstAttribute="bottom" secondItem="7QI-lD-CsU" secondAttribute="bottom" id="ACH-3A-T1Z"/>
                             <constraint firstItem="V4K-lJ-C22" firstAttribute="trailing" secondItem="7QI-lD-CsU" secondAttribute="trailing" id="Cvt-5g-63S"/>
-                            <constraint firstItem="GJX-OB-3ii" firstAttribute="bottom" secondItem="7QI-lD-CsU" secondAttribute="bottom" id="JIX-Jr-b0y"/>
+                            <constraint firstItem="4Zu-qC-oJw" firstAttribute="leading" secondItem="7QI-lD-CsU" secondAttribute="leading" id="IAb-Xc-Kc1"/>
+                            <constraint firstItem="GJX-OB-3ii" firstAttribute="bottom" secondItem="7QI-lD-CsU" secondAttribute="bottom" constant="-266" id="JIX-Jr-b0y"/>
                             <constraint firstItem="Ur0-eC-sh2" firstAttribute="trailing" secondItem="7QI-lD-CsU" secondAttribute="trailing" id="KQe-fw-uOE"/>
                             <constraint firstItem="GdR-qo-D9K" firstAttribute="centerX" secondItem="jhR-gd-QSC" secondAttribute="centerX" id="N0W-nj-mLW"/>
+                            <constraint firstItem="bOh-0B-1VV" firstAttribute="top" secondItem="4Zu-qC-oJw" secondAttribute="bottom" constant="1" id="O5W-bK-oHt"/>
                             <constraint firstItem="V4K-lJ-C22" firstAttribute="top" secondItem="Ur0-eC-sh2" secondAttribute="bottom" constant="4" id="P4o-ff-eRm"/>
-                            <constraint firstItem="GJX-OB-3ii" firstAttribute="trailing" secondItem="7QI-lD-CsU" secondAttribute="trailing" id="PKO-Be-VAF"/>
+                            <constraint firstItem="GJX-OB-3ii" firstAttribute="trailing" secondItem="7QI-lD-CsU" secondAttribute="trailing" constant="-31" id="PKO-Be-VAF"/>
                             <constraint firstItem="bOh-0B-1VV" firstAttribute="trailing" secondItem="7QI-lD-CsU" secondAttribute="trailing" id="RQw-MN-K9N"/>
                             <constraint firstItem="bOh-0B-1VV" firstAttribute="leading" secondItem="7QI-lD-CsU" secondAttribute="leading" id="X2b-xu-S7b"/>
                             <constraint firstItem="Ur0-eC-sh2" firstAttribute="leading" secondItem="7QI-lD-CsU" secondAttribute="leading" id="ck4-Wy-YEU"/>
                             <constraint firstItem="Ur0-eC-sh2" firstAttribute="trailing" secondItem="7QI-lD-CsU" secondAttribute="trailing" id="eb7-63-aLU"/>
                             <constraint firstItem="bOh-0B-1VV" firstAttribute="top" secondItem="Yzr-3X-ivo" secondAttribute="bottom" constant="14" id="h2X-Tj-x94"/>
-                            <constraint firstItem="GJX-OB-3ii" firstAttribute="leading" secondItem="7QI-lD-CsU" secondAttribute="leading" id="ket-Ww-9Il"/>
+                            <constraint firstItem="GJX-OB-3ii" firstAttribute="leading" secondItem="7QI-lD-CsU" secondAttribute="leading" constant="32" id="ket-Ww-9Il"/>
                             <constraint firstItem="bOh-0B-1VV" firstAttribute="top" secondItem="Ur0-eC-sh2" secondAttribute="bottom" constant="4" id="lD5-iV-BwZ"/>
+                            <constraint firstItem="4Zu-qC-oJw" firstAttribute="top" secondItem="ng2-p2-blo" secondAttribute="top" constant="56" id="qbS-s4-TYY"/>
+                            <constraint firstItem="4Zu-qC-oJw" firstAttribute="trailing" secondItem="7QI-lD-CsU" secondAttribute="trailing" id="tlS-zv-BmW"/>
                             <constraint firstItem="V4K-lJ-C22" firstAttribute="leading" secondItem="7QI-lD-CsU" secondAttribute="leading" id="uTV-OY-QCC"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="7QI-lD-CsU"/>
@@ -1623,6 +1639,7 @@
                         <outlet property="brightnessSlider" destination="7Wk-dF-esF" id="aGR-21-YLB"/>
                         <outlet property="contrastSlider" destination="5RW-T1-e1P" id="ttp-aA-fHc"/>
                         <outlet property="drawVieww" destination="GJX-OB-3ii" id="rsw-km-E9W"/>
+                        <outlet property="drawWithoutVieww" destination="4Zu-qC-oJw" id="a2i-Ry-Jwd"/>
                         <outlet property="drawbgview" destination="V4K-lJ-C22" id="B2d-cl-BjL"/>
                         <outlet property="filterBGView" destination="Ur0-eC-sh2" id="neq-UQ-gBW"/>
                         <outlet property="filteredImageView" destination="WTo-BN-xBj" id="d9u-jH-zDT"/>
@@ -1643,7 +1660,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="84Q-sb-I90" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2959" y="-564"/>
+            <point key="canvasLocation" x="2958.75" y="-564.08450704225356"/>
         </scene>
         <!--Preview List View Controller-->
         <scene sceneID="9Ge-a6-Gya">

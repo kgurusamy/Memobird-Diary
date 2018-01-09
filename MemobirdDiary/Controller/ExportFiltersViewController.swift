@@ -126,6 +126,8 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
     ////////////NEW CODE FOR PAINT
     private static let deltaWidth = CGFloat(2.0)
     @IBOutlet weak var drawVieww: TouchDrawView!
+    @IBOutlet weak var drawWithoutVieww: TouchDrawView!
+
     ///////////////
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -155,7 +157,7 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
         flowLayout.minimumInteritemSpacing = 0.0
         self.photoFilterCollectionView.collectionViewLayout = flowLayout
         filteredImageView.inputImage = getnewImage
-        filteredImageView.contentMode = .scaleAspectFit
+        filteredImageView.contentMode = .scaleAspectFill
         filteredImageView.backgroundColor = UIColor.clear
         filteredImageView.filter = filters[0]
         colorControl.input(filteredImageView.inputImage!)
@@ -164,15 +166,15 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
             filteredImageView.isHidden = true
             undobtnoutlet.isHidden = true
             let color = UIColor.black
-            drawVieww.setColor(color)
+            drawWithoutVieww.setColor(color)
             undobtnoutlet.isHidden = true
             filterBGView.isHidden = true
             
             tabBarView.isHidden = true
             //tabBarView.delegate = nil
             drawbgview.isHidden = false
-            drawVieww.delegate = self
-            drawVieww.setWidth(ExportFiltersViewController.deltaWidth)
+            drawWithoutVieww.delegate = self
+            drawWithoutVieww.setWidth(ExportFiltersViewController.deltaWidth)
             drawcheckbool = true
             
            // strokesbgview.isHidden = true
@@ -220,7 +222,7 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoFilterCell", for: indexPath) as! PhotoFilterCollectionViewCell
-        cell.filteredImageView.contentMode = .scaleAspectFit
+        cell.filteredImageView.contentMode = .scaleAspectFill
         cell.backgroundColor = UIColor.clear
         cell.filteredImageView.inputImage = UIImage(named: "duckling.jpg")
         cell.filteredImageView.filter = filters[indexPath.item]
@@ -283,7 +285,7 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
         flowLayout.minimumInteritemSpacing = 0.0
         self.photoFilterCollectionView.collectionViewLayout = flowLayout
         filteredImageView.inputImage = getnewImage
-        filteredImageView.contentMode = .scaleAspectFit
+        filteredImageView.contentMode = .scaleAspectFill
         filteredImageView.filter = filters[0]
         colorControl.input(filteredImageView.inputImage!)
     }

@@ -882,7 +882,6 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        UserDefaults.standard.set(nil, forKey: "SavescrollcontentHeightt")
 
         NotificationCenter.default.removeObserver(self)
         if(vwTextBoxOption.isHidden == false){
@@ -1089,7 +1088,6 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         
             differencescrolllastimage = scrollviewcontentIntvalue - sumLastypositionandHeight
             
-            let defaults = UserDefaults.standard
             var floatReducedifferencescrolllastimage = CGFloat()
             if(differencescrolllastimage > 60)
             {
@@ -1097,27 +1095,14 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
                 floatReducedifferencescrolllastimage = CGFloat(Reducedifferencescrolllastimage)
                 self.scrollView.contentSize = CGSize(width: self.scrollView.contentSize.width, height: self.scrollView.contentSize.height - floatReducedifferencescrolllastimage)
 
-                if (defaults.object(forKey: "SavescrollcontentHeightt") != nil)
-                {
-                    
-                }else{
-                    defaults.set(floatReducedifferencescrolllastimage, forKey: "SavescrollcontentHeightt")
-                }
             }
-            if (defaults.object(forKey: "SavescrollcontentHeightt") != nil)
-            {
-                var NEWscrollviewcontentIntvalue = Int()
-                NEWscrollviewcontentIntvalue = defaults.object(forKey: "SavescrollcontentHeightt") as! Int
-                if(NEWscrollviewcontentIntvalue == Int(floatReducedifferencescrolllastimage))
-                {
+            print(self.scrollView.contentSize.height)
+            print(sumLastypositionandHeight)
+            print("sumLastypositionandHeight")
 
-                }else{
-                    defaults.set(floatReducedifferencescrolllastimage, forKey: "SavescrollcontentHeightt")
-                    var offset = scrollView.contentOffset
-                    offset.y = scrollView.contentSize.height - scrollView.bounds.size.height + scrollView.contentInset.bottom + 10
-                    scrollView.setContentOffset(offset, animated: false)
-                }
-            }
+            var offset = scrollView.contentOffset
+            offset.y = scrollView.contentSize.height - scrollView.bounds.size.height + scrollView.contentInset.bottom + 10
+            scrollView.setContentOffset(offset, animated: false)
         }
     }
     // MARK:- ScrollView methods
