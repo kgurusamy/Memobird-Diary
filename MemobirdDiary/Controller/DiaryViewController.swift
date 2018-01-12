@@ -38,7 +38,6 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
     @IBOutlet weak var brightnessslider: UISlider!
     let imagePicker = UIImagePickerController()
     var picimageView = UIImageView()
-    var textLabel = UILabel()
     var btnImageWithText = UIButton()
     var btnPlainTextBox = UIButton()
     var scrollView: UIScrollView!
@@ -47,7 +46,6 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
     var selectedDiaryEntryIndex : Int! = -1
     var mode : String = ""
     var stickerView = LDStickerView()
-    var addremovecount : Int = 0
     var backgroundTextView : UITextView!
     var keyboardHeight : CGFloat! = 0
     @IBOutlet weak var filteredImageView: FilteredImageView!
@@ -92,14 +90,6 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
     
     // MARK:- Image filter related controls
     @IBOutlet weak var materialBGview: UIView!
-    var filters = [CIFilter]()
-    fileprivate var colorControl = ColorControl()
-    //////////
-   
-    /////////////////
-    @IBOutlet weak var filterscollectionView: UICollectionView!
-    @IBOutlet weak var filterscontrastsliderBGview: UIView!
-    @IBOutlet weak var filtercollectionviewbg: UIView!
     
      // MARK:- Editor controls and methods
     @IBOutlet weak var editorBGview: UIView!
@@ -108,9 +98,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
     @IBOutlet weak var morebtnoutlet: UIButton!
     @IBOutlet weak var PredefineImagesBtn: UIButton!
     // calculate number of columns needed to display all items
-   
-    
-    
+
     @IBAction func materialSavebtn(_ sender: Any)
     {
         self.materialsBGview.isHidden = true
@@ -146,43 +134,22 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
             print("option menu presented")
         }
     }
-    let filterDescriptors: [(filterName: String, filterDisplayName: String)] = [
-        ("CIColorControls", "None"),
-        ("CILineOverlay", "Sketch"),
-        ("CIColorInvert", "Invert"),
-        ("CIComicEffect", "Comic"),
-        ("CIEdgeWork", "Pencil"),
-        ("CIPhotoEffectChrome", "Chrome"),
-        ("CIPhotoEffectProcess", "Process"),
-        ("CIPhotoEffectTransfer", "Transfer"),
-        ("CIPhotoEffectInstant", "Instant"),
-        ("CIStraightenFilter", "Straighten"),
-        ("CITileFilter", "TileFilter"),
-        ("CIToneCurve", "ToneCurve"),
-        
-        ]
     
     @IBAction func filtersbtn(_ sender: Any)
     {
-        filterscontrastsliderBGview.isHidden = false
         EditorBGTempView.isHidden = true
         brightnesssliderBGview.isHidden = true
-        filtercollectionviewbg.isHidden = false
     }
     @IBAction func brightnesscontrastbtn(_ sender: Any)
     {
-        filterscontrastsliderBGview.isHidden = false
         EditorBGTempView.isHidden = true
         brightnesssliderBGview.isHidden = false
-        filtercollectionviewbg.isHidden = true
     }
     
     @IBAction func editorbtnn(_ sender: Any)
     {
-        filterscontrastsliderBGview.isHidden = false
         EditorBGTempView.isHidden = false
         brightnesssliderBGview.isHidden = true
-        filtercollectionviewbg.isHidden = true
     }
     @IBAction func savebtnn(_ sender: Any) {
     }
@@ -195,7 +162,6 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
     func loadData(atIndex : Int)
     {
         self.scrollView.subviews.forEach({ $0.removeFromSuperview() })
-        
         if(diaryEntries.count > 0){
         let currentDiaryEntry = diaryEntries[selectedDiaryEntryIndex]
         let diaryData = currentDiaryEntry.diary_data as! [dataModel]
@@ -242,14 +208,11 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
                     btnImageWithText.accessibilityIdentifier = dataModelObj.imageName
                     btnImageWithText.titleEdgeInsets = UIEdgeInsets(top:-15, left: 0, bottom: 0, right: 0)
                     btnImageWithText.isUserInteractionEnabled = false
-                    //btnImageWithText.accessibilityIdentifier = "dragImageTextBox"
                     stickerView.addGestureRecognizer(doubleTap)
-                    
                     stickerView.setContentView(btnImageWithText)
                     }catch {
                         print("Error loading image : \(error)")
                     }
-                    
                 }
                 else{
 
@@ -263,16 +226,12 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
                     stickerView.addGestureRecognizer(doubleTap)
                     stickerView.setContentView(btnPlainTextBox)
                 }
-
                 stickerView.transform = CGAffineTransform(rotationAngle : dataModelObj.radians)
                 self.scrollView.addSubview(stickerView)
-
             hideOtherViewSelection()
         }
     }
     }
-    
-   
     func saveDataToCoredata(fromView : UIScrollView)
     {
         if(fromView.subviews.count > 0)
@@ -282,23 +241,17 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
                 if(diaryEntries[selectedDiaryEntryIndex].diary_image != nil){
                     deleteFileWithImageName(imageName: diaryEntries[selectedDiaryEntryIndex].diary_image!, isDiary: true)
                 }
-                
-                //CoreDataStack.managedObjectContext.delete(diaryEntries[selectedDiaryEntryIndex])
             }
             dataModelArr.removeAll()
             for dragView in fromView.subviews
             {
                 if(dragView.accessibilityIdentifier == "drag"){
-              
                      let radians:Double = Double(atan2f(Float(Double(dragView.transform.b)), Float(Double(dragView.transform.a))))
-                    
                     let dataModelObj : dataModel
                     if (dragView.subviews[0] as? UIButton == nil)
                     {
-                        
                         let imageView = dragView.subviews[0] as? UIImageView
                         dataModelObj = dataModel(imageName : (imageView?.accessibilityIdentifier)!, xPos :dragView.center.x, yPos :dragView.center.y, width : dragView.bounds.size.width, height : dragView.bounds.size.height,radians : CGFloat(radians), angle : CGFloat(0), type:contentType.image.rawValue, attributedString:(NSAttributedString(string:"")))
-                        
                     }
                     else
                     {
@@ -320,19 +273,10 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
             if(diaryEntries.count > 0 && selectedDiaryEntryIndex != -1){
                 let selectedDiaryEntry = diaryEntries[selectedDiaryEntryIndex]
                 selectedDiaryEntry.modified_time = Date()
-                
                 selectedDiaryEntry.diary_image = captureDiaryScreenAndSave(maxHeight : maxHeight)
-                
                 selectedDiaryEntry.diary_data = dataModelArr as NSObject
                 selectedDiaryEntry.diary_text = backgroundTextView.attributedText
                 selectedDiaryEntry.diary_height = maxHeight
-//                if(self.scrollView.contentSize.height > self.scrollView.frame.size.height + 130)
-//                {
-//                    selectedDiaryEntry.diary_height = Float(self.scrollView.frame.size.height+200)
-//
-//                }else{
-//                    selectedDiaryEntry.diary_height = Float(self.scrollView.frame.size.height)
-//                }
                 diaryEntries[selectedDiaryEntryIndex] = selectedDiaryEntry
             }else{
             if #available(iOS 10.0, *) {
@@ -344,16 +288,6 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
                 coreDataDiary.diary_text = backgroundTextView.attributedText
               
                 coreDataDiary.diary_height = maxHeight
-
-//                if(self.scrollView.contentSize.height > self.scrollView.frame.size.height + 130)
-//                {
-//                    coreDataDiary.diary_height = Float(self.scrollView.frame.size.height+200)
-//
-//                }else{
-//                    coreDataDiary.diary_height = Float(self.scrollView.frame.size.height)
-//
-//                }
-                
             } else {
                 // Fallback on earlier versions
                 let entityDesc = NSEntityDescription.entity(forEntityName: "DiaryEntry", in: CoreDataStack.managedObjectContext)
@@ -363,15 +297,6 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
                 coreDataDiary.modified_time = Date()
                 coreDataDiary.diary_data = dataModelArr as NSObject
                 coreDataDiary.diary_height = maxHeight
-//                if(self.scrollView.contentSize.height > self.scrollView.frame.size.height+130)
-//                {
-//                    coreDataDiary.diary_height = Float(self.scrollView.frame.size.height+200)
-//
-//                }else{
-//                    coreDataDiary.diary_height = Float(self.scrollView.frame.size.height)
-//
-//                }
-                
             }
             }
             CoreDataStack.saveContext()
@@ -380,11 +305,9 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         self.showAlert(alertMessage: "Saved successfully!")
     }
    
-    
     func getSavedData()
     {
         let fetchRequest: NSFetchRequest<DiaryEntry> = DiaryEntry.fetchRequest()
-        
         // Sorting data according to modified time
         let sort = NSSortDescriptor(key: "modified_time", ascending: false)
         fetchRequest.sortDescriptors = [sort]
@@ -492,19 +415,14 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         self.textViewEditTextBox.autocorrectionType = .no
         self.textViewEditTextBox.becomeFirstResponder()
         if(didDisplayedKeyboard == true){
-            
             //getkeyboardHeight -= 90
             showEditTextBox()
-            
         }
-        
-        
     }
 
     func showEditTextBox(){
         self.view.bringSubview(toFront: self.vwEditTextBox)
         self.vwEditTextBox.frame = CGRect(x:self.vwEditTextBox.frame.origin.x,y: self.view.frame.size.height - getkeyboardHeight - vwEditTextBox.frame.size.height+5, width : self.view.frame.size.width, height : self.vwEditTextBox.frame.size.height)
-        //self.textViewEditTextBox.frame = CGRect(x:5.0,y:5.0,width:self.view.frame.size.width/0.75,height:self.vwEditTextBox.frame.size.height-5)
         self.scrollView.contentSize = CGSize(width: self.scrollView.contentSize.width, height: self.scrollView.contentSize.height + 100 )
         print("vwEditTextBox frame : \(self.vwEditTextBox.frame)")
         self.vwEditTextBox.isHidden = false
@@ -517,9 +435,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         let btnCenterAlign = self.view.viewWithTag(textFormat.centerAlign.rawValue) as! UIButton
         let btnBold = self.view.viewWithTag(textFormat.bold.rawValue) as! UIButton
         let btnItalic = self.view.viewWithTag(textFormat.italic.rawValue) as! UIButton
-        //let btnUnderline = self.view.viewWithTag(textFormat.underline.rawValue) as! UIButton
         switch(sender.tag){
-           
         case textFormat.bold.rawValue:
             sender.isSelected = !sender.isSelected
            
@@ -574,15 +490,11 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
             sender.isSelected = !sender.isSelected
             let attString = NSMutableAttributedString(attributedString: backgroundTextView.attributedText)
             if (sender.isSelected) {
-                //var attString = backgroundTextView.attributedText as! NSMutableAttributedString
                 attString.addAttribute(NSAttributedStringKey.underlineStyle, value:NSUnderlineStyle.styleSingle.rawValue, range :NSRange(location: 0, length: attString.length))
-                //backgroundTextView.attributedText = attString
                 sender.setBackgroundImage(UIImage(named:"ico_underline_checked.png"), for: UIControlState.normal)
             }
             else{
-                //let attString = NSMutableAttributedString(attributedString: backgroundTextView.attributedText)
                 attString.removeAttribute(NSAttributedStringKey.underlineStyle, range: NSRange(location: 0, length: attString.length))
-                //backgroundTextView.attributedText = attString
                 sender.setBackgroundImage(UIImage(named:"ico_underline_unchecked.png"), for: UIControlState.normal)
                 }
             backgroundTextView.attributedText = attString
@@ -646,9 +558,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
     @IBAction func sliderValueChanged(sender: UISlider) {
         sliderFontSizeValue = sender.value
         let btnBold = self.view.viewWithTag(textFormat.bold.rawValue) as! UIButton
-        //let btnUnderline = self.view.viewWithTag(textFormat.underline.rawValue) as! UIButton
         let btnItalic = self.view.viewWithTag(textFormat.italic.rawValue) as! UIButton
-       
         if(btnBold.isSelected){
             backgroundTextView.font = backgroundTextView.font?.bold()
         }
@@ -689,23 +599,17 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         cell.layer.masksToBounds = true
         cell.layer.borderWidth = 2.0
         cell.layer.borderColor = UIColor.gray.cgColor
-        
         cell.fontLabel.text = "Aa"
-        
         cell.fontLabel.textAlignment = .center
         cell.fontLabel.tag = indexPath.row
-        
         cell.backgroundColor = UIColor.white
         cell.fontLabel.textColor = UIColor.black
-        
         cell.fontLabel.font = UIFont(name: fontArray[indexPath.row], size: 25.0)
-       
         if selectedFontCollectionIndexPath != nil && indexPath == selectedFontCollectionIndexPath {
             cell.backgroundColor = UIColor.gray
         }else{
             cell.backgroundColor = UIColor.white
         }
-        
           return cell
         }
         if(collectionView == textBoxCollectionView)
@@ -734,14 +638,12 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         if(collectionView == materialcollectionView)
         {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellMaterial", for: indexPath)
-            
                 cell.contentView.subviews.forEach { $0.removeFromSuperview() }
                 let imgMaterialItem = UIImageView()
                 imgMaterialItem.image = UIImage(named: materialImagesArray[indexPath.row])
                 imgMaterialItem.contentMode = .scaleAspectFit
                 imgMaterialItem.frame = CGRect(x:0, y:0,width :80, height:80)
                 cell.contentView.addSubview(imgMaterialItem)
-         
             return cell
         }
         return UICollectionViewCell()
@@ -785,7 +687,6 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
             let fullImagePath = imagesDirectoryPath + "/\(imageName)"
             let getimage : UIImage = UIImage(named:materialImagesArray[indexPath.row])!
             let myImage = self.fixOrientation(image: getimage)
-            
             dragzoomroatateview(img:myImage, imgName: imageName, type: contentType.image.rawValue, attributedString: NSAttributedString(string:""))
             let data = UIImagePNGRepresentation(myImage)
             let success = FileManager.default.createFile(atPath: fullImagePath, contents: data, attributes: nil)
@@ -805,7 +706,6 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
                 let fullImagePath = imagesDirectoryPath + "/\(imageName)"
                 let getimage : UIImage = UIImage(named:textBoxImagesArray[indexPath.row])!
                 let myImage = self.fixOrientation(image: getimage)
-            
                 dragzoomroatateview(img:myImage, imgName: imageName, type: contentType.imageAndText.rawValue, attributedString: NSAttributedString(string:"Double Tap to edit"))
                 let data = UIImagePNGRepresentation(myImage)
                 let success = FileManager.default.createFile(atPath: fullImagePath, contents: data, attributes: nil)
@@ -819,15 +719,12 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
     // MARK:- ViewController delegate methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        addremovecount = 1;
-
         self.scrollView = UIScrollView()
         self.scrollView.delegate = self
         self.scrollView.contentSize = CGSize(width:self.view.frame.width-30, height: self.view.frame.size.height-140)
         self.scrollView.backgroundColor = UIColor.white
         self.view.addSubview(scrollView)
         addBackgroundTextView()
-        
         let gestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(scrolltouchhandlePan))
         self.view.addGestureRecognizer(gestureRecognizer)
         
@@ -923,7 +820,6 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         }
         // Collection view UI changes
         let fontCollectionlayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        //fontCollectionlayout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
         fontCollectionlayout.itemSize = CGSize(width: 55, height: 55)
         fontCollectionlayout.scrollDirection = .horizontal
         fontCollectionView.frame = CGRect(x:0,y:10,width:self.view.frame.width-10,height:130)
@@ -970,19 +866,10 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
     
     // MARK:- Keypad/Keyboard related methods
     @objc func keyboardWillAppear() {
-        //Do something here
         didDisplayedKeyboard = true
-        // Scroll Up when user selects background textView
-//        if(backgroundTextView.isFirstResponder == true){
-//            var offset = scrollView.contentOffset
-//            offset.y = 0
-//            self.scrollView.setContentOffset(offset, animated: true)
-//            
-//        }
     }
     
     @objc func keyboardWillDisappear() {
-        //Do something here
         didDisplayedKeyboard = false
         self.vwEditTextBox.isHidden = true
     }
@@ -1088,10 +975,6 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
                 self.scrollView.contentSize = CGSize(width: self.scrollView.contentSize.width, height: self.scrollView.contentSize.height - floatReducedifferencescrolllastimage)
 
             }
-//            print(self.scrollView.contentSize.height)
-//            print(sumLastypositionandHeight)
-//            print("sumLastypositionandHeight")
-
             var offset = scrollView.contentOffset
             offset.y = scrollView.contentSize.height - scrollView.bounds.size.height + scrollView.contentInset.bottom + 10
             scrollView.setContentOffset(offset, animated: false)
@@ -1108,8 +991,6 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         if gestureRecognizer.state == .began
         {
             self.scrollView.isScrollEnabled = true
-//            print(self.scrollView.subviews.count)
-//            print(self.scrollView.subviews)
             print("scrolltouchhandlePan")
         }
     }
@@ -1242,49 +1123,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         self.scrollView.addSubview(stickerView)
         self.scrollView.isScrollEnabled = false
     }
-    // MARK:- Tab bar
-    func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
-        if(item.tag == 0){
-            self.vwTextOptions.isHidden = false
-            self.vwTextFormat.isHidden = false
-            self.vwTextFont.isHidden = true
-            self.btnTextFormat.backgroundColor = UIColor.lightGray
-            self.btnTextFont.backgroundColor = UIColor.white
-        }
-        if(item.tag == 1){
-        }
-        if(item.tag == 2){
-        }
-        if(item.tag == 3){
-            //print("Test3")
-            if(addremovecount <= 3)
-            {
-                addremovecount += 1
-                let addremovecountcgfloat = CGFloat(addremovecount)
-                self.scrollView.contentSize = CGSize(width:1.0, height: self.view.frame.height*addremovecountcgfloat)
-            }else{
-                // create the alert
-                let alert = UIAlertController(title: "Alert!", message: "Maximum 3 page allowed", preferredStyle: UIAlertControllerStyle.alert)
-                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
-                self.present(alert, animated: true, completion: nil)
-            }
-        }
-        if(item.tag == 4){
-            //print("Test4")
-            if(addremovecount >= 1)
-            {
-                addremovecount -= 1
-                let addremovecountcgfloat = CGFloat(addremovecount)
-                self.scrollView.contentSize = CGSize(width:1.0, height: self.view.frame.height*addremovecountcgfloat)
-            }
-        }
-        if(item.tag == 5){
-           
-            let HistoryVC = storyboard?.instantiateViewController(withIdentifier: "HistoryViewController") as! HistoryViewController
-            self.navigationController?.pushViewController(HistoryVC, animated: true)
-        }
-    }
-   
+    
     @IBAction func Textbtn(_ sender: Any)
     {
         self.vwTextOptions.isHidden = false
@@ -1343,7 +1182,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
     }
     @IBAction func Grafittbtn(_ sender: Any)
     {
-        camselectedimage = nil
+        cameraselectedimage = nil
         performSegue(withIdentifier: "ExportFiltersViewController", sender: self)
     }
     @IBAction func Barcodebtn(_ sender: Any)
@@ -1386,7 +1225,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         imagePicker.allowsEditing = true
         self.present(imagePicker, animated: true, completion: nil)
     }
-    var camselectedimage: UIImage?
+    var cameraselectedimage: UIImage?
     func imagePickerController(
         _ picker: UIImagePickerController,
         didFinishPickingMediaWithInfo info: [String : Any])
@@ -1395,10 +1234,6 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         let myImage = self.fixOrientation(image: (info[UIImagePickerControllerOriginalImage] as? UIImage)!)
         
         self.dismiss(animated: true, completion: nil)
-        for descriptor in filterDescriptors {
-            filters.append(CIFilter(name: descriptor.filterName)!)
-        }
-       
         let activityView = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
         activityView.center = self.view.center
         activityView.startAnimating()
@@ -1407,20 +1242,16 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
         self.view.bringSubview(toFront: self.vwOverlay)
 
         self.vwOverlay.isHidden = false
-            camselectedimage = myImage
+            cameraselectedimage = myImage
         performSegue(withIdentifier: "ExportFiltersViewController", sender: self)
-
-      
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ExportFiltersViewController" {
             if let nextViewController = segue.destination as? ExportFiltersViewController
             {
-                if(camselectedimage !== nil){
-                nextViewController.getnewImage = camselectedimage
+                if(cameraselectedimage !== nil){
+                nextViewController.getImagefromdiaryview = cameraselectedimage
                 }
-
-                
             }
         }
     }
@@ -1570,10 +1401,7 @@ class DiaryViewController: UIViewController,UITabBarDelegate,UIImagePickerContro
     }
     func captureDiaryScreenAndSave(maxHeight : Float) -> String? {
         hideOtherViewSelection()
-      
-       //UIGraphicsBeginImageContextWithOptions(scrollView.frame.size, false, scrollView.layer.contentsScale)
         UIGraphicsBeginImageContext(scrollView.contentSize)
-        
         let savedFrame = scrollView.frame
         scrollView.contentOffset = CGPoint.zero
        

@@ -91,7 +91,7 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
     @IBOutlet weak var contrastSlider: UISlider!
     @IBOutlet weak var rightBarButtonItem : UIBarButtonItem!
     
-    var getnewImage: UIImage!
+    var getImagefromdiaryview: UIImage!
 
     
     
@@ -145,7 +145,7 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
         undobtnoutlet.layer.borderColor = UIColor.black.cgColor
         
         ///////////?FIlter Code
-        if(getnewImage !== nil){
+        if(getImagefromdiaryview !== nil){
         for descriptor in filterDescriptors {
             filters.append(CIFilter(name: descriptor.filterName)!)
         }
@@ -158,7 +158,7 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
         flowLayout.scrollDirection = UICollectionViewScrollDirection.horizontal
         flowLayout.minimumInteritemSpacing = 0.0
         self.photoFilterCollectionView.collectionViewLayout = flowLayout
-        filteredImageView.inputImage = getnewImage
+        filteredImageView.inputImage = getImagefromdiaryview
         filteredImageView.contentMode = .scaleAspectFit
         filteredImageView.backgroundColor = UIColor.clear
         filteredImageView.filter = filters[0]
@@ -264,18 +264,7 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
         updateEditButtonEnabled()
     }
     
-    // MARK: - UIImagePickerController delegate methods
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        guard let image = info[UIImagePickerControllerOriginalImage] as? UIImage else {
-            dismiss(animated: true, completion: nil)
-            return
-        }
-        getnewImage = image
-        filteredImageView.inputImage = getnewImage
-
-        dismiss(animated: true) { [unowned self] in
-        }
-    }
+    
     @IBAction func undobtn(_ sender: Any)
     {
         for descriptor in filterDescriptors {
@@ -288,7 +277,7 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
         flowLayout.scrollDirection = UICollectionViewScrollDirection.horizontal
         flowLayout.minimumInteritemSpacing = 0.0
         self.photoFilterCollectionView.collectionViewLayout = flowLayout
-        filteredImageView.inputImage = getnewImage
+        filteredImageView.inputImage = getImagefromdiaryview
         filteredImageView.contentMode = .scaleAspectFit
         filteredImageView.filter = filters[0]
         colorControl.input(filteredImageView.inputImage!)
@@ -320,7 +309,7 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
             if(item.tag == 1){
                 let controller = CropViewController()
                 controller.delegate = self
-                controller.image = getnewImage
+                controller.image = getImagefromdiaryview
                 
                 let navController = UINavigationController(rootViewController: controller)
                 present(navController, animated: true, completion: nil)
@@ -349,13 +338,6 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
             if(item.tag == 4){
                 UIView.animate(withDuration: 1.0, animations: {
                     self.filteredImageView.inputImage = self.imageRotatedByDegrees(oldImage: self.filteredImageView.inputImage, deg: 45.0)
-//                    self.filteredImageView.transform = self.filteredImageView.transform.rotated(by: CGFloat(M_PI_2))
-//                    var rotatedImage = UIImage()
-//                    rotatedImage = self.filteredImageView.inputImage
-//                    self.filteredImageView.inputImage = rotatedImage
-//                    let newImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
-//                    UIGraphicsEndImageContext()
-//                    self.filteredImageView.inputImage = newImage
                 })
             }
       
@@ -474,7 +456,7 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
     func insertImageToMainDairyView() {
         
         var getpreviewimage: UIImage!
-        if(getnewImage == nil)
+        if(getImagefromdiaryview == nil)
         {
             if(drawVieww.isHidden == true)
             {
@@ -520,7 +502,7 @@ class ExportFiltersViewController:UIViewController , UICollectionViewDataSource,
     func captureImageForPreview() -> String? {
 
         var getpreviewimage: UIImage!
-        if(getnewImage == nil)
+        if(getImagefromdiaryview == nil)
         {
             getpreviewimage = drawVieww?.snapshot
 
